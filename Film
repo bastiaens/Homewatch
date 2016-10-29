@@ -1,0 +1,132 @@
+public class Film
+{
+	private String titreFilm, realisateur, compositeur,distinctions,genre;
+	private int anneeSortie, dureeMinutes;
+	private String[] acteursPrincipaux;
+	
+	/**
+	*Constructeur sans parametre d'objets de type Film. A utiliser pour tester par defaut.
+	*/
+	public Film()
+	{
+		this.titreFilm = "The Lion King";
+		this.realisateur = "Jsais pas, mais c'est Disney";
+		this.compositeur = "Hans Zimmer";
+		this.anneeSortie = 1994;
+		this.dureeMinutes = 89;
+		this.genre = "Animation 2D";
+	}
+	
+	/**
+	*Constructeur d'objets de type Film.
+	*@param ti comme titre du film, real comme realisateur du film, an comme annee de sortie du film, duree comme duree en minutes du film
+	*
+	*/
+	public Film(String ti,String real,String comp, int an, int duree)
+	{
+		this.titreFilm = ti;
+		this.realisateur = real;
+		this.compositeur = comp;
+		this.anneeSortie = an;
+		this.dureeMinutes = duree;
+		
+	}
+	
+	/**
+	*
+	*
+	*/
+	public String getTitre()
+	{
+		return titreFilm;
+	}
+	
+	/**
+	*
+	*
+	*/
+	public void setTitre(String titre)
+	{
+			this.titreFilm = titre;
+	}
+	
+	/**
+	*
+	*
+	*/
+	public String getRealisateur()
+	{
+		return realisateur;
+	}
+	
+	/**
+	*
+	*
+	*/
+	public void setRealisateur(String real)
+	{
+		this.realisateur = real;
+	}
+	
+	/**
+	*
+	*
+	*/
+	public int getDuree()
+	{
+		return dureeMinutes;
+	}
+	
+		/**
+	*
+	*
+	*/
+	public void setDuree(int minutes)
+	{
+		this.dureeMinutes = minutes;
+	}
+	
+	/**
+	*
+	*
+	*/
+	public int getAnneeSortie()
+	{
+		return anneeSortie;
+	}
+	
+	/**
+	*
+	*
+	*/
+	public void setAnneeSortie(int anSortie)
+	{
+		this.anneeSortie = anSortie;
+	}
+	
+	/**
+	*
+	*
+	*/
+	public String[] getActeurs()
+	{
+		return "";
+	}
+	
+	/**
+	*
+	*
+	*/
+	public void addActeur(String act)
+	{
+		boolean ajout = false;
+		for(int i=0; i < acteursPrincipaux.length && ajout == false;i++)
+		{
+			if(acteursPrincipaux[i]== "")
+			{
+				acteursPrincipaux[i] = act;
+				ajout = true;
+			}
+		}
+	}
+}
