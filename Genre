@@ -1,0 +1,21 @@
+
+public class Genre 
+{
+	private String nomGenre;
+	
+	public enum Categorie
+	{
+		ACTION,COMEDIE, THRILLER,ANIMATION,DRAME
+	}
+	
+	public String getNomGenre()
+	{
+		return "";
+	}
+	
+	public void setNomGenre()
+	{
+		
+	}
+	
+}
