@@ -2,7 +2,7 @@ public class Film
 {
 	private String titreFilm, realisateur, compositeur,distinctions,genre;
 	private int anneeSortie, dureeMinutes;
-	private String[] acteursPrincipaux;
+	private String[] casting;		//rôles titres d'un film.
 	
 	/**
 	*Constructeur sans parametre d'objets de type Film. A utiliser pour tester par defaut.
@@ -33,8 +33,8 @@ public class Film
 	}
 	
 	/**
-	*
-	*
+	*Cette methode renvoie le titre du film sous forme de chaine de caracteres
+	*@return Le titre du film
 	*/
 	public String getTitre()
 	{
@@ -42,7 +42,7 @@ public class Film
 	}
 	
 	/**
-	*
+	*@param titre le titre du film a
 	*
 	*/
 	public void setTitre(String titre)
@@ -52,7 +52,8 @@ public class Film
 	
 	/**
 	*
-	*
+	*Cette methode renvoie le nom du réalisateur du film
+	*@return le nom du realisateur
 	*/
 	public String getRealisateur()
 	{
@@ -70,14 +71,14 @@ public class Film
 	
 	/**
 	*
-	*
+	*@return la duree du film en minutes.
 	*/
 	public int getDuree()
 	{
 		return dureeMinutes;
 	}
 	
-		/**
+	/**
 	*
 	*
 	*/
@@ -88,7 +89,7 @@ public class Film
 	
 	/**
 	*
-	*
+	*@return l'annee de sortie du film
 	*/
 	public int getAnneeSortie()
 	{
@@ -115,7 +116,7 @@ public class Film
 	
 	/**
 	*
-	*
+	*Methode d'ajout d'un/e acteur/actrice au casting du film.
 	*/
 	public void addActeur(String act)
 	{
