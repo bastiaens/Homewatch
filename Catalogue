@@ -1,0 +1,45 @@
+
+public class Videotheque
+{
+	private Film[] catalogue;
+	
+	public Videotheque()
+	{
+		
+	}
+	
+	public void triCroissantParGenre(Film[] cat)
+	{
+		
+		
+	}
+	
+	public void triDecroissantParGenre(Film[] cat)
+	{
+		
+		
+	}
+	public void triCroissantParDateParution(Film[] cat)
+	{
+		
+		
+	}
+	
+	public void triDecroissantParDateParution(Film[] cat)
+	{
+		
+		
+	}
+	
+	public void triCroissantParTitre(Film[] cat)
+	{
+		
+		
+	}
+	
+	public void triDecroissantParTitre(Film[] cat)
+	{
+		
+		
+	}
+}
