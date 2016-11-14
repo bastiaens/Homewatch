@@ -8,8 +8,24 @@ public class Videotheque
 		
 	}
 	
-	public void triCroissantParGenre(Film[] cat)
+	public void swapPersonne(int val1, int val2)
 	{
+		int temp = 0;
+		
+		
+	}
+	
+	public void triCroissantParGenre()
+	{
+		boolean trie = false; // tableau entierement trie ou non.
+		for(int i = 0; i < catalogue.length; i++)
+		{
+			if(catalogue[i].getNomGenre() > catalogue[i++].genre)
+			{
+				//swap(catalogue[i],catalogue[i++])
+
+			}
+		}
 		
 		
 	}
