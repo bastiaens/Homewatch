@@ -1,7 +1,6 @@
-
 public class Genre 
 {
-	private String nomGenre;
+	private static String nomGenre;
 	
 	public enum Categorie
 	{
@@ -10,12 +9,12 @@ public class Genre
 	
 	public String getNomGenre()
 	{
-		return "";
+		return nomGenre;
 	}
 	
-	public void setNomGenre()
+	public static void setNomGenre(String genre)
 	{
-		
+		nomGenre = genre;
 	}
 	
 }
