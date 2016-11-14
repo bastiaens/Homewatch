@@ -1,6 +1,7 @@
 public class Film
 {
-	private String titreFilm, realisateur, compositeur,distinctions,genre;
+	private String titreFilm, realisateur, compositeur,distinctions;
+	Genre genre;
 	private int anneeSortie, dureeMinutes;
 	private Personne[] casting;		//rôles titres d'un film.
 	
@@ -14,7 +15,7 @@ public class Film
 		this.compositeur = "Hans Zimmer";
 		this.anneeSortie = 1994;
 		this.dureeMinutes = 89;
-		this.genre = "Animation 2D";
+	    Genre.setNomGenre("Animation 2D");
 	}
 	
 	/**
@@ -62,7 +63,7 @@ public class Film
 		{
 			if(casting[i] == casting[indice] && casting[i].getMetier().equalsIgnoreCase("realisateur"))
 			{
-				desc += "Prenom : " casting.getPrenom() + " Nom : " + casting.getNom() + " Profession :" + casting.getMetier(); 
+				desc += "Prenom : " + casting[i].getPrenom() + " Nom : " + casting[i].getNom() + " Profession :" + casting[i].getMetier(); 
 			}	
 		}
 		return realisateur;
@@ -118,14 +119,14 @@ public class Film
 	*Methode de recuperation d'un membre du casting.
 	*@param indice l'acteur dans la liste
 	*/
-	public Personne[] getActeurs(int indice)
+	public String getActeurs(int indice)
 	{
 		String desc = "";
-		for(int i = 0; i < casting; i++)
+		for(int i = 0; i < casting.length; i++)
 		{
 			if(casting[i] == casting[indice])
 			{
-				desc += "Prenom : " casting.getPrenom() + " Nom : " + casting.getNom() + " Profession :" + casting.getMetier();
+				desc += "Prenom : " + casting[i].getPrenom() + " Nom : " + casting[i].getNom() + " Profession :" + casting[i].getMetier();
 			}	
 		} 
 		return desc;
