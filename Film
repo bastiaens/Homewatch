@@ -2,7 +2,7 @@ public class Film
 {
 	private String titreFilm, realisateur, compositeur,distinctions,genre;
 	private int anneeSortie, dureeMinutes;
-	private String[] casting;		//rôles titres d'un film.
+	private Personne[] casting;		//rôles titres d'un film.
 	
 	/**
 	*Constructeur sans parametre d'objets de type Film. A utiliser pour tester par defaut.
@@ -55,8 +55,16 @@ public class Film
 	*Cette methode renvoie le nom du réalisateur du film
 	*@return le nom du realisateur
 	*/
-	public String getRealisateur()
+	public String getRealisateur(int indice)
 	{
+		String desc = "";
+		for(int i = 0; i < casting.length; i++)
+		{
+			if(casting[i] == casting[indice] && casting[i].getMetier().equalsIgnoreCase("realisateur"))
+			{
+				desc += "Prenom : " casting.getPrenom() + " Nom : " + casting.getNom() + " Profession :" + casting.getMetier(); 
+			}	
+		}
 		return realisateur;
 	}
 	
@@ -107,11 +115,20 @@ public class Film
 	
 	/**
 	*
-	*
+	*Methode de recuperation d'un membre du casting.
+	*@param indice l'acteur dans la liste
 	*/
-	public String[] getActeurs()
+	public Personne[] getActeurs(int indice)
 	{
-		return "";
+		String desc = "";
+		for(int i = 0; i < casting; i++)
+		{
+			if(casting[i] == casting[indice])
+			{
+				desc += "Prenom : " casting.getPrenom() + " Nom : " + casting.getNom() + " Profession :" + casting.getMetier();
+			}	
+		} 
+		return desc;
 	}
 	
 	/**
@@ -121,11 +138,11 @@ public class Film
 	public void addActeur(String act)
 	{
 		boolean ajout = false;
-		for(int i=0; i < acteursPrincipaux.length && ajout == false;i++)
+		for(int i=0; i < casting.length && ajout == false;i++)
 		{
-			if(acteursPrincipaux[i]== "")
+			if(casting[i]== null)
 			{
-				acteursPrincipaux[i] = act;
+				casting[i] = act;
 				ajout = true;
 			}
 		}
