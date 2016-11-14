@@ -1,0 +1,91 @@
+/**
+ * 
+ */
+
+/**
+ * @author Olivier
+ *
+ */
+public class Serie{
+	private String titre;
+	private Personne[] casting;
+	private int nbEpisodes;
+	private int nbSaisons;
+	private int durée;
+	private String description;
+	private Genre genre;
+	private int cote;
+	
+	public Serie(){
+		this.casting = new Personne[100];
+		
+	}
+	
+	public Serie(String tit, int nbEp, int nbSai, int dur,String desc,int cote, int staff, Genre genre){
+		this.casting = new Personne[staff];
+		this.titre = tit;
+		this.nbEpisodes = nbEp;
+		this.nbSaisons = nbSai;
+		this.durée = dur;
+		this.cote = cote;
+		this.genre = genre;
+	}
+	
+
+	public String getTitre() {
+		return titre;
+	}
+
+	public void setTitre(String titre) {
+		this.titre = titre;
+	}
+
+	public Personne[] getCasting() {
+		return casting;
+	}
+
+	public void setCasting(Personne[] casting) {
+		this.casting = casting;
+	}
+
+	public int getNbEpisodes() {
+		return nbEpisodes;
+	}
+
+	public void setNbEpisodes(int nbEpisodes) {
+		this.nbEpisodes = nbEpisodes;
+	}
+
+	public int getNbSaisons() {
+		return nbSaisons;
+	}
+
+	public void setNbSaisons(int nbSaisons) {
+		this.nbSaisons = nbSaisons;
+	}
+
+	public int getDurée() {
+		return durée;
+	}
+
+	public void setDurée(int durée) {
+		this.durée = durée;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public int getCote() {
+		return cote;
+	}
+
+	public void setCote(int cote) {
+		this.cote = cote;
+	}
+
+}
