@@ -135,7 +135,7 @@ public class Film
 	*
 	*Methode d'ajout d'un/e acteur/actrice au casting du film.
 	*/
-	public void addActeur(String act)
+	public void addActeur(Personne act)
 	{
 		boolean ajout = false;
 		for(int i=0; i < casting.length && ajout == false;i++)
