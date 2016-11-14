@@ -8,31 +8,50 @@ public class Videotheque
 		
 	}
 	
-	public void swapPersonne(int val1, int val2)
+	public void swapFilm(int val1, int val2)
 	{
-		int temp = 0;
+		Film temp = catalogue[val1];
+		catalogue[val1] = catalogue[val2];
+		catalogue[val2] = temp;
 		
 		
 	}
 	
+	/**
+	*
+	* Methode de tri de la videotheque, selon un classement croissant, par genre, de l'ensemble des films.
+	* (Bubble sort)
+	*/
 	public void triCroissantParGenre()
 	{
-		boolean trie = false; // tableau entierement trie ou non.
-		for(int i = 0; i < catalogue.length; i++)
+		/*boolean trie = false; // tableau entierement trie ou non.
+		for(int i = 0; i < catalogue.length && trie == false; i++)
 		{
-			if(catalogue[i].getNomGenre() > catalogue[i++].genre)
+			if(catalogue[i].getNomGenre() > catalogue[i++].getNomGenre())
 			{
-				//swap(catalogue[i],catalogue[i++])
+				swapFilm(catalogue[i],catalogue[i++]);
 
 			}
+			trie = true;
 		}
+		*/
 		
 		
 	}
 	
 	public void triDecroissantParGenre(Film[] cat)
 	{
-		
+		/*boolean trie = false; // tableau entierement trie ou non.
+		for(int i = 0; i < catalogue.length && trie == false; i++)
+		{
+			if(catalogue[i].getNomGenre() < catalogue[i++].getNomGenre())
+			{
+				swapFilm(catalogue[i],catalogue[i++]);
+
+			}
+			trie = true;
+		}
+		*/
 		
 	}
 	public void triCroissantParDateParution(Film[] cat)
@@ -47,15 +66,37 @@ public class Videotheque
 		
 	}
 	
-	public void triCroissantParTitre(Film[] cat)
+	public void triCroissantParTitre()
 	{
-		
+		/*boolean trie = false; // tableau entierement trie ou non.
+		for(int i = 0; i < catalogue.length && trie == false; i++)
+		{
+			if(catalogue[i].getTitre() > catalogue[i++].getTitre())
+			{
+				swapFilm(catalogue[i],catalogue[i++]);
+
+			}
+			trie = true;
+		}
+		*/
 		
 	}
 	
 	public void triDecroissantParTitre(Film[] cat)
 	{
-		
+		/*boolean trie = false; // tableau entierement trie ou non.
+		while(!trie)
+		{
+		for(int i = 0; i < catalogue.length && trie == false; i++)
+		{
+			if(catalogue[i].getTitre() < catalogue[i++].getTitre())
+			{
+				swapFilm(catalogue[i],catalogue[i++]);
+
+			}
+			trie = true;
+		}
+		*/
 		
 	}
 }
