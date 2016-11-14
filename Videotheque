@@ -119,4 +119,15 @@ public class Videotheque
 		*/
 		
 	}
+	
+	/*public Film rechercheLineaire()
+	{
+		for(int i = 0; i < catalogue.length; i++)
+		{
+			if(catalogue[i].)
+			{
+				
+			}
+		}
+	}*/
 }
