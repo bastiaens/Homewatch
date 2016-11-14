@@ -1,0 +1,68 @@
+/**
+ * 
+ */
+
+/**
+ * @author Olivier
+ *
+ */
+public class Personne extends Date {
+	private String nom;
+	private String prenom;
+	private Date ddn;
+	private String sexe;
+	private String metier;
+	
+	
+	public Personne(String nom, String prenom,String metier, String sexe){
+		super();
+		this.nom = nom;
+		this.prenom = prenom;
+		this.metier = metier;
+		this.sexe = sexe;
+		
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public String getPrenom() {
+		return prenom;
+	}
+
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+	
+
+	public String getSexe() {
+		return sexe;
+	}
+
+	public void setSexe(String sexe) {
+		this.sexe = sexe;
+	}
+
+	public String getMetier() {
+		return metier;
+	}
+
+	public void setMetier(String metier) {
+		this.metier = metier;
+	}
+
+	@Override
+	public String toString() {
+		return "Personne [nom=" + nom + ", prenom=" + prenom + ", ddn=" + ddn + ", sexe=" + sexe + ", metier=" + metier
+				+ "]";
+	}
+
+	
+	
+
+}
