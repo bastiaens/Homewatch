@@ -135,13 +135,13 @@ public class Videotheque
 		
 	}
 	
-	/*public Film rechercheLineaire()
+	/*public Film rechercheLineaire(String title)
 	{
 		for(int i = 0; i < catalogue.length; i++)
 		{
-			if(catalogue[i].)
+			if(catalogue[i].titre == title)
 			{
-				
+				return catalogue[i];
 			}
 		}
 	}*/
