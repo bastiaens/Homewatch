@@ -1,13 +1,24 @@
-
+/**
+*Classe representant un ensemble de films par utilisateurs.
+*
+*/
 public class Videotheque
 {
 	private Film[] catalogue;
 	
+	/**
+	*Constructeur d'objet de type Videotheque
+	*
+	*/
 	public Videotheque()
 	{
 		
 	}
-	
+	/**
+	*Methode d'interversion de deux cases d'un tableau.
+	*@param val1 val2 deux entiers representant des indices d'un tableau.
+	*
+	*/
 	public void swapFilm(int val1, int val2)
 	{
 		Film temp = catalogue[val1];
@@ -39,6 +50,10 @@ public class Videotheque
 		
 	}
 	
+	/**
+	*Methode de tri decroissant par order de genre.
+	*
+	*/
 	public void triDecroissantParGenre(Film[] cat)
 	{
 		/*boolean trie = false; // tableau entierement trie ou non.
