@@ -20,7 +20,7 @@ public class Film
 		this.compositeur = "Hans Zimmer";
 		this.anneeSortie = 1994;
 		this.dureeMinutes = 89;
-	    Genre.setNomGenre("Animation 2D");
+	    	genre.setGenre("Animation 2D");
 	}
 	
 	/**
@@ -28,13 +28,14 @@ public class Film
 	*@param ti comme titre du film, real comme realisateur du film, an comme annee de sortie du film, duree comme duree en minutes du film
 	*
 	*/
-	public Film(String ti,String real,String comp, int an, int duree)
+	public Film(String ti,String real,String comp, int an, int duree, String genre)
 	{
 		this.titreFilm = ti;
 		this.realisateur = real;
 		this.compositeur = comp;
 		this.anneeSortie = an;
 		this.dureeMinutes = duree;
+		genre.setGenre(genre);
 		
 	}
 	
