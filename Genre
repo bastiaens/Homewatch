@@ -1,6 +1,6 @@
 public class Genre 
 {
-	private String[] listeGenre = new String["ACTION","COMEDIE", "THRILLER","ANIMATION","DRAME"];	//ensemble des genres disponibles
+	private String[] listeGenre = new String[]{"ACTION","COMEDIE", "THRILLER","ANIMATION","DRAME"};	//ensemble des genres disponibles
 	private String genreDeLoeuvre;		//genre du film ou de la serie3.
 	
 	/*
