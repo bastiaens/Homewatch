@@ -1,34 +1,81 @@
 public class Genre 
 {
-	private static String[] nomGenre;
+	private String[] listeGenre = new String["ACTION","COMEDIE", "THRILLER","ANIMATION","DRAME"];	//ensemble des genres disponibles
+	private String genreDeLoeuvre;		//genre du film ou de la serie3.
 	
+	/*
+	*Constructeur par defaut d'objets de type Genre.
+	*
+	*/
 	public Genre()
 	{
-		nomGenre = new String["ACTION","COMEDIE", "THRILLER","ANIMATION","DRAME"];
+		this.genreDeLoeuvre = "Genre de l'oeuvre";	
+	}
+	/*
+	* Constructeur d'objets de type Genre.
+	*
+	*/
+	public Genre(String genre)
+	{
+		boolean genreExistant = false;
+		for(int i = 0; i < listeGenre.length; i++)
+		{
+			if(listeGenre[i] == genreDeLoeuvre)
+			{
+				this.genreDeLoeuvre = genre;
+				genreExistant = true;
+			}
+		}
+		if(!genreExistant)
+		{
+			addGenre(genre);
+		}
+		
 	}
 	
-	
-	public String getNomGenre()
+	/*
+	*Methode de recuperation du genre.
+	*
+	*
+	*/
+	public String getGenre()
 	{
 		return nomGenre;
 	}
 	
 	/*
 	*
-	*
+	*Methode d'ajout d'un nouveau genre
 	*/
-	public static void addNomGenre(String genre)
+	public void addNewGenre(String genre)
 	{
-		String[] newNomGenre = [nomGenre.length++];	//tableau d'une unité en +.
+		for(int i = 0; i < listeGenre.length; i++)
+		{
+			
+		}
+		String[] newNomGenre = [listeGenre.length++];	//tableau d'une unité en +.
 		
 			//copie des valeurs dans lenouveau tableau.
 		for(int i = 0; i < nomGenre.length;i++)
 		{
-			newNomGenre[i] = nomGenre[i];
+			newNomGenre[i] = listeGenre[i];
 			
 		}
-		newNomGenre[nomGenre.length - 1] = genre;
-		nomGenre = newNomGenre;
+		newNomGenre[listeGenre.length - 1] = genre;
+		listeGenre = newNomGenre;
+	}
+	
+	public void setGenre(String genre)
+	{
+		boolean genreExistant = false;
+		for(int i = 0; i < listeGenre.length; i++)
+		{
+			if(listeGenre[i] == genreDeLoeuvre)
+			{
+				this.genreDeLoeuvre = genre;
+				genreExistant = true;
+			}
+		}
 	}
 	
 	
