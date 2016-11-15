@@ -1,20 +1,35 @@
 public class Genre 
 {
-	private static String nomGenre;
+	private static String[] nomGenre;
 	
-	public enum Categorie
+	public Genre()
 	{
-		ACTION,COMEDIE, THRILLER,ANIMATION,DRAME
+		nomGenre = new String["ACTION","COMEDIE", "THRILLER","ANIMATION","DRAME"];
 	}
+	
 	
 	public String getNomGenre()
 	{
 		return nomGenre;
 	}
 	
-	public static void setNomGenre(String genre)
+	/*
+	*
+	*
+	*/
+	public static void addNomGenre(String genre)
 	{
-		nomGenre = genre;
+		String[] newNomGenre = [nomGenre.length++];	//tableau d'une unité en +.
+		
+			//copie des valeurs dans lenouveau tableau.
+		for(int i = 0; i < nomGenre.length;i++)
+		{
+			newNomGenre[i] = nomGenre[i];
+			
+		}
+		newNomGenre[nomGenre.length - 1] = genre;
+		nomGenre = newNomGenre;
 	}
+	
 	
 }
