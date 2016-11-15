@@ -1,7 +1,7 @@
 public class Genre 
 {
-	private String[] listeGenre = new String[]{"ACTION","COMEDIE", "THRILLER","ANIMATION","DRAME"};	//ensemble des genres disponibles
-	private String genreDeLoeuvre;		//genre du film ou de la serie3.
+	private String[] listeGenre = new String []{"ACTION","COMEDIE", "THRILLER","ANIMATION","DRAME"};	//ensemble des genres disponibles
+	private String genreDeLoeuvre;		//genre du film ou de la serie.
 	
 	/*
 	*Constructeur par defaut d'objets de type Genre.
@@ -28,7 +28,7 @@ public class Genre
 		}
 		if(!genreExistant)
 		{
-			addGenre(genre);
+			addNewGenre(genre);
 		}
 		
 	}
@@ -40,7 +40,7 @@ public class Genre
 	*/
 	public String getGenre()
 	{
-		return nomGenre;
+		return genreDeLoeuvre;
 	}
 	
 	/*
@@ -49,14 +49,12 @@ public class Genre
 	*/
 	public void addNewGenre(String genre)
 	{
-		for(int i = 0; i < listeGenre.length; i++)
-		{
-			
-		}
-		String[] newNomGenre = [listeGenre.length++];	//tableau d'une unité en +.
+		int tailleNouveauTableau = listeGenre.length + 1;// variable de travail
+		
+		String[] newNomGenre = new String[tailleNouveauTableau];	//tableau d'une unité en +.
 		
 			//copie des valeurs dans lenouveau tableau.
-		for(int i = 0; i < nomGenre.length;i++)
+		for(int i = 0; i < listeGenre.length;i++)
 		{
 			newNomGenre[i] = listeGenre[i];
 			
