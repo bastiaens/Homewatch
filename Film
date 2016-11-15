@@ -137,6 +137,16 @@ public class Film
 		return desc;
 	}
 	
+	/*
+	*Methode de recuperation du genre d'un film.
+	* @return Ke genre du film.
+	*
+	*/
+	public Genre getGenre()
+	{
+		return genre;
+	}
+	
 	/**
 	*
 	*Methode d'ajout d'un/e acteur/actrice au casting du film.
