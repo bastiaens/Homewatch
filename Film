@@ -75,7 +75,8 @@ public class Film
 	}
 	
 	/**
-	*
+	*Methode d'insertion de realisateur.
+	*@param real le réalisateur à ajouter.
 	*
 	*/
 	public void setRealisateur(String real)
@@ -84,7 +85,7 @@ public class Film
 	}
 	
 	/**
-	*
+	* Methode de recuperation de la duree d'un film.
 	*@return la duree du film en minutes.
 	*/
 	public int getDuree()
@@ -94,7 +95,7 @@ public class Film
 	
 	/**
 	*
-	*
+	*@param minutes La durée en minutes
 	*/
 	public void setDuree(int minutes)
 	{
@@ -111,8 +112,8 @@ public class Film
 	}
 	
 	/**
-	*
-	*
+	* Methode d'ajout de l'année de sortie d'un film.
+	*@param anSortie La date de sortie du film à rajouter.
 	*/
 	public void setAnneeSortie(int anSortie)
 	{
@@ -139,7 +140,7 @@ public class Film
 	
 	/*
 	*Methode de recuperation du genre d'un film.
-	* @return Ke genre du film.
+	* @return Le genre du film.
 	*
 	*/
 	public Genre getGenre()
