@@ -1,65 +1,111 @@
 /**
- * 
+ *Une classe Personne dans le cadre du projet java : Gestionnaire de films
+ *Etudiant: Bastiaens Olivier/ Groupe n°19 / Classe 2TL2
  */
 
 /**
- * @author Olivier
- *
+ * <b>Personne est la classe représentant les acteurs, réalisateurs, scénaristes du film.</b>
+ * <p>
+ * Un Personne est caractérisé par les informations suivantes :
+ * <ul>
+ * 	<li>Un identifiant unique attribué définitivement.</li>
+ * 	<li>Un nom</li>
+ * 	<li>Un prenom</li>
+ * 	<li>Une date</li>
+ * 	<li>Un metier</li>
+ * </ul>
+ * </p>
+ * 
+ * @author Olivier Bastiaens
  */
 public class Personne extends Date {
 	private String nom;
 	private String prenom;
-	private Date ddn;
-	private String sexe;
 	private String metier;
 	
+	/**
+	 * Constructeur Personne sans arguments
+	 * @param: aucun 
+	 */
 	
-	public Personne(String nom, String prenom,String metier, String sexe){
-		super();
+	public Personne(){
+		
+	}
+	/**
+	Constructeur Personne.
+    * <p>
+    * la construction d'un objet Personne. 
+    * </p>
+    * @param nom, prenom, metier, jour, mois, annee
+    * 
+    */
+	
+	public Personne(String nom, String prenom,String metier, int j, int m, int a){
+		super(j,m,a);
 		this.nom = nom;
 		this.prenom = prenom;
 		this.metier = metier;
-		this.sexe = sexe;
 		
 	}
+	
+	/**
+	 * @return String, le nom de la personne
+	 */
 
 	public String getNom() {
 		return nom;
 	}
+	
+	/**
+	 * Met à jour le nom de la personne
+	 * @param nom
+	 */
 
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
+	
+	/**
+	 * @return String, le prenom de la personne
+	 */
 
 	public String getPrenom() {
 		return prenom;
 	}
+	
+	/**
+	 * Met à jour le prenom de la personne
+	 * @param prenom
+	 */
 
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
 	
-
-	public String getSexe() {
-		return sexe;
-	}
-
-	public void setSexe(String sexe) {
-		this.sexe = sexe;
-	}
+	/**
+	 * @return String, le metier de la personne
+	 */
 
 	public String getMetier() {
 		return metier;
 	}
+	
+	/**
+	 * Met à jour le metier de la personne
+	 * @param metier
+	 */
 
 	public void setMetier(String metier) {
 		this.metier = metier;
 	}
+	
+	/**
+	 * @return String, une chaine de caractère  qui "représente textuellement" cet objet.
+	 */
 
 	@Override
 	public String toString() {
-		return "Personne [nom=" + nom + ", prenom=" + prenom + ", ddn=" + ddn + ", sexe=" + sexe + ", metier=" + metier
-				+ "]";
+		return "Personne:" + this.nom + "\n" + this.prenom + "\n" + this.metier + "\n" + super.toString();
 	}
 
 	
