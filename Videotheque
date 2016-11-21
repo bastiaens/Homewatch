@@ -1,10 +1,13 @@
+import java.util.ArrayList;
+
 /**
 *Classe representant un ensemble de films par utilisateurs.
 *
 */
-public class Videotheque
+public class Videotheque<Film>
 {
-	private Film[] catalogue;
+	//private Film[] catalogue;
+	private ArrayList<Film> catalogue;
 	
 	/**
 	*Constructeur d'objet de type Videotheque
@@ -21,9 +24,12 @@ public class Videotheque
 	*/
 	public void swapFilm(int val1, int val2)
 	{
-		Film temp = catalogue[val1];
-		catalogue[val1] = catalogue[val2];
-		catalogue[val2] = temp;
+		Film temp = catalogue.get(val2); //Sauvegarde du film a ecraser.
+		Film film1 = catalogue.get(val1);
+		Film film2 = catalogue.get(val2); //Le film a ecraser.
+		
+		film2 = film1;
+		film1 = temp;
 		
 		
 	}
@@ -54,14 +60,14 @@ public class Videotheque
 	*Methode de tri decroissant par order de genre.
 	*
 	*/
-	public void triDecroissantParGenre(Film[] cat)
+	public void triDecroissantParGenre(ArrayList<Film> al,Genre genre)
 	{
 		/*boolean trie = false; // tableau entierement trie ou non.
-		for(int i = 0; i < catalogue.length && trie == false; i++)
+		for(Film f : catalogue)
 		{
-			if(catalogue[i].getNomGenre() < catalogue[i++].getNomGenre())
+			if(catalogue.get(i).getNomGenre() < catalogue.get(i++).getNomGenre())
 			{
-				swapFilm(catalogue[i],catalogue[i++]);
+				swapFilm(catalogue.get(i),catalogue.get(i++));
 
 			}
 			trie = true;
@@ -69,7 +75,7 @@ public class Videotheque
 		*/
 		
 	}
-	public void triCroissantParDateParution(Film[] cat)
+	public void triCroissantParDateParution(ArrayList<Film> al)
 	{
 		/*boolean trie = false; // tableau entierement trie ou non.
 		for(int i = 0; i < catalogue.length && trie == false; i++)
@@ -85,7 +91,7 @@ public class Videotheque
 		
 	}
 	
-	public void triDecroissantParDateParution(Film[] cat)
+	public void triDecroissantParDateParution(ArrayList<Film> al)
 	{
 		/*boolean trie = false; // tableau entierement trie ou non.
 		for(int i = 0; i < catalogue.length && trie == false; i++)
@@ -101,7 +107,7 @@ public class Videotheque
 		
 	}
 	
-	public void triCroissantParTitre()
+	public void triCroissantParTitre(ArrayList<Film> al)
 	{
 		/*boolean trie = false; // tableau entierement trie ou non.
 		for(int i = 0; i < catalogue.length && trie == false; i++)
@@ -117,7 +123,7 @@ public class Videotheque
 		
 	}
 	
-	public void triDecroissantParTitre(Film[] cat)
+	public void triDecroissantParTitre(ArrayList<Film> al)
 	{
 		/*boolean trie = false; // tableau entierement trie ou non.
 		while(!trie)
@@ -137,9 +143,9 @@ public class Videotheque
 	
 	/*public Film rechercheLineaire(String title)
 	{
-		for(int i = 0; i < catalogue.length; i++)
+		for(Film f : catalogue)
 		{
-			if(catalogue[i].titre == title)
+			if(catalogue.get(i).titre == title)
 			{
 				return catalogue[i];
 			}
