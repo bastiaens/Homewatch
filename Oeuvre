@@ -158,6 +158,12 @@ public class Oeuvre<Personne>
 	public void ajoutActeur(Personne act)
 	{
 		boolean dejaAjoute = false;
+		
+		if(casting.isEmpty())
+		{
+			casting.add(act);
+			
+		}
 		for(Personne p : casting)
 		{
 			if(p.getPrenom() == act.getPrenom() && p.getNom() == act.getNom())
@@ -177,6 +183,11 @@ public class Oeuvre<Personne>
 	 */
 	public Personne retraitActeur(Personne act)
 	{
+		if(casting.isEmpty())
+		{
+			return null;
+			
+		}
 		for(Personne p : casting)
 		{
 			
@@ -191,7 +202,7 @@ public class Oeuvre<Personne>
 		
 	}
 	/**
-	 * 
+	 * Methode de vidage du casting d'un film.
 	 */
 	public void videCasting()
 	{
