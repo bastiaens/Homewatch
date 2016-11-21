@@ -8,7 +8,8 @@ public class Oeuvre
 	private String titreOeuvre, realisateur, compositeur,distinctions;
 	Genre genre;
 	private int anneeSortie, dureeMinutes;
-	private Personne[] casting;		//rôles titres d'un Oeuvre.
+	// private Personne[] casting;		//rôles titres d'une oeuvre.
+	private Arraylist<Personne> casting = new Arraylist<>(); // roles titre d'une oeuvre.
 	
 	/**
 	*Constructeur sans parametre d'objets de type Oeuvre. A utiliser pour tester par defaut.
@@ -126,14 +127,14 @@ public class Oeuvre
 	*Methode de recuperation d'un membre du casting.
 	*@param indice l'acteur dans la liste
 	*/
-	public String getActeurs(int indice)
+	public String getActeurs(Personne act)
 	{
 		String desc = "";
-		for(int i = 0; i < casting.length; i++)
+		for(Personne p : casting)
 		{
-			if(casting[i] == casting[indice])
+			if(casting.contains(act))
 			{
-				desc += "Prenom : " + casting[i].getPrenom() + " Nom : " + casting[i].getNom() + " Profession :" + casting[i].getMetier();
+				desc += "Prenom : " + casting.get(act).getPrenom() + " Nom : " + castingget(i).getNom() + " Profession :" + casting(i).getMetier();
 			}	
 		} 
 		return desc;
@@ -155,14 +156,27 @@ public class Oeuvre
 	*/
 	public void addActeur(Personne act)
 	{
-		boolean ajout = false;
-		for(int i=0; i < casting.length && ajout == false;i++)
+		boolean dejaAjoute = false;
+		for(Personne p : casting)
 		{
-			if(casting[i]== null)
+			if(casting.get(i) == act)
 			{
-				casting[i] = act;
-				ajout = true;
+				dejaAjoute = true;
 			}
 		}
+		if(!dejaAjoute)
+		{
+			casting.add(act);
+		}
+	}
+	
+	public Personne retraitActeur(Personne act)
+	{
+		if(getActeurs != "")
+		{
+			return casting.remove(act);
+		}
+		System.out.println("L'element ne se trouve pas dans la liste.");
+		return null;
 	}
 }
