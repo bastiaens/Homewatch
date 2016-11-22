@@ -1,218 +1,163 @@
 import java.util.ArrayList;
+import java.util.Iterator;		// Utiliser un itérateur? A méditer....
+
 /**
-*@author JLM
-* Classe representant tout type de Oeuvre dans la videotheque.
+*Classe representant un ensemble de Oeuvres par utilisateurs.
 *
 */
-public class Oeuvre
+public class Videotheque<Oeuvre>
 {
-	private String titreOeuvre, realisateur, compositeur,distinctions;
-	private Genre genre;
-	private int anneeSortie, dureeMinutes;
-	// private Personne[] casting;		//rôles titres d'une oeuvre.
-	private ArrayList<Personne> casting = new ArrayList<>(); // roles titre d'une oeuvre.
+	
+	private ArrayList<Oeuvre> catalogue;
 	
 	/**
-	*Constructeur sans parametre d'objets de type Oeuvre. A utiliser pour tester par defaut.
-	*/
-	public Oeuvre()
-	{
-		this.titreOeuvre = "The Lion King";
-		this.realisateur = "Jsais pas, mais c'est Disney";
-		this.compositeur = "Hans Zimmer";
-		this.anneeSortie = 1994;
-		this.dureeMinutes = 89;
-	    	genre.setGenre("Animation 2D");
-	}
-	
-	/**
-	*Constructeur d'objets de type Oeuvre.
-	*@param ti comme titre du Oeuvre, real comme realisateur du Oeuvre, an comme annee de sortie du Oeuvre, duree comme duree en minutes du Oeuvre
+	*Constructeur d'objet de type Videotheque
 	*
 	*/
-	public Oeuvre(String ti,String real,String comp, int an, int duree, String gen)
+	public Videotheque()
 	{
-		this.titreOeuvre = ti;
-		this.realisateur = real;
-		this.compositeur = comp;
-		this.anneeSortie = an;
-		this.dureeMinutes = duree;
-		genre.setGenre(gen);
+		
+	}
+	/**
+	*Methode d'interversion de deux cases d'un tableau.
+	*@param val1 val2 deux entiers representant des indices d'un tableau.
+	*
+	*/
+	public void swapOeuvre(int val1, int val2)
+	{
+		Oeuvre temp = catalogue.get(val2); //Sauvegarde du Oeuvre a ecraser.
+		Oeuvre oeuvre1 = catalogue.get(val1);
+		Oeuvre oeuvre2 = catalogue.get(val2); //Le Oeuvre a ecraser.
+		
+		oeuvre2 = oeuvre1;
+		oeuvre1 = temp;
+		
 		
 	}
 	
 	/**
-	*Cette methode renvoie le titre du Oeuvre sous forme de chaine de caracteres
-	*@return Le titre du Oeuvre
-	*/
-	public String getTitre()
-	{
-		return titreOeuvre;
-	}
-	
-	/**
-	*@param titre le titre du Oeuvre a
 	*
+	* Methode de tri de la videotheque, selon un classement croissant, par genre, de l'ensemble des Oeuvres.
+	* (Bubble sort)
 	*/
-	public void setTitre(String titre)
+	public void triCroissantParGenre()
 	{
-			this.titreOeuvre = titre;
-	}
-	
-	/**
-	*
-	*Cette methode renvoie le nom du réalisateur du Oeuvre
-	*@return le nom du realisateur
-	*/
-	public String getRealisateur(int indice)
-	{
-		String desc = "";
-		for(Personne p : casting)
+		boolean trie = false; // tableau entierement trie ou non.
+		for(Oeuvre f : catalogue)
 		{
-			if( p.getMetier() == "realisateur")
+			/*if(f.getGenre() > catalogue.get.getNomGenre())
 			{
-				desc += "Prenom : " + p.getPrenom() + " Nom : " + casting.get(indice).getNom() + " Profession :" + casting.get(indice).getMetier();
-			}	
+				swapOeuvre(catalogue[i],catalogue[i++]);
+
+			}*/
+			trie = true;
 		}
-		return realisateur;
-	}
-	
-	/**
-	*Methode d'insertion de realisateur.
-	*@param real le réalisateur à ajouter.
-	*
-	*/
-	public void setRealisateur(String real)
-	{
-		this.realisateur = real;
-	}
-	
-	/**
-	* Methode de recuperation de la duree d'un Oeuvre.
-	*@return la duree du Oeuvre en minutes.
-	*/
-	public int getDuree()
-	{
-		return dureeMinutes;
-	}
-	
-	/**
-	*
-	*@param minutes La durée en minutes
-	*/
-	public void setDuree(int minutes)
-	{
-		this.dureeMinutes = minutes;
-	}
-	
-	/**
-	*
-	*@return l'annee de sortie du Oeuvre
-	*/
-	public int getAnneeSortie()
-	{
-		return anneeSortie;
-	}
-	
-	/**
-	* Methode d'ajout de l'année de sortie d'un Oeuvre.
-	*@param anSortie La date de sortie du Oeuvre à rajouter.
-	*/
-	public void setAnneeSortie(int anSortie)
-	{
-		this.anneeSortie = anSortie;
-	}
-	
-	/**
-	*
-	*Methode de recuperation d'un membre du casting.
-	*@param indice l'acteur dans la liste
-	*/
-	public String getActeurs(int indice)
-	{
-		String desc = "";
-		for(Personne p : casting)
-		{
-			if(casting.contains(p))
-			{
-				desc += "Prenom : " + casting.get(indice).getPrenom() + " Nom : " + casting.get(indice).getNom() + " Profession :" + casting.get(indice).getMetier();			}	
-		} 
-		return desc;
-	}
-	
-	/*
-	*Methode de recuperation du genre d'un Oeuvre.
-	* @return Le genre du Oeuvre.
-	*
-	*/
-	public Genre getGenre()
-	{
-		return genre;
-	}
-	
-	/**
-	*
-	*Methode d'ajout d'un/e acteur/actrice au casting du Oeuvre.
-	*/
-	public void ajoutActeur(Personne act)
-	{
-		boolean dejaAjoute = false;
 		
-		if(casting.isEmpty())
+		
+		
+	}
+	
+	/**
+	*Methode de tri decroissant par order de genre.
+	*
+	*/
+	public void triDecroissantParGenre(ArrayList<Oeuvre> al,Genre genre)
+	{
+		/*boolean trie = false; // tableau entierement trie ou non.
+		for(Oeuvre f : catalogue)
 		{
-			casting.add(act);
-			
-		}
-		for(Personne p : casting)
-		{
-			if(p.getPrenom() == act.getPrenom() && p.getNom() == act.getNom())
+			if(catalogue.get(i).getNomGenre() < catalogue.get(i++).getNomGenre())
 			{
-				dejaAjoute = true;
+				swapOeuvre(catalogue.get(i),catalogue.get(i++));
+
 			}
+			trie = true;
 		}
-		if(!dejaAjoute)
-		{
-			casting.add(act);
-		}
+		*/
+		
 	}
+	public void triCroissantParDateParution(ArrayList<Oeuvre> al)
+	{
+		/*boolean trie = false; // tableau entierement trie ou non.
+		for(int i = 0; i < catalogue.length && trie == false; i++)
+		{
+			if(catalogue[i].getAnneeSortie() > catalogue[i++].getAnneeSortie())
+			{
+				swapOeuvre(catalogue[i],catalogue[i++]);
+
+			}
+			trie = true;
+		}
+		*/
+		
+	}
+	
+	public void triDecroissantParDateParution(ArrayList<Oeuvre> al)
+	{
+		/*boolean trie = false; // tableau entierement trie ou non.
+		for(int i = 0; i < catalogue.length && trie == false; i++)
+		{
+			if(catalogue[i].getAnneeSortie() < catalogue[i++].getAnneeSortie())
+			{
+				swapOeuvre(catalogue[i],catalogue[i++]);
+
+			}
+			trie = true;
+		}
+		*/
+		
+	}
+	
+	public void triCroissantParTitre(ArrayList<Oeuvre> al)
+	{
+		/*boolean trie = false; // tableau entierement trie ou non.
+		for(int i = 0; i < catalogue.length && trie == false; i++)
+		{
+			if(catalogue[i].getTitre() > catalogue[i++].getTitre())
+			{
+				swapOeuvre(catalogue[i],catalogue[i++]);
+
+			}
+			trie = true;
+		}
+		*/
+		
+	}
+	
+	public void triDecroissantParTitre(ArrayList<Oeuvre> al)
+	{
+		/*boolean trie = false; // tableau entierement trie ou non.
+		while(!trie)
+		{
+		for(int i = 0; i < catalogue.length && trie == false; i++)
+		{
+			if(catalogue[i].getTitre() < catalogue[i++].getTitre())
+			{
+				swapOeuvre(catalogue[i],catalogue[i++]);
+
+			}
+			trie = true;
+		}
+		*/
+		
+	}
+	
 	/**
 	 * 
-	 * @param act
+	 * @param title
 	 * @return
 	 */
-	public Personne retraitActeur(Personne act)
+	public Oeuvre rechercheLineaireParTitre(String title)
 	{
-		if(casting.isEmpty())
-		{
-			return null;
-			
-		}
-		for(Personne p : casting)
-		{
-			
-			if(p.getPrenom() == act.getPrenom() && p.getNom() == act.getNom())
-			{
-				return casting.remove(casting.indexOf(act));
-			}
-			
-		}
-		System.out.println("L'element ne se trouve pas dans la liste.");
-		return null;
 		
-	}
-	/**
-	 * Methode de vidage du casting d'un film.
-	 */
-	public void videCasting()
-	{
-		casting.clear();
-	}
-	/*
-	*Methode de verification du contenu d'une liste de casting
-	*@return true si le casting est vide, false sinon.
-	*/
-	public boolean estVide()
-	{
-		return casting.isEmpty();
+		
+		for(Oeuvre f : catalogue)
+		{
+				
+			if(f.getTitre() == title)		//Ze problem.
+			{
+				return f;
+			}
+		}
 	}
 }
