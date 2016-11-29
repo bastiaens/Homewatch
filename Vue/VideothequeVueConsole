@@ -8,6 +8,11 @@ import java.util.Scanner;
 
 //import homewatch.controleur.VideothequeController;
 //import homewatch.model.Videotheque;
+/**
+ * 
+ * @author JLM
+ *
+ */
 public class VideothequeVueConsole extends VideothequeVue implements Observer
 {
 	Scanner sc;
@@ -56,6 +61,15 @@ public class VideothequeVueConsole extends VideothequeVue implements Observer
 			}
 			
 		}
+		
+	}
+	
+	/**
+	 * 
+	 */
+	public void affiche()
+	{
+		
 		
 	}
 }
