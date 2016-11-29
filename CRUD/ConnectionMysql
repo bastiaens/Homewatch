@@ -17,7 +17,7 @@ package Videotheque_modele;
 		            connection = DriverManager.getConnection(DATABASE_URL, "root", "Maniak12");
 
 		        } catch (SQLException ex) {
-		            System.out.println("The following error has occured: " + ex.getMessage());
+		            System.out.println("Erreur : " + ex.getMessage());
 		        }
 		    }
 
@@ -29,7 +29,7 @@ package Videotheque_modele;
 		            connection.close();
 		        } // end try                                               
 		        catch (Exception ex) {
-		            System.out.println("The following error has occured: " + ex.getMessage());
+		            System.out.println("Erreur : " + ex.getMessage());
 		        } // end catch  
 		    }
 
@@ -44,7 +44,7 @@ package Videotheque_modele;
 
 		        } 
 		        catch (SQLException ex) {
-		            System.out.println("The following error has occured: " + ex.getMessage());
+		            System.out.println("Erreur : " + ex.getMessage());
 		        }                                                    
 
 		        return resultSet;
@@ -57,7 +57,7 @@ package Videotheque_modele;
 		            statement.executeUpdate(sql_stmt);
 		        } 
 		        catch (SQLException ex) {
-		            System.out.println("The following error has occured: " + ex.getMessage());
+		            System.out.println("Erreur : " + ex.getMessage());
 		        }
 		    }
 		}
