@@ -44,7 +44,11 @@ public class VideothequeVueConsole extends VideothequeVue implements Observer
 				try
 				{
 					String s = sc.next();
-					if(s.length !=)
+					if(s.length != 1)
+					{
+						affiche("Format non valide.");
+						
+					}
 					
 				}
 				catch(InputMismatchException e)
@@ -67,9 +71,9 @@ public class VideothequeVueConsole extends VideothequeVue implements Observer
 	/**
 	 * 
 	 */
-	public void affiche()
+	public void affiche(String s)
 	{
-		
+		System.out.println(s);
 		
 	}
 }
