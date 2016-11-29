@@ -1,0 +1,31 @@
+package Videotheque_modele;
+
+import java.sql.SQLException;
+import java.util.Scanner;
+
+public class Creer{
+
+    Creer() throws SQLException {
+        Scanner userInput = new Scanner(System.in);
+        System.out.println("Vous avez choissi l'option 1: Ajout d'un film: ");
+        String idFilm;
+        System.out.println("Entrez l'id du Film:");
+        idFilm = userInput.next();
+
+        String titre;
+        System.out.println("Entrez un titre: ");
+        titre = userInput.next();
+
+        String description;
+        System.out.println("Entrez le résumer du film ");
+        description = userInput.next();
+       
+        ConnectionMysql dbUtilities = new ConnectionMysql();
+        
+        String sql_stmt = "INSERT INTO Film (idFilm,titre,description) VALUES ('" + idFilm + "','" + titre + "','" + description + "')";
+        
+        dbUtilities.ExecuteSQLStatement(sql_stmt);
+        CodeBlogConsoleCRUD.DisplayMenu();
+    }
+}
+
