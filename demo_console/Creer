@@ -11,7 +11,7 @@ public class Creer{
 
     Creer() throws SQLException {
         Scanner userInput = new Scanner(System.in);
-        System.out.println("Vous avez choissi l'option 1: Ajout d'un film: ");
+        System.out.println("Vous avez choisi l'option 1: Ajout d'un film: ");
         String idFilm;
         System.out.println("Entrez l'id du Film:");
         idFilm = userInput.next();
