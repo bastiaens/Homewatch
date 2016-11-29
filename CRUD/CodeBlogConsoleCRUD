@@ -12,26 +12,25 @@ public class CodeBlogConsoleCRUD {
 
 	    public static void DisplayMenu() throws SQLException {
 	        Scanner userInput = new Scanner(System.in);
-	        String READ_MENU;
+	        String MENU;
 
 	        // Display menu graphics
 	        System.out.println("*****************************************");
-	        System.out.println("|   CODEBLOG CRUD JAVA EXAMPLE          |");
+	        System.out.println("| Modifier la base de donnée"             );
 	        System.out.println("*****************************************");
 	        System.out.println("| Options:                              |");
-	        System.out.println("|        1. Create Database Records     |");
-	        System.out.println("|        2. Read Database Records       |");
-	        System.out.println("|        3. Update Database Records     |");
-	        System.out.println("|        4. Delete Database Records     |");
-	        System.out.println("|        5. Exit                        |");
+	        System.out.println("|        1. Ajouter un film     |");
+	        System.out.println("|        2. Recherche film       |");
+	        System.out.println("|        3. Mettre à  jour un film     |");
+	        System.out.println("|        4. Supprimer un film    |");
+	        System.out.println("|        5. Quitter                        |");
 	        System.out.println("*****************************************");
+	        System.out.print("Choississez une option: ");
 
-	        System.out.print("Select option: ");
-
-	        READ_MENU = userInput.next();
+	        MENU = userInput.next();
 
 	//display menu based on user selection
-	        switch (READ_MENU) {
+	        switch (MENU) {
 	            case "1":
 	                Create create = new Create();
 	                break;
@@ -42,14 +41,13 @@ public class CodeBlogConsoleCRUD {
 	                Update update = new Update();
 	                break;
 	            case "4":
-	                Date delete = new Delete();
-	                break;
-	            case "5":
-	                System.exit(0);
+	                Delete delete = new Delete();
 	                break;
 	            default:
-	                System.out.println("Invalid selection");
+	                System.out.println("vous avez quitter l'application");
+	                
 	                break; 
 	        }
 	    }
 	}
+
