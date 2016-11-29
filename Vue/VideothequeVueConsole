@@ -1,0 +1,61 @@
+package homewatch;
+
+import java.util.InputMismatchException;
+import java.util.Observer;
+import java.util.Observable;
+import java.io.*;
+import java.util.Scanner;
+
+//import homewatch.controleur.VideothequeController;
+//import homewatch.model.Videotheque;
+public class VideothequeVueConsole extends VideothequeVue implements Observer
+{
+	Scanner sc;
+	
+	public VideothequeVueConsole(Videotheque model, VideothequeController controleur)
+	{
+		super(model,controleur);
+		update(null,null);
+		// sc = new Scanner(System.in);
+		//new Thread(new ReadInput()).start();
+		
+	}
+	
+	@Override
+	public void update(Observable o, Object arg)
+	{
+		System.out.println(model);
+		
+		
+	}
+	
+	//Nested class
+	private class ReadInput implements Runnable
+	{
+		public void run()
+		{
+			while(true)
+			{
+				try
+				{
+					String s = sc.next();
+					if(s.length !=)
+					
+				}
+				catch(InputMismatchException e)
+				{
+					e.printStackTrace();
+					
+				}
+				catch(IOException e)
+				{
+					System.err.println(e.getMessage());
+					
+				}
+				
+			}
+			
+		}
+		
+	}
+}
