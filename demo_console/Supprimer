@@ -1,0 +1,85 @@
+package Videotheque_modele;
+
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.Scanner;
+/**
+ * 
+ * @author Olivier
+ *
+ */
+
+
+public class Supprimer {
+
+    Supprimer() throws SQLException {
+    	// demande à l'id du film a supprimer
+        Scanner userInput = new Scanner(System.in);
+        System.out.println("vous avez choissi 4: supprimer un film: ");
+
+        String idFilm;
+        System.out.println("Entrez l'id du film à supprimer.");
+        idFilm = userInput.next();
+
+        //recherche de les données à supprimer
+        DisplayRecord(idFilm);
+
+        String confirm_Supprimer;
+        System.out.println("Entrez O, pour confirmer la suppression:");
+        confirm_Supprimer = userInput.next();
+        
+        //Demande confirmation, pour suppprimer le film
+        String entreeUser = "O";
+        if (entreeUser.toLowerCase().equals(confirm_Supprimer)) {
+        	ConnectionMysql dbUtilities = new ConnectionMysql();
+
+            String sql_stmt = "Supprimer FROM Film WHERE idFilm = " + idFilm;
+
+            dbUtilities.ExecuteSQLStatement(sql_stmt);
+            
+            System.out.println("le Film a bien été supprimé.");
+        }
+
+        Console.AfficherMenu();
+    }
+
+    private void DisplayRecord(String idFilm) throws SQLException {
+        try {
+        	ConnectionMysql dbUtilities = new ConnectionMysql();
+
+            String sql_stmt = "SELECT idFilm, titre, description FROM Film WHERE idFilm = " + idFilm;
+            ResultSet resultSet = dbUtilities.ReadRecords(sql_stmt);
+
+            //le traitement du resultats 
+            if (resultSet.next()) {
+
+                ResultSetMetaData metaData = resultSet.getMetaData();
+                int numberOfColumns = metaData.getColumnCount();
+                System.out.print("Liste des données de la base de données");
+
+                for (int i = 1; i <= numberOfColumns; i++) {
+                    System.out.printf("%-8st", metaData.getColumnName(i));
+                }
+                System.out.println();
+
+                do {
+                    for (int i = 1; i <= numberOfColumns; i++) {
+                        System.out.printf("%-8st", resultSet.getObject(i));
+                    }
+                    System.out.println();
+                } while (resultSet.next());
+
+                System.out.println();
+
+            } else {
+                System.out.println("film pas trouver");
+            }
+
+            //Fermeture de la base de données 
+            dbUtilities.DisconnectFromDB();
+        } catch (SQLException ex) {
+            System.out.println("Exeption:" + ex.getMessage());
+        } 
+    }
+}
