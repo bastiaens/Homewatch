@@ -1,0 +1,19 @@
+public class VideothequeMVC 
+{
+   public VideothequeMVC()
+   {
+   
+   }
+   
+   public static void main(String[] args)
+   {
+      javax.swing.SwingUtilies.invokeLater(new Runnable()
+      {
+        public void run()
+        {
+          new VideothequeMVC();
+        }
+      });
+      
+   }
+}
