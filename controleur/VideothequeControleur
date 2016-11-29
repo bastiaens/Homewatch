@@ -1,0 +1,17 @@
+import homewatch.model.Videotheque;
+import java.vue.VideothequeVue;
+
+public class VideothequeControleur
+{
+  Videotheque modele;
+  VideothequeVue vue;
+  public VideothequeControleur(Videotheque model)
+  {
+    this.modele = model;
+  }
+  
+  public void addView(VideothequeVue view)
+  {
+    this.vue = view;
+  }
+}
