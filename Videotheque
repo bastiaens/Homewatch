@@ -1,9 +1,10 @@
+package homewatch;
 import java.util.ArrayList;
 import java.util.Iterator;		// Utiliser un itérateur? A méditer....
 
 /**
 *Classe representant un ensemble de Oeuvres par utilisateurs.
-*
+*@author Jean Luc Muteba
 */
 public class Videotheque<Oeuvre>
 {
@@ -11,11 +12,31 @@ public class Videotheque<Oeuvre>
 	private ArrayList<Oeuvre> catalogue;
 	
 	/**
-	*Constructeur d'objet de type Videotheque
+	*Constructeur d'objet de type Videotheque, contenant un catalogue de films/series.
 	*
 	*/
 	public Videotheque()
 	{
+		catalogue = new ArrayList<Oeuvre>();
+	}
+	
+	/**
+	 * Methode d'ajout d'une oeuvre au catalogue de films/series.
+	 * @param o l'oeuvre a ajouter.
+	 */
+	public void addOeuvre(Oeuvre o)
+	{
+		catalogue.add(o);
+		
+	}
+	
+	/**
+	 * Methode de suppression d'un élément du catalogue de films/séries.
+	 * @param o l'oeuvre a retirer.
+	 */
+	public void removeOeuvre(Oeuvre o)
+	{
+		catalogue.remove(o);
 		
 	}
 	/**
@@ -43,14 +64,17 @@ public class Videotheque<Oeuvre>
 	public void triCroissantParGenre()
 	{
 		boolean trie = false; // tableau entierement trie ou non.
-		for(Oeuvre f : catalogue)
+		for(int i = 0; i < catalogue.size(); i++)
 		{
-			/*if(f.getGenre() > catalogue.get.getNomGenre())
+			Oeuvre o1 = catalogue.get(i);	//Oeuvre 1 a comparer.
+			Oeuvre o2 = catalogue.get(i++);	//Oeuvre 2 a comparer, a l'indice suivant.
+			
+			if(o1.getGenre() > o2.getGenre())
 			{
-				swapOeuvre(catalogue[i],catalogue[i++]);
+				swapOeuvre(i,i++);
 
-			}*/
-			trie = true;
+			}
+			trie = true;		//tableau entierement trie.
 		}
 		
 		
@@ -61,89 +85,94 @@ public class Videotheque<Oeuvre>
 	*Methode de tri decroissant par order de genre.
 	*
 	*/
-	public void triDecroissantParGenre(ArrayList<Oeuvre> al,Genre genre)
+	public void triDecroissantParGenre(Videotheque catalogue,Genre genre)
 	{
-		/*boolean trie = false; // tableau entierement trie ou non.
-		for(Oeuvre f : catalogue)
+		boolean trie = false; // tableau entierement trie ou non.
+		for(int i = 0; i < catalogue.size() && trie == false; i++)
 		{
-			if(catalogue.get(i).getNomGenre() < catalogue.get(i++).getNomGenre())
+			if(catalogue.get(i).getGenre() < catalogue.get(i++).getGenre())
+			{
+				swapOeuvre(i,i++);
+
+			}
+			trie = true;	//tableau entierement trie.
+		}
+		
+		
+	}
+	/**
+	 * 
+	 * @param al
+	 */
+	public void triCroissantParDateParution(Videotheque v)
+	{
+		boolean trie = false; // tableau entierement trie ou non.
+		for(int i = 0; i < catalogue.size() && trie == false; i++)
+		{
+			if(catalogue.get(i).getAnneeSortie() > catalogue.get(i++).getAnneeSortie())
 			{
 				swapOeuvre(catalogue.get(i),catalogue.get(i++));
 
 			}
 			trie = true;
 		}
-		*/
 		
-	}
-	public void triCroissantParDateParution(ArrayList<Oeuvre> al)
-	{
-		/*boolean trie = false; // tableau entierement trie ou non.
-		for(int i = 0; i < catalogue.length && trie == false; i++)
-		{
-			if(catalogue[i].getAnneeSortie() > catalogue[i++].getAnneeSortie())
-			{
-				swapOeuvre(catalogue[i],catalogue[i++]);
-
-			}
-			trie = true;
-		}
-		*/
 		
 	}
 	
 	public void triDecroissantParDateParution(ArrayList<Oeuvre> al)
 	{
-		/*boolean trie = false; // tableau entierement trie ou non.
-		for(int i = 0; i < catalogue.length && trie == false; i++)
+		boolean trie = false; // tableau entierement trie ou non.
+		for(int i = 0; i < catalogue.size() && trie == false; i++)
 		{
-			if(catalogue[i].getAnneeSortie() < catalogue[i++].getAnneeSortie())
+			if(catalogue.get(i).getAnneeSortie() < catalogue.get(i++).getAnneeSortie())
 			{
-				swapOeuvre(catalogue[i],catalogue[i++]);
+				swapOeuvre(i,i++);
 
 			}
 			trie = true;
 		}
-		*/
+		
 		
 	}
 	
 	public void triCroissantParTitre(ArrayList<Oeuvre> al)
 	{
-		/*boolean trie = false; // tableau entierement trie ou non.
-		for(int i = 0; i < catalogue.length && trie == false; i++)
+		boolean trie = false; // tableau entierement trie ou non.
+		for(int i = 0; i < catalogue.size() && trie == false; i++)
 		{
-			if(catalogue[i].getTitre() > catalogue[i++].getTitre())
+			if(catalogue.get(i).getTitre() > catalogue.get(i++).getTitre())
 			{
-				swapOeuvre(catalogue[i],catalogue[i++]);
+				swapOeuvre(i,i++);
 
 			}
 			trie = true;
 		}
-		*/
+		
 		
 	}
 	
-	public void triDecroissantParTitre(ArrayList<Oeuvre> al)
+	public void triDecroissantParTitre()
 	{
-		/*boolean trie = false; // tableau entierement trie ou non.
+		 boolean trie = false; // tableau entierement trie ou non.
 		while(!trie)
 		{
-		for(int i = 0; i < catalogue.length && trie == false; i++)
+		for(int i = 0; i < catalogue.size() && trie == false; i++)
 		{
-			if(catalogue[i].getTitre() < catalogue[i++].getTitre())
+			if(catalogue.get(i).getTitre() < catalogue.get(i++).getTitre())
 			{
-				swapOeuvre(catalogue[i],catalogue[i++]);
+				swapOeuvre(i,i++);
 
 			}
 			trie = true;
 		}
-		*/
+		}
+	
 		
 	}
 	
 	/**
-	 * 
+	 * Methode de recherche de
 	 * @param title
 	 * @return
 	 */
@@ -151,13 +180,26 @@ public class Videotheque<Oeuvre>
 	{
 		
 		
-		for(Oeuvre f : catalogue)
+		/*for(Oeuvre o : catalogue)
 		{
 				
-			if(f.getTitre() == title)		//Ze problem.
+			if(o.getTitre().equals(title))		//Ze problem.
 			{
-				return f;
+				return o;
+			}
+		}*/
+		
+		Iterator<Oeuvre> iter = catalogue.iterator();	//Itérateur servant à parcourir l'ArrayList.
+		while(iter.hasNext())
+		{
+			
+			Oeuvre o = iter.next();
+			if(o.getTitre().equals(title))
+			{
+				return o;
+				
 			}
 		}
 	}
+	
 }
