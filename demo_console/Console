@@ -1,0 +1,56 @@
+package Videotheque_modele;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.util.Scanner;
+/**
+ * 	
+ * @author Olivier
+ *
+ */
+public class Console {
+	
+
+	    public static void main(String[] args) throws SQLException {
+	    	AfficherMenu();
+	    }
+
+	    public static void AfficherMenu() throws SQLException {
+	        Scanner userInput = new Scanner(System.in);
+	        String MENU;
+
+	        // Display menu graphics
+	        System.out.println("*****************************************");
+	        System.out.println("| Modifier la base de donnée"             );
+	        System.out.println("*****************************************");
+	        System.out.println("| Options:                              |");
+	        System.out.println("|        1. Ajouter un film             |");
+	        System.out.println("|        2. Recherche film              |");
+	        System.out.println("|        3. Mettre à  jour un film      |");
+	        System.out.println("|        4. Supprimer un film           |");
+	        System.out.println("|        5. Quitter                     |");
+	        System.out.println("*****************************************");
+	        System.out.print("Choississez une option: ");
+
+	        MENU = userInput.next();
+
+	//display menu based on user selection
+	        switch (MENU) {
+	            case "1":
+	                 Creer creer= new Creer();
+	                break;
+	            case "2":
+	                Lire lire = new Lire();
+	                break;
+	            case "3":
+	                MettreAjour mettreajour = new MettreAjour();
+	                break;
+	            case "4":
+	                Supprimer supprimer = new Supprimer();
+	                break;
+	            default:
+	                System.out.println("vous avez quitter l'application");
+	                
+	                break; 
+	        }
+	    }
+	}
