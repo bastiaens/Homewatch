@@ -1,0 +1,250 @@
+package Videotheque_modele;
+import java.util.ArrayList;
+/**
+*@author JLM && Olivier Bastiaens
+* Classe representant tout type de OeuvreDAODAO dans la videotheque.
+*
+*/
+public class OeuvreDAO<Personne>
+{
+	private String titreOeuvre, realisateur, compositeur,distinctions;
+	private String idFilm, titre,description;	// valeurs des elements des tables SQL
+	private Genre genre;
+	private int anneeSortie, dureeMinutes;
+	// private Personne[] casting;		//rôles titres d'une OeuvreDAODAO.
+	private ArrayList<Personne> casting = new ArrayList<>(); // roles titre d'une OeuvreDAODAO.
+	
+	/**
+	*Constructeur sans parametre d'objets de type OeuvreDAODAO. A utiliser pour tester par defaut.
+	*/
+	public OeuvreDAO()
+	{
+		 ConnectionMysql dbUtilities = new ConnectionMysql();
+		 this.titreOeuvre = "INSERT INTO Film (idFilm,titre,description) VALUES ('" + idFilm + "','" + titre + "','" + description + "')";
+        ;
+		this.realisateur = "Jsais pas, mais c'est Disney";
+		this.compositeur = "Hans Zimmer";
+		this.anneeSortie = 1994;
+		this.dureeMinutes = 89;
+	    	genre.setGenre("Animation 2D");
+	}
+	
+	/**
+	*Constructeur d'objets de type OeuvreDAODAO.
+	*@param ti comme titre du OeuvreDAODAO, real comme realisateur du OeuvreDAODAO, an comme annee de sortie du OeuvreDAODAO, duree comme duree en minutes du OeuvreDAODAO
+	*
+	*/
+	public OeuvreDAO(String ti,String real,String comp, int an, int duree, String genre)
+	{
+		this.titreOeuvre = ti;
+		this.realisateur = real;
+		this.compositeur = comp;
+		this.anneeSortie = an;
+		this.dureeMinutes = duree;
+		genre.setGenre(genre);
+		
+	}
+	
+	/**
+	 *Methode de creation d'objets de type Oeuvre, elements faisant partie de la dB
+	 */
+	public OeuvreDAO(String idFilm,String titre,String descriptions)
+	{
+		String filmdeLaDb = "INSERT INTO Film (idFilm,titre,description) VALUES ('" + idFilm + "','" + titre + "','" + description + "')";
+        ;
+		
+	}
+	
+	/**
+	*Cette methode renvoie le titre du OeuvreDAODAO sous forme de chaine de caracteres
+	*@return Le titre du OeuvreDAODAO
+	*/
+	public String getTitre()
+	{
+		return titreOeuvre;
+	}
+	
+	/**
+	 * Methode de recuperation du champ titre de la db Film
+	 * @return
+	 */
+	public String getTitreDb()
+	{
+		
+		return "SELECT titre FROM DBA.Film";
+	}
+	
+	/**
+	 * Methode de modification du titre d'un film dans la base de donnees.
+	 */
+	public void setTitreDb(String title,String idFilm)
+	{
+        String requeteDB = "UPDATE Film SET titre = '" + title + "'  WHERE id = " + idFilm;
+		
+	}
+	/**
+	*@param titre le titre du OeuvreDAODAO a
+	*
+	*/
+	public void setTitre(String titre)
+	{
+			this.titreOeuvre = titre;
+	}
+	
+	/**
+	*
+	*Cette methode renvoie le nom du réalisateur du OeuvreDAODAO
+	*@return le nom du realisateur
+	*/
+	public String getRealisateur(int indice)
+	{
+		String desc = "";
+		for(Personne p : casting)
+		{
+			if( casting.get(indice).getMetier().equalsIgnoreCase("realisateur"))
+			{
+				desc += "Prenom : " + casting.get(indice).getPrenom() + " Nom : " + casting.get(indice).getNom() + " Profession :" + casting.get(indice).getMetier();
+			}	
+		}
+		return realisateur;
+	}
+	
+	/**
+	*Methode d'insertion de realisateur.
+	*@param real le réalisateur à ajouter.
+	*
+	*/
+	public void setRealisateur(String real)
+	{
+		this.realisateur = real;
+	}
+	
+	/**
+	* Methode de recuperation de la duree d'un OeuvreDAODAO.
+	*@return la duree du OeuvreDAODAO en minutes.
+	*/
+	public int getDuree()
+	{
+		return dureeMinutes;
+	}
+	
+	/**
+	*
+	*@param minutes La durée en minutes
+	*/
+	public void setDuree(int minutes)
+	{
+		this.dureeMinutes = minutes;
+	}
+	
+	/**
+	*
+	*@return l'annee de sortie du OeuvreDAODAO
+	*/
+	public int getAnneeSortie()
+	{
+		return anneeSortie;
+	}
+	
+	/**
+	* Methode d'ajout de l'année de sortie d'un OeuvreDAODAO.
+	*@param anSortie La date de sortie du OeuvreDAODAO à rajouter.
+	*/
+	public void setAnneeSortie(int anSortie)
+	{
+		this.anneeSortie = anSortie;
+	}
+	
+	/**
+	*
+	*Methode de recuperation d'un membre du casting.
+	*@param indice l'acteur dans la liste
+	*/
+	public String getActeurs(int indice)
+	{
+		String desc = "";
+		for(Personne p : casting)
+		{
+			if(casting.contains(p))
+			{
+				desc += "Prenom : " + casting.get(indice).getPrenom() + " Nom : " + casting.get(indice).getNom() + " Profession :" + casting.get(indice).getMetier();			}	
+		} 
+		return desc;
+	}
+	
+	/*
+	*Methode de recuperation du genre d'un OeuvreDAODAO.
+	* @return Le genre du OeuvreDAODAO.
+	*
+	*/
+	public Genre getGenre()
+	{
+		return genre;
+	}
+	
+	/**
+	*
+	*Methode d'ajout d'un/e acteur/actrice au casting du OeuvreDAODAO.
+	*/
+	public void ajoutActeur(Personne act)
+	{
+		boolean dejaAjoute = false;
+		
+		if(casting.isEmpty())
+		{
+			casting.add(act);
+			
+		}
+		for(Personne p : casting)
+		{
+			if(p.getPrenom() == act.getPrenom() && p.getNom() == act.getNom())
+			{
+				dejaAjoute = true;
+			}
+		}
+		if(!dejaAjoute)
+		{
+			casting.add(act);
+		}
+	}
+	/**
+	 * 
+	 * @param act
+	 * @return
+	 */
+	public Personne retraitActeur(Personne act)
+	{
+		if(casting.isEmpty())
+		{
+			return null;
+			
+		}
+		for(Personne p : casting)
+		{
+			
+			if(p.getPrenom() == act.getPrenom() && p.getNom() == act.getNom())
+			{
+				return casting.remove(casting.indexOf(act));
+			}
+			
+		}
+		System.out.println("L'element ne se trouve pas dans la liste.");
+		return null;
+		
+	}
+	/**
+	 * Methode de vidage du casting d'un film.
+	 */
+	public void videCasting()
+	{
+		casting.clear();
+	}
+	/*
+	*Methode de verification du contenu d'une liste de casting
+	*@return true si le casting est vide, false sinon.
+	*/
+	public boolean estVide()
+	{
+		return casting.isEmpty();
+	}
+}
