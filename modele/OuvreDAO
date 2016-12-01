@@ -1,0 +1,119 @@
+package Videotheque_modele;
+
+/**
+ * @author Olivier Bastiaens
+ */
+import java.util.*;
+import java.sql.*;
+import java.io.*;
+
+
+public class OeuvreDAO {
+private Connection myConn;
+	
+	public OeuvreDAO() throws Exception {
+		
+		// get db properties
+		Properties props = new Properties();
+		props.load(new FileInputStream("Mysql/videot.properties"));
+		
+		String user = props.getProperty("user");
+		String password = props.getProperty("password");
+		String dburl = props.getProperty("dburl");
+		
+		// connect to database
+		myConn = DriverManager.getConnection(dburl, user, password);
+		
+		System.out.println("DB connection successful to: " + dburl);
+	}
+	
+	public List<Oeuvre> getAllOeuvres() throws Exception {
+		List<Oeuvre> list = new ArrayList<>();
+		
+		Statement myStmt = null;
+		ResultSet myRs = null;
+		
+		try {
+			myStmt = myConn.createStatement();
+			myRs = myStmt.executeQuery("select * from Film");
+			
+			while (myRs.next()) {
+				Oeuvre tempOeuvre = convertRowToOeuvre(myRs);
+				list.add(tempOeuvre);
+			}
+
+			return list;		
+		}
+		finally {
+			close(myStmt, myRs);
+		}
+	}
+	
+	public List<Oeuvre> searchOeuvres(String titre) throws Exception {
+		List<Oeuvre> list = new ArrayList<>();
+
+		PreparedStatement myStmt = null;
+		ResultSet myRs = null;
+
+		try {
+			titre += "%";
+			myStmt = myConn.prepareStatement("select * from Film where titre like ?");
+			
+			myStmt.setString(1, titre);
+			
+			myRs = myStmt.executeQuery();
+			
+			while (myRs.next()) {
+				Oeuvre tempOeuvre = convertRowToOeuvre(myRs);
+				list.add(tempOeuvre);
+			}
+			
+			return list;
+		}
+		finally {
+			close(myStmt, myRs);
+		}
+	}
+	
+	private Oeuvre convertRowToOeuvre(ResultSet myRs) throws SQLException {
+		
+		int idFilm = myRs.getInt("idFilm");
+		String titre = myRs.getString("titre");
+		int idRéalisateur = myRs.getInt("idRéalisateur");
+		int idGenre = myRs.getInt("idGenre");
+		int date_parution = myRs.getInt("date_parution");
+		
+		Oeuvre tempOeuvre = new Oeuvre(idFilm, titre, idRéalisateur, idGenre, date_parution);
+		
+		return tempOeuvre;
+	}
+
+	
+	private static void close(Connection myConn, Statement myStmt, ResultSet myRs)
+			throws SQLException {
+
+		if (myRs != null) {
+			myRs.close();
+		}
+
+		if (myStmt != null) {
+			
+		}
+		
+		if (myConn != null) {
+			myConn.close();
+		}
+	}
+
+	private void close(Statement myStmt, ResultSet myRs) throws SQLException {
+		close(null, myStmt, myRs);		
+	}
+
+	public static void main(String[] args) throws Exception {
+		
+		OeuvreDAO dao = new OeuvreDAO();
+		System.out.println(dao.searchOeuvres("RENCONTRES DU TROISIEME TYPE"));
+
+		System.out.println(dao.getAllOeuvres());
+	}
+}
