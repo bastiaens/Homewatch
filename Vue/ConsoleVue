@@ -1,0 +1,144 @@
+package Videotheque_vue;
+
+import java.sql.SQLException;
+import java.util.Scanner;
+
+import Videotheque_modele.Oeuvre;
+import Videotheque_modele.OeuvreDAO;
+/**
+ * 	
+ * @author Olivier
+ *
+ */
+public class ConsoleVue {
+	
+
+	    public static void main(String[] args) throws SQLException {
+	    	AfficherMenu();
+	    }
+
+	    public static void AfficherMenu() throws SQLException {
+	        Scanner userInput = new Scanner(System.in);
+	        String MENU;
+
+	        // Display menu graphics
+	        System.out.println("*****************************************");
+	        System.out.println("| Modifier la base de donnée"             );
+	        System.out.println("*****************************************");
+	        System.out.println("| Options:                              |");
+	        System.out.println("|        1. Recherche film              |");
+	        System.out.println("|        2. Ajouter un film             |");
+	        System.out.println("|        3. Mettre à  jour un film      |");
+	        System.out.println("|        4. Supprimer un film           |");
+	        System.out.println("|        5. Quitter                     |");
+	        System.out.println("*****************************************");
+	        System.out.print("Choississez une option: ");
+
+	        MENU = userInput.next();
+
+	//display menu based on user selection
+	        switch (MENU) {
+	            case "1":
+				try {
+					Scanner userI = new Scanner(System.in);
+					OeuvreDAO daor = new OeuvreDAO();
+					System.out.println("Vous avez choissi l'option 1: rechercher un film: ");
+					String Titre;
+					System.out.println("entrez un titre:");
+					Titre = userI.next();
+					System.out.println(daor.searchOeuvres(Titre));
+					ConsoleVue.AfficherMenu();
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	            	break;
+	            	
+	            case "2":
+				try {
+					System.out.println("Vous avez choissi l'option 2: Ajout d'un film:");
+					Scanner userI = new Scanner(System.in);
+					OeuvreDAO daoa = new OeuvreDAO();
+			   
+			        System.out.println("Entrez le titre du Film:");
+			        String Titre = userI.next();
+
+			        System.out.println("Entrez son résumer: ");
+			        String Description = userI.next();
+
+			        System.out.println("Entrez l'id du réalisateur");
+			        int idRea = userI.nextInt();
+					
+					System.out.println("entrez l'id du genre:");
+					int idGenre = userI.nextInt();
+					
+					System.out.println("sa date de parution");
+					int date_parution = userI.nextInt();
+					
+					Oeuvre tempOeuvre = new Oeuvre(date_parution, Titre, null, idRea, idGenre, 0);
+					daoa.AddOeuvres(tempOeuvre);
+					ConsoleVue.AfficherMenu();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	            	break;
+	            	
+	            case "3":
+				try {
+					System.out.println("Vous avez choissi l'option 3: Mettre à  jour un film");
+					Scanner userI = new Scanner(System.in);
+					OeuvreDAO daoa = new OeuvreDAO();
+					
+					System.out.println("Entrez le l'id du Film que vous voulez changer:");
+			        int idFilm = userI.nextInt();
+					
+			        System.out.println("Entrez le titre du Film:");
+			        String Titre = userI.next();
+
+			        System.out.println("Entrez son résumer: ");
+			        String Description = userI.next();
+
+			        System.out.println("Entrez l'id du réalisateur");
+			        int idRea = userI.nextInt();
+					
+					System.out.println("entrez l'id du genre:");
+					int idGenre = userI.nextInt();
+					
+					System.out.println("sa date de parution");
+					int date_parution = userI.nextInt();
+					
+					Oeuvre tempOeuvre = new Oeuvre(date_parution, Titre, Description, idRea, idGenre, idFilm);
+					daoa.UpdateOeuvres(tempOeuvre);
+					ConsoleVue.AfficherMenu();
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	            	break;
+	            	
+	            case "4":
+				try {
+					System.out.println("Vous avez choissi l'option 5: Supprimer un film");
+					Scanner userI = new Scanner(System.in);
+					OeuvreDAO daod = new OeuvreDAO();
+					
+					System.out.println("entrez l'id du film:");
+					int idFilm = userI.nextInt();
+					daod.DeleteOeuvres(idFilm);
+					ConsoleVue.AfficherMenu();
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	            	break;
+	            	
+	            default:
+	                System.out.println("vous avez quitter l'application");
+	                break; 
+	        }
+	    }
+	}
