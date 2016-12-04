@@ -29,11 +29,12 @@ private Connection myConn;
 	
 	public List<Oeuvre> getAllOeuvres() throws Exception {
 		List<Oeuvre> list = new ArrayList<>();
-		
+
 		Statement myStmt = null;
 		ResultSet myRs = null;
-		
+
 		try {
+		
 			myStmt = myConn.createStatement();
 			myRs = myStmt.executeQuery("select * from Film");
 			
@@ -41,11 +42,11 @@ private Connection myConn;
 				Oeuvre tempOeuvre = convertRowToOeuvre(myRs);
 				list.add(tempOeuvre);
 			}
-
-			return list;		
+			
+			return list;
 		}
 		finally {
-			close(myStmt, myRs);
+			close(myStmt, myRs, null);
 		}
 	}
 	
@@ -71,7 +72,68 @@ private Connection myConn;
 			return list;
 		}
 		finally {
-			close(myStmt, myRs);
+			close(myStmt, myRs, myStmt);
+		}
+	}
+	
+	public void AddOeuvres(Oeuvre Oeuvre ) throws Exception {
+		PreparedStatement myPstmt = null;
+		
+		try {
+			myPstmt = myConn.prepareStatement("INSERT INTO `videot`.`film` (`titre`, `idRéalisateur`, `idGenre`, `date_parution`) VALUES (?,?,?,?);");
+			
+			//set param
+			myPstmt.setString(1, Oeuvre.getTitre());
+			myPstmt.setInt(2, Oeuvre.getIdRéalisateur());
+			myPstmt.setInt(3, Oeuvre.getIdGenre());
+			myPstmt.setInt(4, Oeuvre.getDate_parition());
+		
+			//exécutée la requête
+			myPstmt.executeUpdate();
+			
+		}
+		finally {
+			close(null, null, myPstmt);
+		}
+	}
+	
+	//reçoit un Objet oeuvre en param
+	public void UpdateOeuvres(Oeuvre Oeuvre ) throws Exception {
+		PreparedStatement myPstmt = null;
+		
+		try {
+			myPstmt = myConn.prepareStatement("UPDATE videot.Film(idFilm,titre,description,idRéalisateur,idGenre,date_parution) VALUES (?,?,?,?,?,?)");
+			//set param
+			myPstmt.setInt(1, Oeuvre.getIdFilm());
+			myPstmt.setString(2, Oeuvre.getTitre());
+			myPstmt.setString(3, Oeuvre.getDes());;
+			myPstmt.setInt(4, Oeuvre.getIdRéalisateur());
+			myPstmt.setInt(5, Oeuvre.getIdGenre());
+			myPstmt.setInt(6, Oeuvre.getDate_parition());
+		
+			//exécutée la requête
+			myPstmt.executeUpdate();
+			
+		}
+		finally {
+			close(null, null, myPstmt);
+		}
+	}
+	
+	public void DeleteOeuvres(int idFilm ) throws Exception {
+		PreparedStatement myPstmt = null;
+		
+		try {
+			myPstmt = myConn.prepareStatement("delete from film where idFilm =?");
+			
+			//set param
+			myPstmt.setInt(1, idFilm);
+			//exécutée la requête
+			myPstmt.executeUpdate();
+			
+		}
+		finally {
+			close(myPstmt, null, myPstmt);
 		}
 	}
 	
@@ -79,17 +141,19 @@ private Connection myConn;
 		
 		int idFilm = myRs.getInt("idFilm");
 		String titre = myRs.getString("titre");
+		String des = myRs.getString("des");
 		int idRéalisateur = myRs.getInt("idRéalisateur");
 		int idGenre = myRs.getInt("idGenre");
 		int date_parution = myRs.getInt("date_parution");
 		
-		Oeuvre tempOeuvre = new Oeuvre(idFilm, titre, idRéalisateur, idGenre, date_parution);
+		Oeuvre tempOeuvre = new Oeuvre(idFilm, titre,des, idRéalisateur, idGenre, date_parution);
 		
 		return tempOeuvre;
 	}
-
 	
-	private static void close(Connection myConn, Statement myStmt, ResultSet myRs)
+	
+	
+	private static void close(Connection myConn, Statement myStmt, ResultSet myRs, PreparedStatement myPstmt)
 			throws SQLException {
 
 		if (myRs != null) {
@@ -103,17 +167,21 @@ private Connection myConn;
 		if (myConn != null) {
 			myConn.close();
 		}
+		if (myPstmt != null) {
+			
+		}
 	}
 
-	private void close(Statement myStmt, ResultSet myRs) throws SQLException {
-		close(null, myStmt, myRs);		
+	private void close(Statement myStmt, ResultSet myRs,PreparedStatement myPstmt) throws SQLException {
+		close(null, myStmt, myRs, myPstmt);		
 	}
 
 	public static void main(String[] args) throws Exception {
 		
 		OeuvreDAO dao = new OeuvreDAO();
-		System.out.println(dao.searchOeuvres("RENCONTRES DU TROISIEME TYPE"));
-
 		System.out.println(dao.getAllOeuvres());
 	}
 }
+	
+
+   
