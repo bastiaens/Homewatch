@@ -29,7 +29,7 @@ public class Console {
 	        System.out.println("|        4. Supprimer un film           |");
 	        System.out.println("|        5. Quitter                     |");
 	        System.out.println("*****************************************");
-	        System.out.print("Choississez une option: ");
+	        System.out.print("Choisissez une option: ");
 
 	        MENU = userInput.next();
 
@@ -48,7 +48,7 @@ public class Console {
 	                Supprimer supprimer = new Supprimer();
 	                break;
 	            default:
-	                System.out.println("vous avez quitter l'application");
+	                System.out.println("vous avez quitté l'application");
 	                
 	                break; 
 	        }
