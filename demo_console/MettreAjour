@@ -13,10 +13,10 @@ public class MettreAjour {
 
     MettreAjour() throws SQLException {
         Scanner userInput = new Scanner(System.in);
-        System.out.println("You selected option 3: MettreAjour database record: ");
+        System.out.println("Vous avez choisi l'option 3: mettre a jour l'enregistrement de la base de donnee : ");
 
         String idFilm;
-        System.out.println("Entrez id du film à MettreAjour: ");
+        System.out.println("Entrez l'id du film à mettre a jour: ");
         idFilm = userInput.next();
 
         //récupère l'enregistrement 
@@ -27,11 +27,11 @@ public class MettreAjour {
         titre = userInput.next();
 
         String description;
-        System.out.println("Entrez le résumer: ");
+        System.out.println("Entrez le résumé: ");
         description = userInput.next();
 
         String idRéalisateur;
-        System.out.println("Entrez idRéalisateur ");
+        System.out.println("Entrez l'id du réalisateur ");
         idRéalisateur = userInput.next();
 
         ConnectionMysql dbUtilities = new ConnectionMysql();
@@ -40,9 +40,9 @@ public class MettreAjour {
 
         dbUtilities.ExecuteSQLStatement(sql_stmt);
 
-        System.out.println("The Record has successfully being deleted");
+        System.out.println("L'enregistrement a ete supprime avec succes.");
 
-        Console.AfficherMenu();
+        Console.afficherMenu();
     }
 
     private void DisplayRecord(String customer_id) throws SQLException {
@@ -53,12 +53,12 @@ public class MettreAjour {
 
             ResultSet resultSet = dbUtilities.ReadRecords(sql_stmt);
 
-            // process query results
+            // Resultats des queries
             if (resultSet.next()) {
 
                 ResultSetMetaData metaData = resultSet.getMetaData();
                 int numberOfColumns = metaData.getColumnCount();
-                System.out.print("Database Records Listingn");
+                System.out.print("Listing des enregistrements de la base de donnees : ");
 
                 for (int i = 1; i <= numberOfColumns; i++) {
                     System.out.printf("%-8st", metaData.getColumnName(i));
@@ -75,10 +75,10 @@ public class MettreAjour {
                 System.out.println();
 
             } else {
-                System.out.println("Aucun enregistrement ");
+                System.out.println("Aucun enregistrement. ");
             }
 
-            //close db connection
+           // Fermeture de la connexion a la base de donnees.
             dbUtilities.DisconnectFromDB();
         } catch (SQLException ex) {
             System.out.println("L'erreur suivante s'est produite " + ex.getMessage());
