@@ -1,8 +1,9 @@
 package Videotheque_modele;
 import java.util.ArrayList;
+import java.sql.*;
 /**
 *@author JLM && Olivier Bastiaens
-* Classe representant tout type de OeuvreDAODAO dans la videotheque.
+* Classe representant tout type de OeuvreDAO dans la videotheque.
 *
 */
 public class OeuvreDAO<Personne>
@@ -15,7 +16,7 @@ public class OeuvreDAO<Personne>
 	private ArrayList<Personne> casting = new ArrayList<>(); // roles titre d'une OeuvreDAODAO.
 	
 	/**
-	*Constructeur sans parametre d'objets de type OeuvreDAODAO. A utiliser pour tester par defaut.
+	*Constructeur sans parametre d'objets de type OeuvreDAO. A utiliser pour tester par defaut.
 	*/
 	public OeuvreDAO()
 	{
@@ -26,29 +27,29 @@ public class OeuvreDAO<Personne>
 		this.compositeur = "Hans Zimmer";
 		this.anneeSortie = 1994;
 		this.dureeMinutes = 89;
-	    	genre.setGenre("Animation 2D");
+	    genre.setGenre("Animation 2D");
 	}
 	
 	/**
-	*Constructeur d'objets de type OeuvreDAODAO.
-	*@param ti comme titre du OeuvreDAODAO, real comme realisateur du OeuvreDAODAO, an comme annee de sortie du OeuvreDAODAO, duree comme duree en minutes du OeuvreDAODAO
+	*Constructeur d'objets de type OeuvreDAO.
+	*@param ti comme titre de l'oeuvre, real comme realisateur de l'oeuvre, an comme annee de sortie de l'oeuvre, duree comme duree en minutes de l'oeuvre DAO.
 	*
 	*/
-	public OeuvreDAO(String ti,String real,String comp, int an, int duree, String genre)
+	public OeuvreDAO(String ti,String real,String comp, int an, int duree, String gen)
 	{
 		this.titreOeuvre = ti;
 		this.realisateur = real;
 		this.compositeur = comp;
 		this.anneeSortie = an;
 		this.dureeMinutes = duree;
-		genre.setGenre(genre);
+		genre.setGenre(gen);
 		
 	}
 	
 	/**
 	 *Methode de creation d'objets de type Oeuvre, elements faisant partie de la dB
 	 */
-	public OeuvreDAO(String idFilm,String titre,String descriptions)
+	public OeuvreDAO(String idFilm,String titre,String description)
 	{
 		String filmdeLaDb = "INSERT INTO Film (idFilm,titre,description) VALUES ('" + idFilm + "','" + titre + "','" + description + "')";
         ;
