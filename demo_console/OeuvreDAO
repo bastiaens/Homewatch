@@ -1,3 +1,4 @@
+package homewatch;
 package Videotheque_modele;
 import java.util.ArrayList;
 import java.sql.*;
@@ -52,7 +53,6 @@ public class OeuvreDAO<Personne>
 	public OeuvreDAO(String idFilm,String titre,String description)
 	{
 		String filmdeLaDb = "INSERT INTO Film (idFilm,titre,description) VALUES ('" + idFilm + "','" + titre + "','" + description + "')";
-        ;
 		
 	}
 	
