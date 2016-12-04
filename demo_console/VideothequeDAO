@@ -1,0 +1,160 @@
+package homewatch;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Iterator;		// Utiliser un itérateur? A méditer....
+
+/**
+*Classe representant un ensemble de Oeuvres par utilisateurs.
+*@author Jean Luc Muteba
+*/
+public class VideothequeDAO<Oeuvre>
+{
+	
+	private ArrayList<Oeuvre> catalogue;
+	
+	/**
+	*Constructeur d'objet de type Videotheque, contenant un catalogue de films/series.
+	*
+	*/
+	public VideothequeDAO()
+	{
+		catalogue = new ArrayList<Oeuvre>();
+	}
+	
+	
+	/**
+	 * Methode d'ajout d'une oeuvre au catalogue de films/series de la base de donnees.
+	 * @param o l'oeuvre a ajouter.
+	 */
+	public void addOeuvreDB(String idFilm,String titre, String description)
+	{
+		OeuvreDAO o = new OeuvreDAO(idFilm,titre,description);
+		
+	}
+	
+	/**
+	 * Methode de suppression d'une oeuvre d'un catalogue de films/series de la base de donnees.
+	 * @param idFilm l'ID du film a supprimer du catalogue.
+	 */
+	public void removeOeuvreDB(String idFilm)
+	{
+		String requeteDB = "DELETE FROM Film "
+						 + "WHERE idFilm = " + idFilm; 
+		
+	}
+	
+	/**
+	 * Methode de suppression d'un élément du catalogue de films/séries.
+	 * @param o l'oeuvre a retirer.
+	 */
+	public void removeOeuvre(Oeuvre o)
+	{
+		catalogue.remove(o);
+		
+	}
+	
+	/**
+	*
+	* Methode de tri de la videotheque, selon un classement croissant, par genre, de l'ensemble des Oeuvres.
+	* (Bubble sort)
+	*/
+	public void triCroissantParGenre()
+	{
+		
+		String requeteDB = "SELECT * FROM DBA.Film NATURAL JOIN Genre_Film" 
+						   +" GROUP BY titre"
+						   + "ORDER BY Genre_id";
+		
+		
+	}
+	
+	/**
+	*
+	* Methode de tri de la videotheque, selon un classement decroissant, par genre, de l'ensemble des Oeuvres.
+	* (Bubble sort)
+	*/
+	public void triDecroissantParGenre()
+	{
+		
+		String requeteDB = "SELECT * FROM DBA.Film NATURAL JOIN Genre_Film "
+						 + "GROUP BY titre"
+						 + "ORDER BY Genre_id DESC";
+		
+		
+	}
+	
+	/**
+	*
+	* Methode de tri de la videotheque, selon un classement croissant, par annee de parution, de l'ensemble des Oeuvres.
+	* 
+	*/
+	public void triCroissantParDateParution()
+	{
+		
+		String requeteDB = "SELECT * FROM DBA.Film"
+						 + "GROUP BY titre"
+						 + "ORDER BY Parition";
+		
+		
+	}
+	
+	/**
+	*
+	* Methode de tri de la videotheque, selon un classement decroissant, par annee de parution, de l'ensemble des Oeuvres.
+	* 
+	*/
+	public void triDecroissantParDateParution()
+	{
+		
+		String requeteDB = "SELECT * FROM DBA.Film"
+						+ " GROUP BY titre"
+						+ " ORDER BY Parition DESC";
+		
+		
+	}
+	
+	/**
+	*
+	* Methode de tri de la videotheque, selon un classement decroissant, par annee de parution, de l'ensemble des Oeuvres.
+	* 
+	*/
+	public void triCroissantParTitre()
+	{
+		
+		String requeteDB = "SELECT * FROM DBA.Film"
+						 + "GROUP BY titre "
+						 + "ORDER BY titre";
+		
+		
+	}
+	
+	/**
+	*
+	* Methode de tri de la videotheque, selon un classement decroissant, par annee de parution, de l'ensemble des Oeuvres.
+	* 
+	*/
+	public void triDecroissantParTitre()
+	{
+		
+		String requeteDB = "SELECT * FROM DBA.Film"
+						 + "GROUP BY titre "
+						 + "ORDER BY titre DESC";
+		
+		
+	}
+	
+	
+		
+	/**
+	 * Methode de recherche d'une oeuvre particulere, en fonction de son titre,dans la base de donnees.
+	 * @param title
+	 * @return
+	 */
+	public void rechercheLineaireParTitre(String title)
+	{
+		
+		String requeteDB = "SELECT idFilm,titre,description FROM DBA.Film WHERE titre = " + title;
+		
+	}
+	
+}
