@@ -6,15 +6,18 @@ package Videotheque_modele;
 
 		public class ConnectionMysql {
 
-			// database URL                              
+			                            
 
-		    static final String DATABASE_URL = "jdbc:mysql://localhost/videot";
+		    static final String DATABASE_URL = "jdbc:mysql://localhost/videot";  //URL de la base de donnees.
 		    Connection connection = null;
 		    Statement statement = null; 
 		    ResultSet resultSet = null; 
-
+		    /**
+		    *Methode de connexion a la base de donnees.
+		    *
+		    */
 		    public ConnectionMysql() throws SQLException {
-		        // establish connection to database  
+		        // etablir la connnexion a la base de donnees. 
 		        try {
 		            connection = DriverManager.getConnection(DATABASE_URL, "root", "Maniak12");
 
@@ -22,19 +25,26 @@ package Videotheque_modele;
 		            System.out.println("L'erreur suivante s'est produite: " + ex.getMessage());
 		        }
 		    }
-
+			/**
+			*Methode de deconnexion de la base de donnees.
+			*
+			*/
 		    public void DisconnectFromDB() {
 
 		        try {
 		            resultSet.close();
 		            statement.close();
 		            connection.close();
-		        } // end try                                               
+		        }                                               
 		        catch (Exception ex) {
 		            System.out.println("L'erreur suivante s'est produite: " + ex.getMessage());
-		        } // end catch  
+		        }
 		    }
-
+		    
+		    /**
+		    *Methode de lecture des enregistrements de la base de donnees.
+		    *
+		    */
 		    public ResultSet ReadRecords(String sql_stmt) {
 		        try {
 
