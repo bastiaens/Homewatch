@@ -11,14 +11,14 @@ public class Console {
 	
 
 	    public static void main(String[] args) throws SQLException {
-	    	AfficherMenu();
+	    	afficherMenu();
 	    }
 
-	    public static void AfficherMenu() throws SQLException {
+	    public static void afficherMenu() throws SQLException {
 	        Scanner userInput = new Scanner(System.in);
 	        String MENU;
 
-	        // Display menu graphics
+	        // Affichage du menu
 	        System.out.println("*****************************************");
 	        System.out.println("| Modifier la base de donnée"             );
 	        System.out.println("*****************************************");
@@ -33,7 +33,7 @@ public class Console {
 
 	        MENU = userInput.next();
 
-	//display menu based on user selection
+	//Affichage du menu selon les choix de l'utilisateur.
 	        switch (MENU) {
 	            case "1":
 	                 Creer creer= new Creer();
