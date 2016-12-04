@@ -11,10 +11,13 @@ import java.sql.SQLException;
 public class Lire {
 
     public Lire() throws SQLException {
-        System.out.println("Vous avez choisi l'option 2: Lire des enregistrement de la base de donnée");
+        System.out.println("Vous avez choisi l'option 2: Lire des enregistrement de la base de données");
         afficherResultats();
     }
-
+    /**
+    *Methode d'affichage des resultats de requetes.
+    *
+    */
     private void afficherResultats() throws SQLException {
         try {
         	//établir une connexion avec la db
