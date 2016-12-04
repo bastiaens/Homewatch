@@ -13,7 +13,7 @@ public class Creer{
         Scanner userInput = new Scanner(System.in);
         System.out.println("Vous avez choisi l'option 1: Ajout d'un film: ");
         String idFilm;
-        System.out.println("Entrez l'id du Film:");
+        System.out.println("Entrez l'id du Film : ");
         idFilm = userInput.next();
 
         String titre;
@@ -21,7 +21,7 @@ public class Creer{
         titre = userInput.next();
 
         String description;
-        System.out.println("Entrez le résumer du film ");
+        System.out.println("Entrez le résumé du film : ");
         description = userInput.next();
        
         ConnectionMysql dbUtilities = new ConnectionMysql();
@@ -29,6 +29,6 @@ public class Creer{
         String sql_stmt = "INSERT INTO Film (idFilm,titre,description) VALUES ('" + idFilm + "','" + titre + "','" + description + "')";
         
         dbUtilities.ExecuteSQLStatement(sql_stmt);
-        Console.AfficherMenu();
+        Console.afficherMenu();
     }
 }
