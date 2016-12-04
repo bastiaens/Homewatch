@@ -11,11 +11,11 @@ import java.sql.SQLException;
 public class Lire {
 
     public Lire() throws SQLException {
-        System.out.println("Vous avez choissi l'option 2: Lire des enregistrement de la base de donnée");
-        AfficherResultats();
+        System.out.println("Vous avez choisi l'option 2: Lire des enregistrement de la base de donnée");
+        afficherResultats();
     }
 
-    private void AfficherResultats() throws SQLException {
+    private void afficherResultats() throws SQLException {
         try {
         	//établir une connexion avec la db
         	ConnectionMysql dbUtilities = new ConnectionMysql();
@@ -56,7 +56,7 @@ public class Lire {
         } catch (SQLException ex) {
             System.out.println("L'erreur suivante s'est produite: " + ex.getMessage());
         } finally {
-            Console.AfficherMenu();
+            Console.afficherMenu();
         }
     }
 }
