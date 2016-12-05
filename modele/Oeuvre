@@ -2,10 +2,9 @@ package Videotheque_modele;
 
 /**
  * 
- * @author Olivier Bastiaen et JL
+ * @author Olivier Bastiaen et JLM
  *
  */
-
 public class Oeuvre {
 	private int idFilm;
 	private String titre;
@@ -18,7 +17,7 @@ public class Oeuvre {
 	private int date_parution;
 	
 	/**
-	 * 
+	 * Constructeur d'objets de type Oeuvre.
 	 * @param titre
 	 * @param des
 	 * @param rea
@@ -34,7 +33,7 @@ public class Oeuvre {
 	}
 
 	/**
-	 * 
+	 * Constructeur d'objets de type Oeuvre.
 	 * @param idFilm
 	 * @param titre
 	 * @param des
@@ -51,7 +50,7 @@ public class Oeuvre {
 		this.date_parution = date;
 	}
 	/**
-	 * 
+	 * Constructeur d'objets de type Oeuvre.
 	 * @param idF
 	 * @param titre
 	 * @param des
@@ -72,42 +71,66 @@ public class Oeuvre {
 		this.prenomReal = firstNameReal;
 	}
 	
-	
+	/**
+	*Accesseur du nom du réalisateur du film.
+	*
+	*/
 	public String getNomReal() {
 		return nomReal;
 	}
 
-
+	/**
+	*Mutateur du nom du réalisateur du film.
+	*@param nomReal Le nom du réalisateur.
+	*/
 	public void setNomReal(String nomReal) {
 		this.nomReal = nomReal;
 	}
 
-
+	/**
+	*Accesseur du prenom du realisateur du film.
+	*
+	*/
 	public String getPrenomReal() {
 		return prenomReal;
 	}
 
-
+	/**
+	*Mutateur du prenom du realisateur du film.
+	*@param prenomReal Le prénom du réalisateur.
+	*/
 	public void setPrenomReal(String prenomReal) {
 		this.prenomReal = prenomReal;
 	}
 
-
+	/**
+	*Accesseur du genre du film.
+	*
+	*/
 	public String getGenre() {
 		return genre;
 	}
 
-
+	/**
+	*Mutateur du genre du film.
+	*@param genre Le genre du film,sous forme de chaine de caracteres.
+	*/
 	public void setGenre(String genre) {
 		this.genre = genre;
 	}
 
-
+	/**
+	*Accesseur de la description du film.
+	*@return une description du film.
+	*/
 	public String getDescription() {
 		return description;
 	}
 
-
+	/**
+	*Mutateur de description du film.
+	*@param description La nouvelle description du film.
+	*/
 	public void setDescription(String description) {
 		this.description = description;
 	}
