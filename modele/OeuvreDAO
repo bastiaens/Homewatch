@@ -1,11 +1,18 @@
 package Videotheque_modele;
 
+import java.io.FileInputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 /**
  * @author Olivier Bastiaens
  */
-import java.util.*;
-import java.sql.*;
-import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
 
 public class OeuvreDAO {
@@ -50,32 +57,50 @@ private Connection myConn;
 		}
 	}
 	
-	public List<Oeuvre> searchOeuvres(String titre) throws Exception {
+	/**
+	 * 
+	 * @param titre
+	 * @return
+	 * @throws Exception
+	 */
+	public Oeuvre searchOeuvre(String titre) throws Exception {
 		List<Oeuvre> list = new ArrayList<>();
-
+		Oeuvre o1 = new Oeuvre(0,"","",0,"","",0,0);	//Oeuvre placeholder. Servira a trouver l'element.
 		PreparedStatement myStmt = null;
 		ResultSet myRs = null;
-
+		
 		try {
 			titre += "%";
-			myStmt = myConn.prepareStatement("select * from Film where titre like ?");
+			myStmt = myConn.prepareStatement("select f.idFilm, f.titre, f.description, r.idRéalisateur, r.nom_re, r.prenom_re, g.idGenre, g.genre, f.date_parution "
+					+ "from film as f natural join genre as g natural join réalisateur as r where titre like ?");
 			
 			myStmt.setString(1, titre);
 			
 			myRs = myStmt.executeQuery();
 			
-			while (myRs.next()) {
-				Oeuvre tempOeuvre = convertRowToOeuvre(myRs);
-				list.add(tempOeuvre);
+			while (myRs.next()) 
+			{
+				if(o1.getTitre() == titre)
+				{
+
+					Oeuvre tempOeuvre = convertRowToOeuvre(myRs);
+					o1= tempOeuvre;
+					
+				}
 			}
 			
-			return list;
+			return o1;
 		}
 		finally {
 			close(myStmt, myRs, myStmt);
 		}
 	}
 	
+	/**
+	 * 
+	 * @param Oeuvre
+	 * @throws Exception
+	 */
 	public void AddOeuvres(Oeuvre Oeuvre ) throws Exception {
 		PreparedStatement myPstmt = null;
 		
@@ -86,7 +111,7 @@ private Connection myConn;
 			myPstmt.setString(1, Oeuvre.getTitre());
 			myPstmt.setInt(2, Oeuvre.getIdRéalisateur());
 			myPstmt.setInt(3, Oeuvre.getIdGenre());
-			myPstmt.setInt(4, Oeuvre.getDate_parition());
+			myPstmt.setInt(4, Oeuvre.getDate_parution());
 		
 			//exécutée la requête
 			myPstmt.executeUpdate();
@@ -98,18 +123,26 @@ private Connection myConn;
 	}
 	
 	//reçoit un Objet oeuvre en param
-	public void UpdateOeuvres(Oeuvre Oeuvre ) throws Exception {
+
+	/**
+	 * 
+	 * @param ancienTitre
+	 * @param Oeuvre
+	 * @throws Exception
+	 */
+	public void UpdateOeuvres(String ancienTitre, Oeuvre Oeuvre ) throws Exception {
 		PreparedStatement myPstmt = null;
 		
 		try {
-			myPstmt = myConn.prepareStatement("UPDATE videot.Film(idFilm,titre,description,idRéalisateur,idGenre,date_parution) VALUES (?,?,?,?,?,?)");
+			//myPstmt = myConn.prepareStatement("UPDATE film SET  titre=?, description=?, idRéalisateur=?, idGenre=?, date_parution=? WHERE titre =ancienTitre ");
+			myPstmt = myConn.prepareStatement("SET SQL_SAFE_UPDATES=0 );"
+			+ "UPDATE film SET titre=?, description =?, idRéalisateur = 2, idGenre = 5, date_parution =? WHERE titre like '" + ancienTitre);
 			//set param
-			myPstmt.setInt(1, Oeuvre.getIdFilm());
 			myPstmt.setString(2, Oeuvre.getTitre());
-			myPstmt.setString(3, Oeuvre.getDes());;
+			myPstmt.setString(3, Oeuvre.getDescription());
 			myPstmt.setInt(4, Oeuvre.getIdRéalisateur());
 			myPstmt.setInt(5, Oeuvre.getIdGenre());
-			myPstmt.setInt(6, Oeuvre.getDate_parition());
+			myPstmt.setInt(6, Oeuvre.getDate_parution());
 		
 			//exécutée la requête
 			myPstmt.executeUpdate();
@@ -120,6 +153,11 @@ private Connection myConn;
 		}
 	}
 	
+	/**
+	 * 
+	 * @param idFilm
+	 * @throws Exception
+	 */
 	public void DeleteOeuvres(int idFilm ) throws Exception {
 		PreparedStatement myPstmt = null;
 		
@@ -136,23 +174,37 @@ private Connection myConn;
 			close(myPstmt, null, myPstmt);
 		}
 	}
-	
+	/**
+	 * 
+	 * @param myRs
+	 * @return
+	 * @throws SQLException
+	 */
 	private Oeuvre convertRowToOeuvre(ResultSet myRs) throws SQLException {
 		
 		int idFilm = myRs.getInt("idFilm");
 		String titre = myRs.getString("titre");
-		String des = myRs.getString("des");
+		String des = myRs.getString("description");
 		int idRéalisateur = myRs.getInt("idRéalisateur");
+		String nameR = myRs.getString("nom_re");
+		String fnameR = myRs.getString("prenom_re");
 		int idGenre = myRs.getInt("idGenre");
-		int date_parution = myRs.getInt("date_parution");
+		int date_parution = myRs.getInt("Date_parution");
 		
-		Oeuvre tempOeuvre = new Oeuvre(idFilm, titre,des, idRéalisateur, idGenre, date_parution);
+		Oeuvre tempOeuvre = new Oeuvre(idFilm,titre,des,idRéalisateur,nameR,fnameR,idGenre,date_parution);
 		
 		return tempOeuvre;
 	}
 	
 	
-	
+	/**
+	 * 
+	 * @param myConn
+	 * @param myStmt
+	 * @param myRs
+	 * @param myPstmt
+	 * @throws SQLException
+	 */
 	private static void close(Connection myConn, Statement myStmt, ResultSet myRs, PreparedStatement myPstmt)
 			throws SQLException {
 
@@ -176,12 +228,6 @@ private Connection myConn;
 		close(null, myStmt, myRs, myPstmt);		
 	}
 
-	public static void main(String[] args) throws Exception {
-		
-		OeuvreDAO dao = new OeuvreDAO();
-		System.out.println(dao.getAllOeuvres());
-	}
 }
-	
 
    
