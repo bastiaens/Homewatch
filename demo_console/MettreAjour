@@ -45,7 +45,7 @@ public class MettreAjour {
         Console.afficherMenu();
     }
 
-    private void DisplayRecord(String customer_id) throws SQLException {
+    private void displayRecord(String customer_id) throws SQLException {
         try {
         	ConnectionMysql dbUtilities = new ConnectionMysql();
 
