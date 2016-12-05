@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 /**
- * @author Olivier Bastiaens
+ * @author Olivier Bastiaens et JL
  */
 import java.util.ArrayList;
 import java.util.List;
