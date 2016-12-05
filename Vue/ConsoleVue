@@ -7,7 +7,7 @@ import Videotheque_modele.Oeuvre;
 import Videotheque_modele.OeuvreDAO;
 /**
  * 	
- * @author Olivier
+ * @author Olivier et JL
  *
  */
 public class ConsoleVue {
@@ -42,11 +42,11 @@ public class ConsoleVue {
 				try {
 					Scanner userI = new Scanner(System.in);
 					OeuvreDAO daor = new OeuvreDAO();
-					System.out.println("Vous avez choissi l'option 1: rechercher un film: ");
+					System.out.println("Vous avez choisi l'option 1: rechercher un film: ");
 					String Titre;
 					System.out.println("entrez un titre:");
 					Titre = userI.next();
-					System.out.println(daor.searchOeuvres(Titre));
+					System.out.println(daor.searchOeuvre(Titre));
 					ConsoleVue.AfficherMenu();
 					
 				} catch (Exception e) {
@@ -57,9 +57,11 @@ public class ConsoleVue {
 	            	
 	            case "2":
 				try {
-					System.out.println("Vous avez choissi l'option 2: Ajout d'un film:");
+					System.out.println("Vous avez choisi l'option 2: Ajout d'un film:");
 					Scanner userI = new Scanner(System.in);
 					OeuvreDAO daoa = new OeuvreDAO();
+					 System.out.println("Entrez l'id du Film:");
+				        int id = userI.nextInt();
 			   
 			        System.out.println("Entrez le titre du Film:");
 			        String Titre = userI.next();
@@ -76,7 +78,7 @@ public class ConsoleVue {
 					System.out.println("sa date de parution");
 					int date_parution = userI.nextInt();
 					
-					Oeuvre tempOeuvre = new Oeuvre(date_parution, Titre, null, idRea, idGenre, 0);
+					Oeuvre tempOeuvre = new Oeuvre(id, Titre,Description, idRea, idGenre, date_parution); 
 					daoa.AddOeuvres(tempOeuvre);
 					ConsoleVue.AfficherMenu();
 				} catch (Exception e) {
@@ -87,15 +89,18 @@ public class ConsoleVue {
 	            	
 	            case "3":
 				try {
-					System.out.println("Vous avez choissi l'option 3: Mettre à  jour un film");
+					System.out.println("Vous avez choisi l'option 3: Mettre à  jour un film");
 					Scanner userI = new Scanner(System.in);
-					OeuvreDAO daoa = new OeuvreDAO();
+					Oeuvre daoa; //l'ancien film
+					Oeuvre daob; // film modifié
+					OeuvreDAO o1;
 					
-					System.out.println("Entrez le l'id du Film que vous voulez changer:");
-			        int idFilm = userI.nextInt();
+					System.out.println("Entrez le titre du film que vous voulez changer:");
+					String ancienTitre = userI.next();		// Le titre du film a changer.
 					
-			        System.out.println("Entrez le titre du Film:");
-			        String Titre = userI.next();
+					o1 = searchOeuvre(ancienTitre); // il y a une erreur ici
+			        System.out.println("Entrez le nouveau titre du Film:");
+			        String nouveauTitre = userI.next();
 
 			        System.out.println("Entrez son résumer: ");
 			        String Description = userI.next();
@@ -109,8 +114,8 @@ public class ConsoleVue {
 					System.out.println("sa date de parution");
 					int date_parution = userI.nextInt();
 					
-					Oeuvre tempOeuvre = new Oeuvre(date_parution, Titre, Description, idRea, idGenre, idFilm);
-					daoa.UpdateOeuvres(tempOeuvre);
+					daob = new Oeuvre(nouveauTitre, Description, idRea, idGenre,date_parution);
+					daoa.UpdateOeuvres(ancienTitre,daob);
 					ConsoleVue.AfficherMenu();
 					
 				} catch (Exception e) {
