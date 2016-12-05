@@ -1,219 +1,168 @@
-package tp7.controller;
-import java.util.ArrayList;
+package Videotheque_modele;
+
 /**
-*@author JLM
-* Classe representant tout type de Oeuvre dans la videotheque.
-*
-*/
-public class Oeuvre<Personne>
-{
-	private String titreOeuvre, realisateur, compositeur,distinctions;
-	private Genre genre;
-	private int anneeSortie, dureeMinutes;
-	// private Personne[] casting;		//rôles titres d'une oeuvre.
-	private ArrayList<Personne> casting = new ArrayList<>(); // roles titre d'une oeuvre.
+ * 
+ * @author Olivier Bastiaen et JL
+ *
+ */
+
+public class Oeuvre {
+	private int idFilm;
+	private String titre;
+	private String description;
+	private int idRéalisateur;
+	private String nomReal;
+	private String prenomReal;
+	private int idGenre;
+	private String genre;
+	private int date_parution;
 	
 	/**
-	*Constructeur sans parametre d'objets de type Oeuvre. A utiliser pour tester par defaut.
-	*/
-	public Oeuvre()
-	{
-		this.titreOeuvre = "The Lion King";
-		this.realisateur = "Jsais pas, mais c'est Disney";
-		this.compositeur = "Hans Zimmer";
-		this.anneeSortie = 1994;
-		this.dureeMinutes = 89;
-	    	genre.setGenre("Animation 2D");
+	 * 
+	 * @param titre
+	 * @param des
+	 * @param rea
+	 * @param genre
+	 * @param date
+	 */
+	public Oeuvre(String titre, String des, int rea, int genre, int date) {
+		this.titre = titre;
+		this.description= des;
+		this.idRéalisateur = rea;
+		this.idGenre = genre;
+		this.date_parution = date;
 	}
-	
+
 	/**
-	*Constructeur d'objets de type Oeuvre.
-	*@param ti comme titre du Oeuvre, real comme realisateur du Oeuvre, an comme annee de sortie du Oeuvre, duree comme duree en minutes du Oeuvre
-	*
-	*/
-	public Oeuvre(String ti,String real,String comp, int an, int duree, String genre)
-	{
-		this.titreOeuvre = ti;
-		this.realisateur = real;
-		this.compositeur = comp;
-		this.anneeSortie = an;
-		this.dureeMinutes = duree;
-		genre.setGenre(genre);
-		
-	}
-	
-	/**
-	*Cette methode renvoie le titre du Oeuvre sous forme de chaine de caracteres
-	*@return Le titre du Oeuvre
-	*/
-	public String getTitre()
-	{
-		return titreOeuvre;
-	}
-	
-	/**
-	*@param titre le titre du Oeuvre a
-	*
-	*/
-	public void setTitre(String titre)
-	{
-			this.titreOeuvre = titre;
-	}
-	
-	/**
-	*
-	*Cette methode renvoie le nom du réalisateur du Oeuvre
-	*@return le nom du realisateur
-	*/
-	public String getRealisateur(int indice)
-	{
-		String desc = "";
-		for(Personne p : casting)
-		{
-			if( casting.get(indice).getMetier().equalsIgnoreCase("realisateur"))
-			{
-				desc += "Prenom : " + casting.get(indice).getPrenom() + " Nom : " + casting.get(indice).getNom() + " Profession :" + casting.get(indice).getMetier();
-			}	
-		}
-		return realisateur;
-	}
-	
-	/**
-	*Methode d'insertion de realisateur.
-	*@param real le réalisateur à ajouter.
-	*
-	*/
-	public void setRealisateur(String real)
-	{
-		this.realisateur = real;
-	}
-	
-	/**
-	* Methode de recuperation de la duree d'un Oeuvre.
-	*@return la duree du Oeuvre en minutes.
-	*/
-	public int getDuree()
-	{
-		return dureeMinutes;
-	}
-	
-	/**
-	*
-	*@param minutes La durée en minutes
-	*/
-	public void setDuree(int minutes)
-	{
-		this.dureeMinutes = minutes;
-	}
-	
-	/**
-	*
-	*@return l'annee de sortie du Oeuvre
-	*/
-	public int getAnneeSortie()
-	{
-		return anneeSortie;
-	}
-	
-	/**
-	* Methode d'ajout de l'année de sortie d'un Oeuvre.
-	*@param anSortie La date de sortie du Oeuvre à rajouter.
-	*/
-	public void setAnneeSortie(int anSortie)
-	{
-		this.anneeSortie = anSortie;
-	}
-	
-	/**
-	*
-	*Methode de recuperation d'un membre du casting.
-	*@param indice l'acteur dans la liste
-	*/
-	public String getActeurs(int indice)
-	{
-		String desc = "";
-		for(Personne p : casting)
-		{
-			if(casting.contains(p))
-			{
-				desc += "Prenom : " + casting.get(indice).getPrenom() + " Nom : " + casting.get(indice).getNom() + " Profession :" + casting.get(indice).getMetier();			}	
-		} 
-		return desc;
-	}
-	
-	/*
-	*Methode de recuperation du genre d'un Oeuvre.
-	* @return Le genre du Oeuvre.
-	*
-	*/
-	public Genre getGenre()
-	{
-		return genre;
-	}
-	
-	/**
-	*
-	*Methode d'ajout d'un/e acteur/actrice au casting du Oeuvre.
-	*/
-	public void ajoutActeur(Personne act)
-	{
-		boolean dejaAjoute = false;
-		
-		if(casting.isEmpty())
-		{
-			casting.add(act);
-			
-		}
-		for(Personne p : casting)
-		{
-			if(p.getPrenom() == act.getPrenom() && p.getNom() == act.getNom())
-			{
-				dejaAjoute = true;
-			}
-		}
-		if(!dejaAjoute)
-		{
-			casting.add(act);
-		}
+	 * 
+	 * @param idFilm
+	 * @param titre
+	 * @param des
+	 * @param rea
+	 * @param genre
+	 * @param date
+	 */
+	public Oeuvre(int idFilm, String titre, String des, int rea, int genre, int date) {
+		this.idFilm = idFilm;
+		this.titre = titre;
+		this.description= des;
+		this.idRéalisateur = rea;
+		this.idGenre = genre;
+		this.date_parution = date;
 	}
 	/**
 	 * 
-	 * @param act
-	 * @return
+	 * @param idF
+	 * @param titre
+	 * @param des
+	 * @param realId
+	 * @param nameReal
+	 * @param firstNameReal
+	 * @param genre
+	 * @param date
 	 */
-	public Personne retraitActeur(Personne act)
-	{
-		if(casting.isEmpty())
-		{
-			return null;
-			
-		}
-		for(Personne p : casting)
-		{
-			
-			if(p.getPrenom() == act.getPrenom() && p.getNom() == act.getNom())
-			{
-				return casting.remove(casting.indexOf(act));
-			}
-			
-		}
-		System.out.println("L'element ne se trouve pas dans la liste.");
-		return null;
-		
+	public Oeuvre(int idF, String titre, String des, int realId,String nameReal,String firstNameReal, int genre, int date) {
+		this.idFilm = idF;
+		this.titre = titre;
+		this.description= des;
+		this.idRéalisateur = realId;
+		this.idGenre = genre;
+		this.date_parution = date;
+		this.nomReal = nameReal;
+		this.prenomReal = firstNameReal;
 	}
-	/**
-	 * Methode de vidage du casting d'un film.
-	 */
-	public void videCasting()
-	{
-		casting.clear();
+	
+	
+	public String getNomReal() {
+		return nomReal;
 	}
-	/*
-	*Methode de verification du contenu d'une liste de casting
-	*@return true si le casting est vide, false sinon.
-	*/
-	public boolean estVide()
-	{
-		return casting.isEmpty();
+
+
+	public void setNomReal(String nomReal) {
+		this.nomReal = nomReal;
 	}
+
+
+	public String getPrenomReal() {
+		return prenomReal;
+	}
+
+
+	public void setPrenomReal(String prenomReal) {
+		this.prenomReal = prenomReal;
+	}
+
+
+	public String getGenre() {
+		return genre;
+	}
+
+
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
+
+
+	public String getDescription() {
+		return description;
+	}
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
+
+
+
+	public int getIdFilm() {
+		return idFilm;
+	}
+
+	public void setIdFilm(int idFilm) {
+		this.idFilm = idFilm;
+	}
+
+	public String getTitre() {
+		return titre;
+	}
+
+	public void setTitre(String titre) {
+		this.titre = titre;
+	}
+
+	public int getIdRéalisateur() {
+		return idRéalisateur;
+	}
+
+	public void setIdRéalisateur(int idRéalisateur) {
+		this.idRéalisateur = idRéalisateur;
+	}
+
+	public int getIdGenre() {
+		return idGenre;
+	}
+
+	public void setIdGenre(int idGenre) {
+		this.idGenre = idGenre;
+	}
+
+	public int getDate_parution() {
+		return date_parution;
+	}
+
+
+	public void setDate_parution(int date_parution) {
+		this.date_parution = date_parution;
+	}
+
+
+	@Override
+	public String toString() {
+		return String
+				.format("Oeuvre: [idFilm=%s, titre=%s, description=%s idRéalisateur=%s, idGenre=%s, date_parution=%s]",
+						idFilm, titre, description, idRéalisateur,idGenre,date_parution);
+	}
+	
 }
