@@ -3,8 +3,10 @@ package Videotheque_vue;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import Videotheque_modele.Oeuvre;
-import Videotheque_modele.OeuvreDAO;
+import Videotheque_modele.*;
+
+
+
 /**
  * 	
  * @author Olivier et JL
@@ -91,14 +93,11 @@ public class ConsoleVue {
 				try {
 					System.out.println("Vous avez choisi l'option 3: Mettre à  jour un film");
 					Scanner userI = new Scanner(System.in);
-					Oeuvre daoa; //l'ancien film
-					Oeuvre daob; // film modifié
-					OeuvreDAO o1;
+					OeuvreDAO daoa = new OeuvreDAO();
 					
-					System.out.println("Entrez le titre du film que vous voulez changer:");
-					String ancienTitre = userI.next();		// Le titre du film a changer.
+					System.out.println("Entrez l'id du film que vous voulez changer:");
+					int idF = userI.nextInt();		// Le titre du film a changer.
 					
-					o1 = searchOeuvre(ancienTitre); // il y a une erreur ici
 			        System.out.println("Entrez le nouveau titre du Film:");
 			        String nouveauTitre = userI.next();
 
@@ -114,8 +113,8 @@ public class ConsoleVue {
 					System.out.println("sa date de parution");
 					int date_parution = userI.nextInt();
 					
-					daob = new Oeuvre(nouveauTitre, Description, idRea, idGenre,date_parution);
-					daoa.UpdateOeuvres(ancienTitre,daob);
+					Oeuvre daob = new Oeuvre(idF, nouveauTitre, Description, idRea, idGenre, date_parution);
+					daoa.UpdateOeuvres(daob);
 					ConsoleVue.AfficherMenu();
 					
 				} catch (Exception e) {
