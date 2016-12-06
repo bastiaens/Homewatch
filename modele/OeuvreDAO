@@ -7,20 +7,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-/**
- * @author Olivier Bastiaens et JL
- */
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ * @author Olivier Bastiaens et JL
+ */
 
 public class OeuvreDAO {
+	
 private Connection myConn;
 	
 	public OeuvreDAO() throws Exception {
 		
-		// get db properties
+		// va rechercher le mot de passe, le nom de l'utilisateur et l'URL de connection dans un dossier Mysql
 		Properties props = new Properties();
 		props.load(new FileInputStream("Mysql/videot.properties"));
 		
@@ -33,6 +34,12 @@ private Connection myConn;
 		
 		System.out.println("DB connection successful to: " + dburl);
 	}
+	
+	/**
+	 * Méthode qui renvoie tout les film de la db
+	 * @return list, list contenent tout les films se trouvant dans la db
+	 * @throws Exception
+	 */
 	
 	public List<Oeuvre> getAllOeuvres() throws Exception {
 		List<Oeuvre> list = new ArrayList<>();
@@ -58,9 +65,9 @@ private Connection myConn;
 	}
 	
 	/**
-	 * 
+	 * Méthode qui permet de rechercher un film sur base de son titre
 	 * @param titre
-	 * @return
+	 * @return tout les informations concernant le film demander
 	 * @throws Exception
 	 */
 	public Oeuvre searchOeuvre(String titre) throws Exception {
@@ -72,7 +79,8 @@ private Connection myConn;
 		try {
 			titre += "%";
 			myStmt = myConn.prepareStatement("select f.idFilm, f.titre, f.description, r.idRéalisateur, r.nom_re, r.prenom_re, g.idGenre, g.genre, f.date_parution "
-					+ "from film as f natural join genre as g natural join réalisateur as r where titre like ?");
+					+ "from film as f natural join genre as g natural join réalisateur as r"
+					+ " where titre like ?");
 			
 			myStmt.setString(1, titre);
 			
@@ -97,7 +105,7 @@ private Connection myConn;
 	}
 	
 	/**
-	 * 
+	 *Méthode permettant d'ajouter un film dans la base de donnée.
 	 * @param Oeuvre
 	 * @throws Exception
 	 */
@@ -126,27 +134,30 @@ private Connection myConn;
 
 	/**
 	 * 
-	 * @param ancienTitre
+	 * Méthode qui permet de modifier les données d'un film 
 	 * @param Oeuvre
 	 * @throws Exception
 	 */
-	public void UpdateOeuvres(String ancienTitre, Oeuvre Oeuvre ) throws Exception {
+	public void UpdateOeuvres(Oeuvre Oeuvre ) throws Exception {
 		PreparedStatement myPstmt = null;
 		
 		try {
 			//myPstmt = myConn.prepareStatement("UPDATE film SET  titre=?, description=?, idRéalisateur=?, idGenre=?, date_parution=? WHERE titre =ancienTitre ");
-			myPstmt = myConn.prepareStatement("SET SQL_SAFE_UPDATES=0 );"
-			+ "UPDATE film SET titre=?, description =?, idRéalisateur = 2, idGenre = 5, date_parution =? WHERE titre like '" + ancienTitre);
+			myPstmt = myConn.prepareStatement("UPDATE film SET titre=?, description=?, idRéalisateur=?, idGenre=?, date_parution=?"
+			+ " WHERE idFilm = ?");
+			
 			//set param
-			myPstmt.setString(2, Oeuvre.getTitre());
-			myPstmt.setString(3, Oeuvre.getDescription());
-			myPstmt.setInt(4, Oeuvre.getIdRéalisateur());
-			myPstmt.setInt(5, Oeuvre.getIdGenre());
-			myPstmt.setInt(6, Oeuvre.getDate_parution());
+			
+			myPstmt.setString(1, Oeuvre.getTitre());
+			myPstmt.setString(2, Oeuvre.getDescription());
+			myPstmt.setInt(3, Oeuvre.getIdRéalisateur());
+			myPstmt.setInt(4, Oeuvre.getIdGenre());
+			myPstmt.setInt(5, Oeuvre.getDate_parution());
+			myPstmt.setInt(6, Oeuvre.getIdFilm());
 		
 			//exécutée la requête
 			myPstmt.executeUpdate();
-			
+			System.out.println("le film a été modifié avec succes");
 		}
 		finally {
 			close(null, null, myPstmt);
@@ -154,7 +165,7 @@ private Connection myConn;
 	}
 	
 	/**
-	 * 
+	 * Méthode qui permet de supprimer un film 
 	 * @param idFilm
 	 * @throws Exception
 	 */
