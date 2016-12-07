@@ -109,7 +109,7 @@ private Connection myConn;
 	 * @param Oeuvre
 	 * @throws Exception
 	 */
-	public void AddOeuvres(Oeuvre Oeuvre ) throws Exception {
+	public void addOeuvres(Oeuvre Oeuvre ) throws Exception {
 		PreparedStatement myPstmt = null;
 		
 		try {
@@ -138,7 +138,7 @@ private Connection myConn;
 	 * @param Oeuvre
 	 * @throws Exception
 	 */
-	public void UpdateOeuvres(Oeuvre Oeuvre ) throws Exception {
+	public void updateOeuvres(Oeuvre Oeuvre ) throws Exception {
 		PreparedStatement myPstmt = null;
 		
 		try {
@@ -169,7 +169,7 @@ private Connection myConn;
 	 * @param idFilm
 	 * @throws Exception
 	 */
-	public void DeleteOeuvres(int idFilm ) throws Exception {
+	public void deleteOeuvres(int idFilm ) throws Exception {
 		PreparedStatement myPstmt = null;
 		
 		try {
