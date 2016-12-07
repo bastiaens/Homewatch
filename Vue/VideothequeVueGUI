@@ -1,0 +1,113 @@
+package homewatch;
+
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+/**
+ * 
+ * @author JLM
+ *
+ */
+public class VideothequeVueGUI implements ActionListener 
+{
+	private JFrame fenetre;
+	private JTextField champRecherche = new JTextField(3);
+	
+	// Déclaration et initialisation des boutons de la fenetre.
+	private JButton creeFilm = new JButton("Creer un film");
+	private JButton chercheFilm = new JButton("Rechercher un film");
+	private JButton ajoutFilm = new JButton("Ajouter un nouveau film");
+	private JButton retraitFilm = new JButton("Supprimer un film");
+	private JButton modifieFilm = new JButton("Modifier un film");
+	private JButton afficherCatalogue = new JButton("Affichr tous les films");
+	
+	private JLabel message = new JLabel("Un message.");
+	private JTable table;
+	JPanel contenu = new JPanel();
+	
+	/**
+	 * Constructeur d'objet de type VideothequeGUI, donc d'une fenetre.
+	 */
+	public VideothequeVueGUI()
+	{
+		fenetre = new JFrame("Homewatch");	//construction de fenetre..
+		contenu.setLayout(new BoxLayout(contenu, BoxLayout.Y_AXIS));
+		updateTable();
+		contenu.add(table.getTableHeader());
+		contenu.add(table);
+		contenu.add(message);
+		
+		fenetre.add(contenu, BorderLayout.NORTH);
+		
+		JPanel fieldZone = new JPanel();
+		fieldZone.setLayout(new BoxLayout(fieldZone, BoxLayout.X_AXIS));
+ 		
+	}
+	
+	/**
+	 * Listener.
+	 */
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		Object source = e.getSource(); //??? Mais ça marche...
+		
+		if(source == creeFilm)
+		{
+			
+		}
+		else if(source == chercheFilm)
+		{
+			
+			
+		}
+		else if(source == ajoutFilm)
+		{
+			
+			
+		}
+		else if(source == retraitFilm)
+		{
+			
+			
+		}
+		else if(source == modifieFilm)
+		{
+			
+			
+		}
+		else
+		{
+			//affichage du catalogue entier.
+		}
+		
+		
+		
+	}
+	
+	/**
+	 * 
+	 */
+	public void updateTable()
+	{
+		
+		
+	}
+	
+	/**
+	 * 
+	 */
+	public void update()
+	{
+		
+		
+	}
+}
