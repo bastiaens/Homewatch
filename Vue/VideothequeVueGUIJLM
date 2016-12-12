@@ -1,9 +1,10 @@
-package homewatch;
-
+package Videotheque_vue;
+import Videotheque_modele. *;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.io.IOException;
+import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,129 +13,160 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-/**
- * 
- * @author JLM
- *
- */
-public class VideothequeVueGUI implements ActionListener 
-{
-	private JFrame fenetre;
-	private String entreeUserTitre, entreeUserIdFilm;
-	private JTextField champRecherche = new JTextField(3);	//"Barre de recherche".
-	private JTextField champResultat = new JTextField(3);	//champ du Resultat.
-	//	champResultat.setEditable(false); ne marche pas,etrangement...
-	
-	// Déclaration et initialisation des boutons de la fenetre.
-	private JButton creeFilm = new JButton("Creer un film");
-	private JButton chercheFilm = new JButton("Rechercher un film");
-	private JButton ajoutFilm = new JButton("Ajouter un nouveau film");
-	private JButton retraitFilm = new JButton("Supprimer un film");
-	private JButton modifieFilm = new JButton("Modifier un film");
-	private JButton afficherCatalogue = new JButton("Afficher tous les films");
-	
-	
-	//champs de texte pour récolter les entrées utilisateurs
-	private JTextField entreeUser1 = new JTextField(20);
-	
-	private JLabel message = new JLabel("Un message.");
-	private JTable table;
-	JPanel contenu = new JPanel();
-	
-	/**
-	 * Constructeur d'objet de type VideothequeGUI, donc d'une fenetre.
-	 */
-	public VideothequeVueGUI()
-	{
-		fenetre = new JFrame("Homewatch");	//construction de fenetre..
-		contenu.setLayout(new BoxLayout(contenu, BoxLayout.Y_AXIS));
-		updateTable();
-		contenu.add(table.getTableHeader());
-		contenu.add(table);
-		contenu.add(message);
-		
-		fenetre.add(contenu, BorderLayout.NORTH);
-		
-		//ajout des boutons
-		
-		creeFilm.addActionListener(this);
-		contenu.add(creeFilm);
-		chercheFilm.addActionListener(this);
-		contenu.add(chercheFilm);
-		ajoutFilm.addActionListener(this);
-		contenu.add(ajoutFilm);
-		modifieFilm.addActionListener(this);
-		contenu.add(modifieFilm);
-		retraitFilm.addActionListener(this);
-		contenu.add(retraitFilm);
-		afficherCatalogue.addActionListener(this);
-		contenu.add(afficherCatalogue);
-		JPanel fieldZone = new JPanel();
-		fieldZone.setLayout(new BoxLayout(fieldZone, BoxLayout.X_AXIS));
- 		
-	}
-	
-	/**
-	 * Listener.
-	 */
-	@Override
-	public void actionPerformed(ActionEvent e)
-	{
-		Object source = e.getSource(); //??? Mais ça marche...
-		
-		if(source == creeFilm)
-		{
-			entreeUserTitre = JOptionPane.showInputDialog("Veuillez spécifier les caractéristiques du film. ");
-			champResultat.setText("");
-		}
-		else if(source == chercheFilm)
-		{
-			entreeUserTitre = JOptionPane.showInputDialog("Titre du film? ");
-			//champResultat.setText(getTitreDb());
-		}
-		else if(source == ajoutFilm)
-		{
-			entreeUserTitre = JOptionPane.showInputDialog("Veuillez spécifier les caractéristiques du film.");
-			champResultat.setText("");
-		}
-		else if(source == retraitFilm)
-		{
-			entreeUserTitre = JOptionPane.showInputDialog("Titre du film à supprimer?");
-			champResultat.setText("");
-		}
-		else if(source == modifieFilm)
-		{
-			entreeUserTitre = JOptionPane.showInputDialog("Titre du film à modifier?");
-			Oeuvre o1 = new Oeuvre();
-			o1.setTitreDb(entreeUserTitre,entreeUserIdFilm);
-			champResultat.setText("");
-		}
-		else
-		{
-			//affichage du catalogue entier.
-			champResultat.setText("");
-		}
-		
-		
-		
-	}
-	
-	
+import java.util.List;
+import Videotheque_modele.*;
+
+public class GUIJML implements ActionListener{
 	/**
 	 * 
+	 * @author JLM
+	 *
 	 */
-	public void updateTable()
-	{
+		private JFrame fenetre;
+		private String entreeUserTitre, entreeUserIdFilm;
+		private JTextField champRecherche = new JTextField(3);	//"Barre de recherche".
+		private JTextField champResultat = new JTextField(3);	//champ du Resultat.
+		//	champResultat.setEditable(false); ne marche pas,etrangement...
+		
+		// Déclaration et initialisation des boutons de la fenetre.
+		private JButton creeFilm = new JButton("Creer un film");
+		private JButton chercheFilm = new JButton("Rechercher un film");
+		private JButton ajoutFilm = new JButton("Ajouter un nouveau film");
+		private JButton retraitFilm = new JButton("Supprimer un film");
+		private JButton modifieFilm = new JButton("Modifier un film");
+		private JButton afficherCatalogue = new JButton("Afficher tous les films");
 		
 		
-	}
-	
-	/**
-	 * 
-	 */
-	public void update()
-	{
+		//champs de texte pour récolter les entrées utilisateurs
+		private JTextField entreeUser1 = new JTextField(20);
+		
+		private JLabel message = new JLabel("Un message.");
+		private JTable table;
+		JPanel contenu = new JPanel();
+		
+		/**
+		 * Constructeur d'objet de type VideothequeGUI, donc d'une fenetre.
+		 */
+		public GUIJML()
+		{
+			fenetre = new JFrame("Homewatch");	//construction de fenetre..
+			contenu.setLayout(new BoxLayout(contenu, BoxLayout.Y_AXIS));
+			updateTable();
+			contenu.add(table.getTableHeader());
+			contenu.add(table);
+			contenu.add(message);
+			
+			fenetre.add(contenu, BorderLayout.NORTH);
+			
+			//ajout des boutons
+			
+			creeFilm.addActionListener(this);
+			contenu.add(creeFilm);
+			chercheFilm.addActionListener(this);
+			contenu.add(chercheFilm);
+			ajoutFilm.addActionListener(this);
+			contenu.add(ajoutFilm);
+			modifieFilm.addActionListener(this);
+			contenu.add(modifieFilm);
+			retraitFilm.addActionListener(this);
+			contenu.add(retraitFilm);
+			afficherCatalogue.addActionListener(this);
+			contenu.add(afficherCatalogue);
+			JPanel fieldZone = new JPanel();
+			fieldZone.setLayout(new BoxLayout(fieldZone, BoxLayout.X_AXIS));
+	 		
+		}
+		
+		/**
+		 * Listener.
+		 */
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			try
+			{	
+				Object source = e.getSource(); //??? Mais ça marche...
+				
+				if(source == creeFilm)
+				{
+					entreeUserTitre = JOptionPane.showInputDialog("Veuillez spécifier les caractéristiques du film. ");
+					
+					champResultat.setText("");
+				}
+				else if(source == chercheFilm)
+				{
+					entreeUserTitre = JOptionPane.showInputDialog("Titre du film? ");
+					//champResultat.setText(getTitreDb());
+				}
+				else if(source == ajoutFilm)
+				{
+					entreeUserTitre = JOptionPane.showInputDialog("Veuillez spécifier les caractéristiques du film.");
+					champResultat.setText("");
+				}
+				else if(source == retraitFilm)
+				{
+					entreeUserTitre = JOptionPane.showInputDialog("Titre du film à supprimer?");
+					champResultat.setText("");
+				}
+				else if(source == modifieFilm)
+				{
+					entreeUserTitre = JOptionPane.showInputDialog("Titre du film à modifier?");
+					OeuvreDAO odao = new OeuvreDAO();
+					Oeuvre o2 = odao.searchOeuvre(entreeUserTitre);
+					odao.UpdateOeuvres(o2);
+					champResultat.setText("");
+				}
+				else
+				{
+					//affichage du catalogue entier.
+					OeuvreDAO odao = new OeuvreDAO();
+					List<Oeuvre> catalogue = new ArrayList<Oeuvre>();
+					champResultat.setText("");
+					
+					  String liste;
+					  
+					  catalogue = odao.getAllOeuvres();
+					  // A RESOUDRE : 
+					 //liste += catalogue.displayListeOeuvre(catalogue);
+					  liste += catalogue.getAllOeuvre().displayListeOeuvre(catalogue);
+
+					 champResultat.setText(liste);
+					 
+				}
+				
+			}
+			catch(IOException exc)
+			{
+				System.err.println(exc.getMessage());
+				
+			}
+			catch(Exception exc2)
+			{
+				System.err.println(exc2.getMessage());
+				
+			}
+				
+		}
 		
 		
-	}
+		/**
+		 * 
+		 */
+		public void updateTable()
+		{
+			
+			
+		}
+		
+		/**
+		 * 
+		 */
+		public void update()
+		{
+			
+			
+		}
 }
+
+
+
