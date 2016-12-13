@@ -221,8 +221,6 @@ public class VideoGUI extends JFrame implements ActionListener {
 				  String liste;
 				  
 				  catalogue = odao.getAllOeuvres();
-				  // A RESOUDRE : 
-				 //liste += catalogue.displayListeOeuvre(catalogue);
 				  
 				  DefaultTableModel model = (DefaultTableModel)table.getModel();
 				  Object[] row = new Object[6];
