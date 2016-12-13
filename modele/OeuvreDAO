@@ -1,5 +1,5 @@
-package Videotheque_modele;
-
+package Home.modele;
+ 
 import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,16 +8,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Observable;
 import java.util.Properties;
 
 /**
  * @author Olivier Bastiaens et JL
  */
 
-public class OeuvreDAO {
+public class OeuvreDAO extends Observable implements Iterator {
 	
 private Connection myConn;
+private List<Oeuvre> list = new ArrayList<>();
 	
 	public OeuvreDAO() throws Exception {
 		
@@ -42,7 +45,6 @@ private Connection myConn;
 	 */
 	
 	public List<Oeuvre> getAllOeuvres() throws Exception {
-		List<Oeuvre> list = new ArrayList<>();
 
 		Statement myStmt = null;
 		ResultSet myRs = null;
@@ -50,7 +52,8 @@ private Connection myConn;
 		try {
 		
 			myStmt = myConn.createStatement();
-			myRs = myStmt.executeQuery("select * from Film");
+			myRs = myStmt.executeQuery("select idFilm, titre, genre, nom_re, prenom_re, date_parution"
+					+ " from videot.film natural join videot.genre natural join videot.réalisateur;");
 			
 			while (myRs.next()) {
 				Oeuvre tempOeuvre = convertRowToOeuvre(myRs);
@@ -64,6 +67,18 @@ private Connection myConn;
 		}
 	}
 	
+	public String displayListeOeuvre(List<Oeuvre> list){
+		String catalogue = "";
+		
+		for(Iterator it = list.iterator(); it.hasNext();)
+		{
+			catalogue += it.next().toString();
+			
+		}
+		
+		return catalogue;
+		
+	}
 	/**
 	 * Méthode qui permet de rechercher un film sur base de son titre
 	 * @param titre
@@ -109,7 +124,7 @@ private Connection myConn;
 	 * @param Oeuvre
 	 * @throws Exception
 	 */
-	public void addOeuvres(Oeuvre Oeuvre ) throws Exception {
+	public void AddOeuvres(Oeuvre Oeuvre ) throws Exception {
 		PreparedStatement myPstmt = null;
 		
 		try {
@@ -138,7 +153,7 @@ private Connection myConn;
 	 * @param Oeuvre
 	 * @throws Exception
 	 */
-	public void updateOeuvres(Oeuvre Oeuvre ) throws Exception {
+	public void UpdateOeuvres(Oeuvre Oeuvre ) throws Exception {
 		PreparedStatement myPstmt = null;
 		
 		try {
@@ -169,7 +184,7 @@ private Connection myConn;
 	 * @param idFilm
 	 * @throws Exception
 	 */
-	public void deleteOeuvres(int idFilm ) throws Exception {
+	public void DeleteOeuvres(int idFilm ) throws Exception {
 		PreparedStatement myPstmt = null;
 		
 		try {
@@ -195,15 +210,13 @@ private Connection myConn;
 		
 		int idFilm = myRs.getInt("idFilm");
 		String titre = myRs.getString("titre");
-		String des = myRs.getString("description");
-		int idRéalisateur = myRs.getInt("idRéalisateur");
+		String genre = myRs.getString("genre");
 		String nameR = myRs.getString("nom_re");
 		String fnameR = myRs.getString("prenom_re");
-		int idGenre = myRs.getInt("idGenre");
 		int date_parution = myRs.getInt("Date_parution");
 		
-		Oeuvre tempOeuvre = new Oeuvre(idFilm,titre,des,idRéalisateur,nameR,fnameR,idGenre,date_parution);
 		
+		Oeuvre tempOeuvre = new Oeuvre(idFilm,titre,genre, nameR,fnameR, date_parution);
 		return tempOeuvre;
 	}
 	
@@ -239,6 +252,16 @@ private Connection myConn;
 		close(null, myStmt, myRs, myPstmt);		
 	}
 
-}
+	@Override
+	public boolean hasNext() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
-   
+	@Override
+	public Object next() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
