@@ -1,172 +1,282 @@
-package Videotheque_vue;
-import Videotheque_modele. *;
-import java.awt.BorderLayout;
+package Home.vue;
+
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
-import javax.swing.BoxLayout;
+import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import java.util.List;
-import Videotheque_modele.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
-public class GUIJML implements ActionListener{
+import Home.modele.Oeuvre;
+import Home.modele.OeuvreDAO;
+
+public class VideoGUI extends JFrame implements ActionListener {
+	
+	
+	//déclaration des variables
+	private JPanel contentPane;
+	
+	private JTextField textField_1_titre;
+	private JTextField textField_2_genre;
+	private JTextField textField_3_nom_re;
+	private JTextField textField_4_prenom;
+	private JTextField textField_5_parution;
+
+	private JTable table;
+	
+	private String entreeUserTitre, entreeUserIdFilm;
+	
+	private JButton chercheFilm = new JButton("Rechercher un film");
+	private JButton creeFilm = new JButton("Nouveau film");
+	private JButton supprimeFilm = new JButton("supprimer un Film");
+	private JButton modifieFilm = new JButton("Modifier un film");
+	private JButton afficheCatalogue = new JButton("afficher tout");
+	
+	
+	JLabel lblId = new JLabel("id: ");
+	JLabel lblTitre = new JLabel("titre :");
+	JLabel lblGenre = new JLabel("genre :");
+	JLabel lblNomre = new JLabel("nom_re :");
+	JLabel lblPrenomre = new JLabel("prenom_re :");
+	JLabel lblParution = new JLabel("parution :");
+	JScrollPane scrollPane = new JScrollPane();
+	private final JButton btnAffichecatalogue = new JButton("afficheCatalogue");
+
+
+
+
+
+
+
+	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					VideoGUI frame = new VideoGUI();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public VideoGUI() {
+		
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 706, 446);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+
+		
+		lblId.setBounds(40, 78, 61, 14);
+		contentPane.add(lblId);
+		
+		lblTitre.setBounds(40, 102, 61, 14);
+		contentPane.add(lblTitre);
+		
+		lblGenre.setBounds(40, 127, 61, 14);
+		contentPane.add(lblGenre);
+		
+		lblNomre.setBounds(40, 152, 61, 14);
+		contentPane.add(lblNomre);
+		
+		lblPrenomre.setBounds(40, 177, 61, 14);
+		contentPane.add(lblPrenomre);
+		
+		lblParution.setBounds(40, 202, 61, 14);
+		contentPane.add(lblParution);
+		
+		JTextField textField_id = new JTextField();
+		textField_id.setBounds(111, 75, 86, 20);
+		contentPane.add(textField_id);
+		textField_id.setColumns(10);
+		
+		textField_1_titre = new JTextField();
+		textField_1_titre.setColumns(10);
+		textField_1_titre.setBounds(111, 99, 86, 20);
+		contentPane.add(textField_1_titre);
+		
+		textField_2_genre = new JTextField();
+		textField_2_genre.setColumns(10);
+		textField_2_genre.setBounds(111, 124, 86, 20);
+		contentPane.add(textField_2_genre);
+		
+		textField_3_nom_re = new JTextField();
+		textField_3_nom_re.setColumns(10);
+		textField_3_nom_re.setBounds(111, 149, 86, 20);
+		contentPane.add(textField_3_nom_re);
+		
+		textField_4_prenom = new JTextField();
+		textField_4_prenom.setColumns(10);
+		textField_4_prenom.setBounds(111, 174, 86, 20);
+		contentPane.add(textField_4_prenom);
+		
+		textField_5_parution = new JTextField();
+		textField_5_parution.setColumns(10);
+		textField_5_parution.setBounds(111, 199, 86, 20);
+		contentPane.add(textField_5_parution);
+		
+		scrollPane.setBounds(243, 75, 417, 144);
+		contentPane.add(scrollPane);
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"IdFilm", "Titre", "Genre", "Nom_re", "Prenom_re", "Parution"
+			}
+		));
+		scrollPane.setViewportView(table);
+		
+		
+		chercheFilm.addActionListener(this);
+		chercheFilm.setBounds(242, 11, 89, 23);
+		contentPane.add(chercheFilm);
+		
+		//ajout des boutons
+		supprimeFilm.addActionListener(this);
+		supprimeFilm.setBounds(555, 11, 109, 23);
+		contentPane.add(supprimeFilm);
+		
+		creeFilm.addActionListener(this);
+		creeFilm.setBounds(341, 11, 89, 23);
+		contentPane.add(creeFilm);
+		
+		modifieFilm.addActionListener(this);
+		modifieFilm.setBounds(440, 11, 105, 23);
+		contentPane.add(modifieFilm);
+		
+		btnAffichecatalogue.addActionListener(this);
+		btnAffichecatalogue.setBounds(143, 11, 89, 23);
+		contentPane.add(btnAffichecatalogue);
+		
+		
+	}
+	
+	/**
+	 * Listener.
+	 */
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		try
+		{	
+			Object source = e.getSource(); //??? Mais ça marche...
+			
+			if(source == creeFilm)
+			{
+				entreeUserTitre = JOptionPane.showInputDialog("Veuillez spécifier les caractéristiques du film. ");
+				
+				
+			}
+			else if(source == chercheFilm)
+			{
+				entreeUserTitre = JOptionPane.showInputDialog("Titre du film? ");
+				//champResultat.setText(getTitreDb());
+			}
+			else if(source == supprimeFilm)
+			{
+				entreeUserTitre = JOptionPane.showInputDialog("Titre du film à supprimer?");
+				
+			}
+			else if(source == modifieFilm)
+			{
+				entreeUserTitre = JOptionPane.showInputDialog("Titre du film à modifier?");
+				OeuvreDAO odao = new OeuvreDAO();
+				Oeuvre o2 = odao.searchOeuvre(entreeUserTitre);
+				odao.UpdateOeuvres(o2);
+				
+			}
+			else if(source == btnAffichecatalogue)
+			{
+				//affichage du catalogue entier.
+				OeuvreDAO odao = new OeuvreDAO();
+				List<Oeuvre> catalogue = new ArrayList<Oeuvre>();
+				
+				
+				  String liste;
+				  
+				  catalogue = odao.getAllOeuvres();
+				  // A RESOUDRE : 
+				 //liste += catalogue.displayListeOeuvre(catalogue);
+				  
+				  DefaultTableModel model = (DefaultTableModel)table.getModel();
+				  Object[] row = new Object[6];
+				  for(int i = 0; i < catalogue.size(); i++)
+				  {
+					  row[0] = catalogue.get(i).getIdFilm();
+			           row[1] = catalogue.get(i).getTitre();
+			           row[2] = catalogue.get(i).getGenre();
+			           row[3] = catalogue.get(i).getNomReal();
+			           row[4] = catalogue.get(i).getPrenomReal();
+			           row[5] = catalogue.get(i).getDate_parution();
+			           
+			           model.addRow(row);
+				   
+
+				 
+				 
+				  	}
+					scrollPane.setViewportView(table);
+
+			
+				}
+		}	
+		catch(IOException exc)
+		{
+			System.err.println(exc.getMessage());
+			
+		}
+		catch(Exception exc2)
+		{
+			System.err.println(exc2.getMessage());
+			
+		}
+			
+	}
+	
+	
 	/**
 	 * 
-	 * @author JLM
-	 *
 	 */
-		private JFrame fenetre;
-		private String entreeUserTitre, entreeUserIdFilm;
-		private JTextField champRecherche = new JTextField(3);	//"Barre de recherche".
-		private JTextField champResultat = new JTextField(3);	//champ du Resultat.
-		//	champResultat.setEditable(false); ne marche pas,etrangement...
-		
-		// Déclaration et initialisation des boutons de la fenetre.
-		private JButton creeFilm = new JButton("Creer un film");
-		private JButton chercheFilm = new JButton("Rechercher un film");
-		private JButton ajoutFilm = new JButton("Ajouter un nouveau film");
-		private JButton retraitFilm = new JButton("Supprimer un film");
-		private JButton modifieFilm = new JButton("Modifier un film");
-		private JButton afficherCatalogue = new JButton("Afficher tous les films");
+	public void updateTable()
+	{
 		
 		
-		//champs de texte pour récolter les entrées utilisateurs
-		private JTextField entreeUser1 = new JTextField(20);
-		
-		private JLabel message = new JLabel("Un message.");
-		private JTable table;
-		JPanel contenu = new JPanel();
-		
-		/**
-		 * Constructeur d'objet de type VideothequeGUI, donc d'une fenetre.
-		 */
-		public GUIJML()
-		{
-			fenetre = new JFrame("Homewatch");	//construction de fenetre..
-			contenu.setLayout(new BoxLayout(contenu, BoxLayout.Y_AXIS));
-			updateTable();
-			contenu.add(table.getTableHeader());
-			contenu.add(table);
-			contenu.add(message);
-			
-			fenetre.add(contenu, BorderLayout.NORTH);
-			
-			//ajout des boutons
-			
-			creeFilm.addActionListener(this);
-			contenu.add(creeFilm);
-			chercheFilm.addActionListener(this);
-			contenu.add(chercheFilm);
-			ajoutFilm.addActionListener(this);
-			contenu.add(ajoutFilm);
-			modifieFilm.addActionListener(this);
-			contenu.add(modifieFilm);
-			retraitFilm.addActionListener(this);
-			contenu.add(retraitFilm);
-			afficherCatalogue.addActionListener(this);
-			contenu.add(afficherCatalogue);
-			JPanel fieldZone = new JPanel();
-			fieldZone.setLayout(new BoxLayout(fieldZone, BoxLayout.X_AXIS));
-	 		
-		}
-		
-		/**
-		 * Listener.
-		 */
-		@Override
-		public void actionPerformed(ActionEvent e)
-		{
-			try
-			{	
-				Object source = e.getSource(); //??? Mais ça marche...
-				
-				if(source == creeFilm)
-				{
-					entreeUserTitre = JOptionPane.showInputDialog("Veuillez spécifier les caractéristiques du film. ");
-					
-					champResultat.setText("");
-				}
-				else if(source == chercheFilm)
-				{
-					entreeUserTitre = JOptionPane.showInputDialog("Titre du film? ");
-					//champResultat.setText(getTitreDb());
-				}
-				else if(source == ajoutFilm)
-				{
-					entreeUserTitre = JOptionPane.showInputDialog("Veuillez spécifier les caractéristiques du film.");
-					champResultat.setText("");
-				}
-				else if(source == retraitFilm)
-				{
-					entreeUserTitre = JOptionPane.showInputDialog("Titre du film à supprimer?");
-					champResultat.setText("");
-				}
-				else if(source == modifieFilm)
-				{
-					entreeUserTitre = JOptionPane.showInputDialog("Titre du film à modifier?");
-					OeuvreDAO odao = new OeuvreDAO();
-					Oeuvre o2 = odao.searchOeuvre(entreeUserTitre);
-					odao.UpdateOeuvres(o2);
-					champResultat.setText("");
-				}
-				else
-				{
-					//affichage du catalogue entier.
-					OeuvreDAO odao = new OeuvreDAO();
-					List<Oeuvre> catalogue = new ArrayList<Oeuvre>();
-					champResultat.setText("");
-					
-					  String liste;
-					  
-					  catalogue = odao.getAllOeuvres();
-					  // A RESOUDRE : 
-					 //liste += catalogue.displayListeOeuvre(catalogue);
-					  liste += catalogue.getAllOeuvre().displayListeOeuvre(catalogue);
-
-					 champResultat.setText(liste);
-					 
-				}
-				
-			}
-			catch(IOException exc)
-			{
-				System.err.println(exc.getMessage());
-				
-			}
-			catch(Exception exc2)
-			{
-				System.err.println(exc2.getMessage());
-				
-			}
-				
-		}
+	}
+	
+	/**
+	 * 
+	 */
+	public void update()
+	{
 		
 		
-		/**
-		 * 
-		 */
-		public void updateTable()
-		{
-			
-			
-		}
-		
-		/**
-		 * 
-		 */
-		public void update()
-		{
-			
-			
-		}
+	}
 }
-
 
 
