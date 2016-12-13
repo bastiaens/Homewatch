@@ -189,8 +189,8 @@ public class VideoGUI extends JFrame implements ActionListener {
 			
 			if(source == creeFilm)
 			{
-				entreeUserTitre = JOptionPane.showInputDialog("Veuillez spécifier les caractéristiques du film. ");
-				
+				entreeUserTitre = JOptionPane.showInputDialog("Veuillez spécifier le titre du film : ");
+				entreeUserDesc = JOptionPane.showInputDialog("Veuillez spécifier la description : ");
 				
 			}
 			else if(source == chercheFilm)
@@ -258,22 +258,6 @@ public class VideoGUI extends JFrame implements ActionListener {
 	}
 	
 	
-	/**
-	 * 
-	 */
-	public void updateTable()
-	{
-		
-		
-	}
-	
-	/**
-	 * 
-	 */
-	public void update()
-	{
-		
-		
 	}
 }
 
