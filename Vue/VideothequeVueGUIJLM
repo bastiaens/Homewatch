@@ -259,6 +259,15 @@ public class VideoGUI extends JFrame implements ActionListener {
 	
 	
 	}
+	
+	/**
+	*
+	*
+	*/
+	public void update()
+	{
+	
+	}
 }
 
 
