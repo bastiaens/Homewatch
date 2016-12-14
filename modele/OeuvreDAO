@@ -13,6 +13,10 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Properties;
 
+import javax.swing.table.DefaultTableModel;
+
+import Home.vue.*;
+
 /**
  * @author Olivier Bastiaens et JL
  */
@@ -21,6 +25,7 @@ public class OeuvreDAO extends Observable implements Iterator {
 	
 private Connection myConn;
 private List<Oeuvre> list = new ArrayList<>();
+
 	
 	public OeuvreDAO() throws Exception {
 		
@@ -45,19 +50,26 @@ private List<Oeuvre> list = new ArrayList<>();
 	 */
 	
 	public List<Oeuvre> getAllOeuvres() throws Exception {
-
+		
+		
+		String req = "select idFilm, titre, genre, nom_re, prenom_re, date_parution"
+				+ " from videot.film natural join videot.genre natural join videot.réalisateur;";
 		Statement myStmt = null;
 		ResultSet myRs = null;
 
 		try {
 		
 			myStmt = myConn.createStatement();
-			myRs = myStmt.executeQuery("select idFilm, titre, genre, nom_re, prenom_re, date_parution"
-					+ " from videot.film natural join videot.genre natural join videot.réalisateur;");
-			
+			myRs = myStmt.executeQuery(req);
+			Oeuvre Oeuvre;
 			while (myRs.next()) {
-				Oeuvre tempOeuvre = convertRowToOeuvre(myRs);
-				list.add(tempOeuvre);
+				 Oeuvre = new Oeuvre (myRs.getInt("idFilm"),
+						 myRs.getString("titre"),
+						 myRs.getString("genre"),
+						 myRs.getString("nom_re"),
+						 myRs.getString("prenom_re"),
+						 myRs.getInt("date_parution"));
+				list.add(Oeuvre);
 			}
 			
 			return list;
@@ -93,8 +105,8 @@ private List<Oeuvre> list = new ArrayList<>();
 		
 		try {
 			titre += "%";
-			myStmt = myConn.prepareStatement("select f.idFilm, f.titre, f.description, r.idRéalisateur, r.nom_re, r.prenom_re, g.idGenre, g.genre, f.date_parution "
-					+ "from film as f natural join genre as g natural join réalisateur as r"
+			myStmt = myConn.prepareStatement("select f.idFilm, f.titre, f.description, r.idRéalisateur, r.nom_re, r.prenom_re, f.date_parution "
+					+ "from film as f natural natural join réalisateur as r"
 					+ " where titre like ?");
 			
 			myStmt.setString(1, titre);
@@ -105,8 +117,14 @@ private List<Oeuvre> list = new ArrayList<>();
 			{
 				if(o1.getTitre() == titre)
 				{
-
-					Oeuvre tempOeuvre = convertRowToOeuvre(myRs);
+							//encore à modifier
+					Oeuvre tempOeuvre = new Oeuvre (myRs.getInt("idFilm"),
+							 myRs.getString("titre"),
+							 myRs.getString("description"),
+							 myRs.getString("idRéalisateur"),
+							 myRs.getString("nom_re"),
+							 myRs.getString("prenom_re"),
+							 myRs.getInt("date_parution"));
 					o1= tempOeuvre;
 					
 				}
@@ -200,13 +218,15 @@ private List<Oeuvre> list = new ArrayList<>();
 			close(myPstmt, null, myPstmt);
 		}
 	}
+	
+	 
 	/**
 	 * 
 	 * @param myRs
 	 * @return
 	 * @throws SQLException
 	 */
-	private Oeuvre convertRowToOeuvre(ResultSet myRs) throws SQLException {
+	/*private Oeuvre convertRowToOeuvre(ResultSet myRs) throws SQLException {
 		
 		int idFilm = myRs.getInt("idFilm");
 		String titre = myRs.getString("titre");
@@ -218,7 +238,7 @@ private List<Oeuvre> list = new ArrayList<>();
 		
 		Oeuvre tempOeuvre = new Oeuvre(idFilm,titre,genre, nameR,fnameR, date_parution);
 		return tempOeuvre;
-	}
+	/*}
 	
 	
 	/**
