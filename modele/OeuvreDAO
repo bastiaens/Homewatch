@@ -1,320 +1,311 @@
-package Home.modele;
- 
-import java.io.FileInputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+package Home.vue;
+
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Observable;
-import java.util.Properties;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
-import Home.vue.*;
+import Home.modele.Oeuvre;
+import Home.modele.OeuvreDAO;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-/**
- * @author Olivier Bastiaens et JL
- */
-
-public class OeuvreDAO extends Observable implements Iterator {
+public class VideoGUI extends JFrame implements ActionListener {
 	
-private Connection myConn;
-private List<Oeuvre> list = new ArrayList<>();
-
 	
-	public OeuvreDAO() throws Exception {
-		
-		// va rechercher le mot de passe, le nom de l'utilisateur et l'URL de connection dans un dossier Mysql
-		Properties props = new Properties();
-		props.load(new FileInputStream("Mysql/videot.properties"));
-		
-		String user = props.getProperty("user");
-		String password = props.getProperty("password");
-		String dburl = props.getProperty("dburl");
-		
-		// connect to database
-		myConn = DriverManager.getConnection(dburl, user, password);
-		
-		System.out.println("DB connection successful to: " + dburl);
-	}
+	//déclaration des variables
+	private JPanel contentPane;
+	
+	private JTextField textField_1_titre;
+	private JTextField textField_2_genre;
+	private JTextField textField_3_nom_re;
+	private JTextField textField_4_prenom;
+	private JTextField textField_5_parution;
+	private JTextField textField_id = new JTextField(); 
+
+	public JTable table;
+	
+	private String entreeUserTitre, entreeUserIdFilm;
+	
+	private JButton chercheFilm = new JButton("Rechercher un film");
+	private JButton creeFilm = new JButton("Nouveau film");
+	private JButton supprimeFilm = new JButton("supprimer un Film");
+	private JButton modifieFilm = new JButton("Modifier un film");
+	private JButton afficheCatalogue = new JButton("afficher tout");
+	
+	
+	JLabel lblId = new JLabel("id: ");
+	JLabel lblTitre = new JLabel("titre :");
+	JLabel lblGenre = new JLabel("genre :");
+	JLabel lblNomre = new JLabel("nom_re :");
+	JLabel lblPrenomre = new JLabel("prenom_re :");
+	JLabel lblParution = new JLabel("parution :");
+	JScrollPane scrollPane = new JScrollPane();
+	private final JButton btnAffichecatalogue = new JButton("afficheCatalogue");
+	private JTextField txtEntrezUnTitre;
+
+
+
+
+
+
+
 	
 	/**
-	 * Méthode qui renvoie tout les film de la db
-	 * @return list, list contenent tout les films se trouvant dans la db
-	 * @throws Exception
+	 * Launch the application.
 	 */
-	
-	public List<Oeuvre> getAllOeuvres() throws Exception {
-		
-		
-		String req = "select idFilm, titre, genre, nom_re, prenom_re, date_parution"
-				+ " from videot.film natural join videot.genre natural join videot.réalisateur;";
-		Statement myStmt = null;
-		ResultSet myRs = null;
-
-		try {
-		
-			myStmt = myConn.createStatement();
-			myRs = myStmt.executeQuery(req);
-			Oeuvre Oeuvre;
-			while (myRs.next()) {
-				 Oeuvre = new Oeuvre (myRs.getInt("idFilm"),
-						 myRs.getString("titre"),
-						 myRs.getString("genre"),
-						 myRs.getString("nom_re"),
-						 myRs.getString("prenom_re"),
-						 myRs.getInt("date_parution"));
-				list.add(Oeuvre);
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					VideoGUI frame = new VideoGUI();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
-			
-			return list;
-		}
-		finally {
-			close(myStmt, myRs, null);
-		}
+		});
 	}
-	
-	
-	
-	
-	
-	public String displayListeOeuvre(List<Oeuvre> list){
-		String catalogue = "";
-		
-		for(Iterator it = list.iterator(); it.hasNext();)
-		{
-			catalogue += it.next().toString();
-			
-		}
-		
-		return catalogue;
-		
-	}
-	
-	/**
-	 * Méthode qui permet de rechercher un film sur base de son titre entrer par l'utilisateur
-	 * @param titre
-	 * @return tout les informations concernant le film demander
-	 * @throws Exception
-	 */
-	public List<Oeuvre> searchOeuvre(String titre) throws Exception {
-		
-		String req = "select idFilm, titre, genre, nom_re, prenom_re, date_parution"
-				+ " from videot.film natural join videot.genre natural join videot.réalisateur where titre like ?";
-		PreparedStatement myStmt = null;
-		ResultSet myRs = null;
 
-		try {
-			titre += "%";
-			myStmt = myConn.prepareStatement(req);
-			myStmt.setString(1, titre);
-			myRs = myStmt.executeQuery();
-			Oeuvre Oeuvre;
-			while (myRs.next()) {
-				 Oeuvre = new Oeuvre (myRs.getInt("idFilm"),
-						 myRs.getString("titre"),
-						 myRs.getString("genre"),
-						 myRs.getString("nom_re"),
-						 myRs.getString("prenom_re"),
-						 myRs.getInt("date_parution"));
-				list.add(Oeuvre);
+	/**
+	 * Create the frame.
+	 */
+	public VideoGUI() {
+		setTitle("HomeWatch");
+		
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 706, 446);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+
+		
+		lblId.setBounds(40, 78, 61, 14);
+		contentPane.add(lblId);
+		
+		lblTitre.setBounds(40, 102, 61, 14);
+		contentPane.add(lblTitre);
+		
+		lblGenre.setBounds(40, 127, 61, 14);
+		contentPane.add(lblGenre);
+		
+		lblNomre.setBounds(40, 152, 61, 14);
+		contentPane.add(lblNomre);
+		
+		lblPrenomre.setBounds(40, 177, 61, 14);
+		contentPane.add(lblPrenomre);
+		
+		lblParution.setBounds(40, 202, 61, 14);
+		contentPane.add(lblParution);
+		
+		
+		textField_id.setBounds(111, 75, 86, 20);
+		contentPane.add(textField_id);
+		textField_id.setColumns(10);
+		
+		textField_1_titre = new JTextField();
+		textField_1_titre.setColumns(10);
+		textField_1_titre.setBounds(111, 99, 86, 20);
+		contentPane.add(textField_1_titre);
+		
+		textField_2_genre = new JTextField();
+		textField_2_genre.setColumns(10);
+		textField_2_genre.setBounds(111, 124, 86, 20);
+		contentPane.add(textField_2_genre);
+		
+		textField_3_nom_re = new JTextField();
+		textField_3_nom_re.setColumns(10);
+		textField_3_nom_re.setBounds(111, 149, 86, 20);
+		contentPane.add(textField_3_nom_re);
+		
+		textField_4_prenom = new JTextField();
+		textField_4_prenom.setColumns(10);
+		textField_4_prenom.setBounds(111, 174, 86, 20);
+		contentPane.add(textField_4_prenom);
+		
+		textField_5_parution = new JTextField();
+		textField_5_parution.setColumns(10);
+		textField_5_parution.setBounds(111, 199, 86, 20);
+		contentPane.add(textField_5_parution);
+		scrollPane.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				//Display selected row in JTextefields
+				
+				   // Get The Index Of The Slected Row 
+		        int i = table.getSelectedRow();
+
+		        TableModel model = table.getModel();
+		        
+		         // Display Slected Row In JTexteFields
+		        textField_id.setText(model.getValueAt(i,0).toString());
+		        textField_1_titre.setText(model.getValueAt(i,1).toString());
+		        textField_2_genre.setText(model.getValueAt(i,2).toString());
+		        textField_3_nom_re.setText(model.getValueAt(i,3).toString());
+		        textField_4_prenom.setText(model.getValueAt(i,4).toString());
+		        textField_5_parution.setText(model.getValueAt(i,5).toString());
 			}
-			
-			return list;
-		}
-		finally {
-			close(myStmt, myRs, null);
-		}
-	}
+		});
+		
+		scrollPane.setBounds(243, 75, 417, 144);
+		contentPane.add(scrollPane);
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"IdFilm", "Titre", "Genre", "Nom_re", "Prenom_re", "Parution"
+			}
+		));
+		scrollPane.setViewportView(table);
 		
 		
+		chercheFilm.addActionListener(this);
+		chercheFilm.setBounds(242, 11, 89, 23);
+		contentPane.add(chercheFilm);
 		
-	/**
-	 *Méthode permettant d'ajouter un film dans la base de donnée.
-	 * @param Oeuvre
-	 * @throws Exception
-	 */
-	public void AddOeuvres(Oeuvre Oeuvre ) throws Exception {
-		PreparedStatement myPstmt = null;
+		//ajout des boutons
+		supprimeFilm.addActionListener(this);
+		supprimeFilm.setBounds(555, 11, 109, 23);
+		contentPane.add(supprimeFilm);
 		
-		try {
-			myPstmt = myConn.prepareStatement("INSERT INTO `videot`.`film` (`titre`, `idRéalisateur`, `idGenre`, `date_parution`) VALUES (?,?,?,?);");
-			
-			//set param
-			myPstmt.setString(1, Oeuvre.getTitre());
-			myPstmt.setInt(2, Oeuvre.getIdRéalisateur());
-			myPstmt.setInt(3, Oeuvre.getIdGenre());
-			myPstmt.setInt(4, Oeuvre.getDate_parution());
+		creeFilm.addActionListener(this);
+		creeFilm.setBounds(341, 11, 89, 23);
+		contentPane.add(creeFilm);
 		
-			//exécutée la requête
-			myPstmt.executeUpdate();
-			
-		}
-		finally {
-			close(null, null, myPstmt);
-		}
-	}
-	
-	//reçoit un Objet oeuvre en param
-
-	/**
-	 * 
-	 * Méthode qui permet de modifier les données d'un film 
-	 * @param Oeuvre
-	 * @throws Exception
-	 */
-	public void UpdateOeuvres(Oeuvre Oeuvre ) throws Exception {
-		PreparedStatement myPstmt = null;
+		modifieFilm.addActionListener(this);
+		modifieFilm.setBounds(440, 11, 105, 23);
+		contentPane.add(modifieFilm);
 		
-		try {
-			//myPstmt = myConn.prepareStatement("UPDATE film SET  titre=?, description=?, idRéalisateur=?, idGenre=?, date_parution=? WHERE titre =ancienTitre ");
-			myPstmt = myConn.prepareStatement("UPDATE film SET titre=?, description=?, idRéalisateur=?, idGenre=?, date_parution=?"
-			+ " WHERE idFilm = ?");
-			
-			//set param
-			
-			myPstmt.setString(1, Oeuvre.getTitre());
-			myPstmt.setString(2, Oeuvre.getDescription());
-			myPstmt.setInt(3, Oeuvre.getIdRéalisateur());
-			myPstmt.setInt(4, Oeuvre.getIdGenre());
-			myPstmt.setInt(5, Oeuvre.getDate_parution());
-			myPstmt.setInt(6, Oeuvre.getIdFilm());
+		btnAffichecatalogue.addActionListener(this);
+		btnAffichecatalogue.setBounds(243, 41, 89, 23);
+		contentPane.add(btnAffichecatalogue);
 		
-			//exécutée la requête
-			myPstmt.executeUpdate();
-			System.out.println("le film a été modifié avec succes");
-		}
-		finally {
-			close(null, null, myPstmt);
-		}
+		txtEntrezUnTitre = new JTextField();
+		txtEntrezUnTitre.setText("Entrez un titre");
+		txtEntrezUnTitre.setBounds(134, 14, 98, 20);
+		contentPane.add(txtEntrezUnTitre);
+		txtEntrezUnTitre.setColumns(10);
+		
+		
 	}
 	
 	/**
-	 * Méthode qui permet de supprimer un film 
-	 * @param idFilm
-	 * @throws Exception
+	 * Listener.
 	 */
-	public void deleteOeuvres(String titre ) throws Exception {
-		PreparedStatement myPstmt = null;
-		
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
 		try
-		{
-			List<Oeuvre> film = new ArrayList<Oeuvre>();
-			film = searchOeuvre(titre);
-
-			 //oeuvreASupprimer.getTitre();
-
-		}
-		finally
-		{
-			close(null,null,myPstmt);
-		}
+		{	
+			Object source = e.getSource(); //??? Mais ça marche...
+			
+			if(source == creeFilm)
+			{
+				entreeUserTitre = JOptionPane.showInputDialog("Veuillez spécifier les caractéristiques du film. ");
+				
+				
 			}
-	
-	public void addRowtoJTable(DefaultTableModel model, String titre) throws Exception {
-		
-		List<Oeuvre> film = new ArrayList<Oeuvre>();
-		film = searchOeuvre(titre);
-		
-		  Object[] row = new Object[6];
-		  for(int i = 0; i < film.size(); i++)
-		  {
-			  row[0] = film.get(i).getIdFilm();
-	           row[1] = film.get(i).getTitre();
-	           row[2] = film.get(i).getGenre();
-	           row[3] = film.get(i).getNomReal();
-	           row[4] = film.get(i).getPrenomReal();
-	           row[5] = film.get(i).getDate_parution();
-	           
-	           model.addRow(row);
-		  }
-	
+			else if(source == chercheFilm)
+			{
+				OeuvreDAO odao = new OeuvreDAO();
+				String titre = txtEntrezUnTitre.getText(); //récupère le titre entrez
+				DefaultTableModel model = (DefaultTableModel)table.getModel();
+				odao.clearJTable(model);		// On vide la table.
+				odao.addRowtoJTable(model, titre);
+				scrollPane.setViewportView(table);
+			
+			}
+			else if(source == supprimeFilm)
+			{
+				OeuvreDAO odao = new OeuvreDAO();
+				String titre = txtEntrezUnTitre.getText(); //récupère l'id du film
+				DefaultTableModel model = (DefaultTableModel)table.getModel();
+				odao.deleteOeuvres(titre);
+				scrollPane.setViewportView(table);
+
+				
+			}
+			else if(source == modifieFilm)
+			{
+				entreeUserTitre = JOptionPane.showInputDialog("Titre du film à modifier?");
+				
+				
+			}
+			else if(source == btnAffichecatalogue)
+			{
+				//affichage du catalogue entier.
+				OeuvreDAO odao = new OeuvreDAO();
+				List<Oeuvre> catalogue = new ArrayList<Oeuvre>();
+				  catalogue = odao.getAllOeuvres();
+				  
+				  DefaultTableModel model = (DefaultTableModel)table.getModel();
+					odao.clearJTable(model);		// On vide la table.
+
+				  Object[] row = new Object[6];
+				  for(int i = 0; i < catalogue.size(); i++)
+				  {
+					  row[0] = catalogue.get(i).getIdFilm();
+			           row[1] = catalogue.get(i).getTitre();
+			           row[2] = catalogue.get(i).getGenre();
+			           row[3] = catalogue.get(i).getNomReal();
+			           row[4] = catalogue.get(i).getPrenomReal();
+			           row[5] = catalogue.get(i).getDate_parution();
+			           
+			           model.addRow(row);
+				  }
+					scrollPane.setViewportView(table);
+			
+			}
+		}	
+		catch(IOException exc)
+		{
+			System.err.println(exc.getMessage());
+			
+		}
+		catch(Exception exc2)
+		{
+			System.err.println(exc2.getMessage());
+			
+		}
 	}
+	
+	
 	/**
 	 * 
-	 * @param model
-	 * @param titre
-	 * @throws Exception
 	 */
-	public void removeRowFromJTable(DefaultTableModel model, String titre) throws Exception {
-		
-		List<Oeuvre> film = new ArrayList<Oeuvre>();
-		film = searchOeuvre(titre);
-		
-		deleteOeuvre(film.get().getTitre());
-		  /*for(int i = 0; i < film.size(); i++)
-		  {
-			  String title = film.get(i).getTitre();
-			  if(title == titre)
-			  {
-				  model.removeRow(i);
-			  }
-			   
-	           
-		  }
-		  */
-	
-	}
-
-	/**
-	 * 	Methode de reinitialisation d'un modele contenant des films.
-	 * @param model
-	 */
-	public void clearJTable(DefaultTableModel model) throws Exception
+	public void updateTable()
 	{
 		
-		model.setRowCount(0);
 		
 	}
-	
 	
 	/**
 	 * 
-	 * @param myConn
-	 * @param myStmt
-	 * @param myRs
-	 * @param myPstmt
-	 * @throws SQLException
 	 */
-	private static void close(Connection myConn, Statement myStmt, ResultSet myRs, PreparedStatement myPstmt)
-			throws SQLException {
-
-		if (myRs != null) {
-			myRs.close();
-		}
-
-		if (myStmt != null) {
-			
-		}
+	public void update()
+	{
 		
-		if (myConn != null) {
-			myConn.close();
-		}
-		if (myPstmt != null) {
-			
-		}
+		
 	}
-
-	private void close(Statement myStmt, ResultSet myRs,PreparedStatement myPstmt) throws SQLException {
-		close(null, myStmt, myRs, myPstmt);		
-	}
-
-	@Override
-	public boolean hasNext() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Object next() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
+
+
