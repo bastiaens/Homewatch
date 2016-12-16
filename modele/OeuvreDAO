@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Properties;
 
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import Home.vue.*;
@@ -79,6 +80,10 @@ private List<Oeuvre> list = new ArrayList<>();
 		}
 	}
 	
+	
+	
+	
+	
 	public String displayListeOeuvre(List<Oeuvre> list){
 		String catalogue = "";
 		
@@ -91,52 +96,45 @@ private List<Oeuvre> list = new ArrayList<>();
 		return catalogue;
 		
 	}
+	
 	/**
-	 * Méthode qui permet de rechercher un film sur base de son titre
+	 * Méthode qui permet de rechercher un film sur base de son titre entrer par l'utilisateur
 	 * @param titre
 	 * @return tout les informations concernant le film demander
 	 * @throws Exception
 	 */
-	public Oeuvre searchOeuvre(String titre) throws Exception {
-		List<Oeuvre> list = new ArrayList<>();
-		Oeuvre o1 = new Oeuvre(0,"","",0,"","",0,0);	//Oeuvre placeholder. Servira a trouver l'element.
+	public List<Oeuvre> searchOeuvre(String titre) throws Exception {
+		
+		String req = "select idFilm, titre, genre, nom_re, prenom_re, date_parution"
+				+ " from videot.film natural join videot.genre natural join videot.réalisateur where titre like ?";
 		PreparedStatement myStmt = null;
 		ResultSet myRs = null;
-		
+
 		try {
 			titre += "%";
-			myStmt = myConn.prepareStatement("select f.idFilm, f.titre, f.description, r.idRéalisateur, r.nom_re, r.prenom_re, f.date_parution "
-					+ "from film as f natural natural join réalisateur as r"
-					+ " where titre like ?");
-			
+			myStmt = myConn.prepareStatement(req);
 			myStmt.setString(1, titre);
-			
 			myRs = myStmt.executeQuery();
-			
-			while (myRs.next()) 
-			{
-				if(o1.getTitre() == titre)
-				{
-							//encore à modifier
-					Oeuvre tempOeuvre = new Oeuvre (myRs.getInt("idFilm"),
-							 myRs.getString("titre"),
-							 myRs.getString("description"),
-							 myRs.getString("idRéalisateur"),
-							 myRs.getString("nom_re"),
-							 myRs.getString("prenom_re"),
-							 myRs.getInt("date_parution"));
-					o1= tempOeuvre;
-					
-				}
+			Oeuvre Oeuvre;
+			while (myRs.next()) {
+				 Oeuvre = new Oeuvre (myRs.getInt("idFilm"),
+						 myRs.getString("titre"),
+						 myRs.getString("genre"),
+						 myRs.getString("nom_re"),
+						 myRs.getString("prenom_re"),
+						 myRs.getInt("date_parution"));
+				list.add(Oeuvre);
 			}
 			
-			return o1;
+			return list;
 		}
 		finally {
-			close(myStmt, myRs, myStmt);
+			close(myStmt, myRs, null);
 		}
 	}
-	
+		
+		
+		
 	/**
 	 *Méthode permettant d'ajouter un film dans la base de donnée.
 	 * @param Oeuvre
@@ -202,43 +200,78 @@ private List<Oeuvre> list = new ArrayList<>();
 	 * @param idFilm
 	 * @throws Exception
 	 */
-	public void DeleteOeuvres(int idFilm ) throws Exception {
+	public void deleteOeuvres(String titre ) throws Exception {
 		PreparedStatement myPstmt = null;
 		
-		try {
-			myPstmt = myConn.prepareStatement("delete from film where idFilm =?");
-			
-			//set param
-			myPstmt.setInt(1, idFilm);
-			//exécutée la requête
-			myPstmt.executeUpdate();
-			
+		try
+		{
+			List<Oeuvre> film = new ArrayList<Oeuvre>();
+			film = searchOeuvre(titre);
+
+			 //oeuvreASupprimer.getTitre();
+
 		}
-		finally {
-			close(myPstmt, null, myPstmt);
+		finally
+		{
+			close(null,null,myPstmt);
 		}
-	}
+			}
 	
-	 
+	public void addRowtoJTable(DefaultTableModel model, String titre) throws Exception {
+		
+		List<Oeuvre> film = new ArrayList<Oeuvre>();
+		film = searchOeuvre(titre);
+		
+		  Object[] row = new Object[6];
+		  for(int i = 0; i < film.size(); i++)
+		  {
+			  row[0] = film.get(i).getIdFilm();
+	           row[1] = film.get(i).getTitre();
+	           row[2] = film.get(i).getGenre();
+	           row[3] = film.get(i).getNomReal();
+	           row[4] = film.get(i).getPrenomReal();
+	           row[5] = film.get(i).getDate_parution();
+	           
+	           model.addRow(row);
+		  }
+	
+	}
 	/**
 	 * 
-	 * @param myRs
-	 * @return
-	 * @throws SQLException
+	 * @param model
+	 * @param titre
+	 * @throws Exception
 	 */
-	/*private Oeuvre convertRowToOeuvre(ResultSet myRs) throws SQLException {
+	public void removeRowFromJTable(DefaultTableModel model, String titre) throws Exception {
 		
-		int idFilm = myRs.getInt("idFilm");
-		String titre = myRs.getString("titre");
-		String genre = myRs.getString("genre");
-		String nameR = myRs.getString("nom_re");
-		String fnameR = myRs.getString("prenom_re");
-		int date_parution = myRs.getInt("Date_parution");
+		List<Oeuvre> film = new ArrayList<Oeuvre>();
+		film = searchOeuvre(titre);
 		
+		deleteOeuvre(film.get().getTitre());
+		  /*for(int i = 0; i < film.size(); i++)
+		  {
+			  String title = film.get(i).getTitre();
+			  if(title == titre)
+			  {
+				  model.removeRow(i);
+			  }
+			   
+	           
+		  }
+		  */
+	
+	}
+
+	/**
+	 * 	Methode de reinitialisation d'un modele contenant des films.
+	 * @param model
+	 */
+	public void clearJTable(DefaultTableModel model) throws Exception
+	{
 		
-		Oeuvre tempOeuvre = new Oeuvre(idFilm,titre,genre, nameR,fnameR, date_parution);
-		return tempOeuvre;
-	/*}
+		model.setRowCount(0);
+		
+	}
 	
 	
 	/**
