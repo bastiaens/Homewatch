@@ -216,13 +216,21 @@ public class VideoGUI extends JFrame implements ActionListener {
 	{
 		try
 		{	
-			Object source = e.getSource(); //??? Mais ça marche...
+			Object source = e.getSource();
 			
-			if(source == creeFilm)
+			if(source == creeFilm)// affichage tab ne marche pas  à continuée... 
 			{
-				entreeUserTitre = JOptionPane.showInputDialog("Veuillez spécifier les caractéristiques du film. ");
-				
-				
+				OeuvreDAO odao = new OeuvreDAO();
+				String titre = textField_1_titre.getText(); //récupère le titre entré
+				String genre = textField_2_genre.getText(); //récupère le genre entré 
+				String nomRealisateur = textField_3_nom_re.getText(); //récupère le nom du réalisateur entré
+				String prenomRealisateur = textField_4_prenom.getText(); //récupère le prenom du réalisateur entré
+				String parution = textField_5_parution.getText(); //récupère l'année entrée
+				Oeuvre aAjouter = new Oeuvre(titre,genre,nomRealisateur,prenomRealisateur,parution);
+				odao.addOeuvre(aAjouter);	//ajout de l'oeuvre dans la dB
+				DefaultTableModel model = (DefaultTableModel)table.getModel();
+				odao.addRowtoJTable(model, titre);
+				JOptionPane.showMessageDialog(this, "le film a été enregistré");
 			}
 			else if(source == chercheFilm)
 			{
@@ -234,12 +242,13 @@ public class VideoGUI extends JFrame implements ActionListener {
 				scrollPane.setViewportView(table);
 			
 			}
-			else if(source == supprimeFilm)
+			else if(source == supprimeFilm) 
 			{
 				OeuvreDAO odao = new OeuvreDAO();
 				String titre = txtEntrezUnTitre.getText(); //récupère l'id du film
 				DefaultTableModel model = (DefaultTableModel)table.getModel();
 				odao.deleteOeuvres(titre);
+				JOptionPane.showMessageDialog(this, "le film a été supprimé");
 				scrollPane.setViewportView(table);
 
 				
@@ -258,7 +267,7 @@ public class VideoGUI extends JFrame implements ActionListener {
 				  catalogue = odao.getAllOeuvres();
 				  
 				  DefaultTableModel model = (DefaultTableModel)table.getModel();
-					odao.clearJTable(model);		// On vide la table.
+				  odao.clearJTable(model);		// On vide la table.
 
 				  Object[] row = new Object[6];
 				  for(int i = 0; i < catalogue.size(); i++)
@@ -307,5 +316,8 @@ public class VideoGUI extends JFrame implements ActionListener {
 		
 	}
 }
+
+
+
 
 
