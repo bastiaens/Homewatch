@@ -1,17 +1,32 @@
-import homewatch.model.Videotheque;
-import java.vue.VideothequeVue;
+package Home.controleur;
 
-public class VideothequeControleur
+import Home.modele.Oeuvre;
+import Home.modele.OeuvreDAO;
+import Home.vue.ConsoleVue;
+
+/**
+ * Classe gerant les interactions modele/vue.
+ * @author JL et Olivier
+ *
+ */
+public class VideoController 
 {
-  Videotheque modele;
-  VideothequeVue vue;
-  public VideothequeControleur(Videotheque model)
-  {
-    this.modele = model;
-  }
-  
-  public void addView(VideothequeVue view)
-  {
-    this.vue = view;
-  }
-}
+	private ConsoleVue vue = null;
+	private Oeuvre model;		//Est-ce vraiment notre modèle??
+	private OeuvreDAO model2;		//Est-ce vraiment notre modèle??
+	/**
+	 * Constructeur MVC.
+	 * @param mod
+	 * @param view
+	 */
+	public VideoController(Oeuvre mod, ConsoleVue view)
+	{
+		model = mod;
+		vue = view;
+	}
+	
+	public void ajoutVue(ConsoleVue view)
+	{
+		this.vue = view;
+	}
+	
