@@ -27,12 +27,17 @@ import Home.controleur.VideoController;
 import Home.modele.Oeuvre;
 import Home.modele.OeuvreDAO;
 import Home.modele.Personne;
-
+/**
+*Classe representant une interface graphique (Graphic User Interface) de la videotheque.
+*
+*/
 public class VideoGUI extends JFrame implements ActionListener {
 	
 	
-	//déclaration des variables
+	//déclaration du contenant
 	private JPanel contentPane;
+	
+	//déclaration des champs de textes.
 	
 	private JTextField textField_1_titre;
 	private JTextField textField_2_genre;
@@ -40,11 +45,13 @@ public class VideoGUI extends JFrame implements ActionListener {
 	private JTextField textField_4_prenom;
 	private JTextField textField_5_parution;
 	private JTextField textField_id = new JTextField(); 
-
+	
+	//Declaration du "tableau" de films.
 	public JTable table;
 	
 	private String entreeUserTitre, entreeUserIdFilm;
 	
+	//Initialisation des boutons.
 	private JButton chercheFilm = new JButton("Rechercher un film");
 	private JButton creeFilm = new JButton("Nouveau film");
 	private JButton supprimeFilm = new JButton("supprimer un Film");
@@ -52,13 +59,15 @@ public class VideoGUI extends JFrame implements ActionListener {
 	private JButton afficheCatalogue = new JButton("afficher tout");
 	private JButton btnLancer = new JButton("Visionner");
 	
-	
+	// Initialisation des etiquettes pour les champs de texte.
 	JLabel lblId = new JLabel("id: ");
 	JLabel lblTitre = new JLabel("titre :");
 	JLabel lblGenre = new JLabel("genre :");
 	JLabel lblNomre = new JLabel("nom_re :");
 	JLabel lblPrenomre = new JLabel("prenom_re :");
 	JLabel lblParution = new JLabel("parution :");
+	
+	//Initialisation d'un champ de texte avec defilement horizontal/vertical.
 	JScrollPane scrollPane = new JScrollPane();
 	private final JButton btnAffichecatalogue = new JButton("afficheCatalogue");
 	private JTextField txtEntrezUnTitre;
@@ -77,7 +86,7 @@ public class VideoGUI extends JFrame implements ActionListener {
 
 	
 	/**
-	 * Launch the application.
+	 * Lancement de l'application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -115,7 +124,7 @@ public class VideoGUI extends JFrame implements ActionListener {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-
+		//Initialisations des labels.
 		
 		lblId.setBounds(40, 78, 61, 14);
 		contentPane.add(lblId);
@@ -135,6 +144,7 @@ public class VideoGUI extends JFrame implements ActionListener {
 		lblParution.setBounds(40, 202, 61, 14);
 		contentPane.add(lblParution);
 		
+		//Initialisation des champs de texte.
 		
 		textField_id.setBounds(111, 75, 86, 20);
 		contentPane.add(textField_id);
@@ -166,10 +176,14 @@ public class VideoGUI extends JFrame implements ActionListener {
 		contentPane.add(textField_5_parution);
 		scrollPane.addMouseListener(new MouseAdapter() {
 			@Override
+			/**
+			*Eventhandler pour les evenements lies aux clics de souris de l'utilisateur
+			*
+			*/
 			public void mouseClicked(MouseEvent arg0) {
 				//Display selected row in JTextefields
 				
-				   // Get The Index Of The Slected Row 
+				   // Recuperation de l'index de la ligne selectionnee.
 		        int i = table.getSelectedRow();
 
 		        TableModel model = table.getModel();
@@ -211,14 +225,15 @@ public class VideoGUI extends JFrame implements ActionListener {
 				"IdFilm", "Titre", "Genre", "Nom_re", "Prenom_re", "Parution","Description","Couverture"
 			}
 		));
-		scrollPane.setViewportView(table);
+		scrollPane.setViewportView(table);		// insérer la table dans le modele.
 		table.setDefaultEditor(Object.class, null);	// rendre la cellule non modifiable
+		
+		//ajout des boutons
 		
 		chercheFilm.addActionListener(this);
 		chercheFilm.setBounds(242, 11, 89, 23);
 		contentPane.add(chercheFilm);
-		
-		//ajout des boutons
+				
 		supprimeFilm.addActionListener(this);
 		supprimeFilm.setBounds(555, 11, 109, 23);
 		contentPane.add(supprimeFilm);
@@ -234,6 +249,8 @@ public class VideoGUI extends JFrame implements ActionListener {
 		btnAffichecatalogue.addActionListener(this);
 		btnAffichecatalogue.setBounds(243, 41, 89, 23);
 		contentPane.add(btnAffichecatalogue);
+		
+		//Initialisation du champ de texte pour la recherche d'oeuvre basée sur le titre.
 		
 		txtEntrezUnTitre = new JTextField();
 		txtEntrezUnTitre.setText("Entrez un titre");
@@ -304,7 +321,7 @@ public class VideoGUI extends JFrame implements ActionListener {
 		{	
 			Object source = e.getSource();
 			
-			if(source == creeFilm)
+			if(source == creeFilm)		//Si l'utilisateur a cliqué sur le bouton de creation de film :
 			{
 				OeuvreDAO odao = new OeuvreDAO();
 				String titre = textField_1_titre.getText(); //récupère le titre entré
@@ -322,7 +339,7 @@ public class VideoGUI extends JFrame implements ActionListener {
 				
 				
 			}
-			else if(source == chercheFilm)
+			else if(source == chercheFilm)		//Si l'utilisateur a cliqué sur le bouton de recherche de film :
 			{
 				OeuvreDAO odao = new OeuvreDAO();
 				String titre = txtEntrezUnTitre.getText(); //récupère le titre entrez
@@ -333,7 +350,7 @@ public class VideoGUI extends JFrame implements ActionListener {
 				
 			
 			}
-			else if(source == supprimeFilm) 
+			else if(source == supprimeFilm) 	//Si l'utilisateur a cliqué sur le bouton de suppression de film :
 			{
 				OeuvreDAO odao = new OeuvreDAO();
 				String titre = txtEntrezUnTitre.getText(); //récupère l'id du film
@@ -346,7 +363,7 @@ public class VideoGUI extends JFrame implements ActionListener {
 
 				
 			}
-			else if(source == modifieFilm)//ne marche pas
+			else if(source == modifieFilm) 		//Si l'utilisateur a cliqué sur le bouton de modification de film :
 			{
 				String req ="UPDATE film INNER JOIN realisateur INNER JOIN genre"
 							+ "ON film.idFilm = realisateur.idFilm AND film.idGenre = genre.idGenre"
@@ -388,14 +405,14 @@ public class VideoGUI extends JFrame implements ActionListener {
 				}
 				
 			}
-			else if(source == btnLancer)
+			else if(source == btnLancer)			//Si l'utilisateur a cliqué sur le bouton de visionnage de film :
 			{
 				//Quasi opérationnel, manque juste la bonne façon de nommer l'URL.
 				String filename = "C:\\Users\\Olivier\\Documents\\Ephec\\2T\\dev_info_app\\Projet_java\\HomeWatch\\Videos_Projet\\" + textField_1_titre.getText() + ".mp4";
 				ProcessBuilder pb = new ProcessBuilder("C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe",filename);
 				Process start = pb.start();
 			}
-			else if(source == btnAffichecatalogue)
+			else if(source == btnAffichecatalogue)		//Si l'utilisateur a cliqué sur le bouton d'affichage du catalogue :
 			{
 				//affichage du catalogue entier.
 				OeuvreDAO odao = new OeuvreDAO();
