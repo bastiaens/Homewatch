@@ -26,6 +26,8 @@ public class OeuvreDAO extends Observable implements Iterator {
 	
 private Connection myConn;
 private List<Oeuvre> list = new ArrayList<>();
+private List<Personne> listActors = new ArrayList<>();
+
 
 	
 	public OeuvreDAO() throws Exception {
@@ -52,9 +54,8 @@ private List<Oeuvre> list = new ArrayList<>();
 	
 	public List<Oeuvre> getAllOeuvres() throws Exception {
 		
-		
-		String req = "select idFilm, titre, genre, nom_re, prenom_re, date_parution"
-				+ " from videot.film natural join videot.genre natural join videot.réalisateur;";
+		//Pour les acteurs : rajouter les colonnes nom_a + les NATURAL JOIN qu'il faut
+		String req = "SELECT idFilm, titre, genre, nom_re, prenom_re, date_parution, description, couverture FROM videot.film natural JOIN videot.genre natural join videot.réalisateur";
 		Statement myStmt = null;
 		ResultSet myRs = null;
 
@@ -69,7 +70,12 @@ private List<Oeuvre> list = new ArrayList<>();
 						 myRs.getString("genre"),
 						 myRs.getString("nom_re"),
 						 myRs.getString("prenom_re"),
-						 myRs.getInt("date_parution"));
+						 myRs.getInt("date_parution"),
+						 myRs.getString("description"),
+						 myRs.getString("couverture")
+						 //myRs.getString("nom_a")
+						 )
+						 ;
 				list.add(oeuvre);
 			}
 			
@@ -80,7 +86,33 @@ private List<Oeuvre> list = new ArrayList<>();
 		}
 	}
 	
-	
+	public List<Personne> getAllActeurs(String titre) throws Exception
+	{
+		String req = "SELECT titre, nom_a, prenom_a"
+				+ " FROM videot.acteur_film NATURAL JOIN acteur NATURAL JOIN film WHERE titre = ?"; //requête sql a modifier
+		PreparedStatement myStmt = null;
+		ResultSet myRs = null;
+
+		try {
+			myStmt = myConn.prepareStatement(req);
+			myStmt.setString(1, titre);
+			myRs = myStmt.executeQuery();
+			Personne acteur;
+			while (myRs.next()) {
+				 acteur = new Personne (
+						 myRs.getString("nom_a"),
+						 myRs.getString("prenom_a"))
+						 ;
+				listActors.add(acteur);
+			}
+			
+			return listActors;
+		}
+		finally {
+			close(myStmt, myRs, null);
+		}
+		
+	}	
 	
 	
 	
@@ -105,7 +137,7 @@ private List<Oeuvre> list = new ArrayList<>();
 	 */
 	public List<Oeuvre> searchOeuvre(String titre) throws Exception {
 		
-		String req = "select idFilm, titre, genre, nom_re, prenom_re, date_parution"
+		String req = "select idFilm, titre, genre, nom_re, prenom_re, date_parution, description"
 				+ " from videot.film natural join videot.genre natural join videot.réalisateur where titre like ?";
 		PreparedStatement myStmt = null;
 		ResultSet myRs = null;
@@ -122,7 +154,8 @@ private List<Oeuvre> list = new ArrayList<>();
 						 myRs.getString("genre"),
 						 myRs.getString("nom_re"),
 						 myRs.getString("prenom_re"),
-						 myRs.getInt("date_parution"));
+						 myRs.getInt("date_parution"),
+						 myRs.getString("description"));
 				list.add(Oeuvre);
 			}
 			
@@ -142,8 +175,8 @@ private List<Oeuvre> list = new ArrayList<>();
 	 */
 	public List<Oeuvre> searchOeuvreById(String id) throws Exception {
 		
-		String req = "select idFilm, titre, genre, nom_re, prenom_re, date_parution"
-				+ " from videot.film natural join videot.genre natural join videot.réalisateur where idFilm like ?";
+		String req = "select idFilm, titre, genre, nom_re, prenom_re, date_parution, description"
+				+ " from videot.film natural join videot.genre natural join videot.réalisateur where idFilm = ?";
 		PreparedStatement myStmt = null;
 		ResultSet myRs = null;
 
@@ -154,12 +187,13 @@ private List<Oeuvre> list = new ArrayList<>();
 			myRs = myStmt.executeQuery();
 			Oeuvre Oeuvre;
 			while (myRs.next()) {
-				 Oeuvre = new Oeuvre (myRs.getInt("idFilm"),
+				Oeuvre = new Oeuvre (myRs.getInt("idFilm"),
 						 myRs.getString("titre"),
 						 myRs.getString("genre"),
 						 myRs.getString("nom_re"),
 						 myRs.getString("prenom_re"),
-						 myRs.getInt("date_parution"));
+						 myRs.getInt("date_parution"),
+						 myRs.getString("description"));
 				list.add(Oeuvre);
 			}
 			
@@ -171,67 +205,35 @@ private List<Oeuvre> list = new ArrayList<>();
 	}
 
 		
-	/**
-	 *Méthode permettant d'ajouter le titre et l'annee du film dans la base de donnée.
-	 * @param Oeuvre
-	 * @throws Exception
-	 */
-	public void addFilm(Oeuvre Oeuvre,String movieTitle,String year ) throws Exception {
-		
-		PreparedStatement myPstmt = null;
-		
-		//les requêtes:
-		String reqFilm = "INSERT INTO `videot`.`réalisateur` (` + titre `, `date_parution`) VALUES ( " + movieTitle + ", " + year + ")"
-				+ "SELECT titre,date_parution"
-				+ "FROM 'film'"
-				+ "WHERE NOT EXISTS(SELECT 'titre' FROM film);";
-		
-		
-		try {
-			myPstmt = myConn.prepareStatement(reqFilm);
-			
-			//set param pour tab film
-			myPstmt.setString(1, Oeuvre.getTitre());
-			myPstmt.setInt(2, Oeuvre.getDate_parution());
-		
-			//exécutée la requête
-			myPstmt.executeUpdate();
-			
-		}
-		finally {
-			close(null, null, null, myPstmt);
-		}
-	}
+	
 	
 	/**
 	 *Méthode permettant d'ajouter le titre et l'annee du film dans la base de donnée.
 	 * @param Oeuvre
 	 * @throws Exception
 	 */
-	public void addRealisateur(Oeuvre Oeuvre ) throws Exception {
+	public int rechercheRéalisateurId(String nomR, String prenomR){
 		
-		PreparedStatement myPstmt = null;
+		int idRea = 0; //variable de travail
+		String reqIdRea = "SELECT idRéalisateur FROM réalisateur WHERE nom_re = ? and prenom_re = ? ";
+		PreparedStatement myStmt = null;
+		ResultSet myRs = null;
+    	
+    	try {
+    	    myStmt = myConn.prepareStatement(reqIdRea);
+    	    myStmt.setString(1, nomR);
+    	    myStmt.setString(2, prenomR);
+    	    myRs = myStmt.executeQuery();
+
+    		while(myRs.next()) {
+    			idRea = myRs.getInt("idRéalisateur");
+    		}
+    	} catch(SQLException e) {
+    		e.printStackTrace();
+    	}
 		
-		//les requêtes:
-		String reqFilm = "INSERT INTO `videot`.`réalisateur` (`titre`, `date_parution`) VALUES (?,?)"
-				+ "SELECT titre,date_parution"
-				+ "FROM 'film'"
-				+ "WHERE NOT EXISTS(SELECT 'titre' FROM film);";
+		return idRea;
 		
-		try {
-			myPstmt = myConn.prepareStatement(reqFilm);
-			
-			//set param pour tab film
-			myPstmt.setString(1, Oeuvre.getTitre());
-			myPstmt.setInt(2, Oeuvre.getDate_parution());
-		
-			//exécutée la requête
-			myPstmt.executeUpdate();
-			
-		}
-		finally {
-			close(null, null, null, myPstmt);
-		}
 	}
 	
 	public void addOeuvre(Oeuvre o) throws Exception
@@ -240,7 +242,7 @@ private List<Oeuvre> list = new ArrayList<>();
 		PreparedStatement myPstmt3 = null;
 		
 		//les requêtes:
-		String reqFilm = "INSERT INTO videot.film (titre, date_parution, idGenre) VALUES (?,?,?)";
+		String reqFilm = "INSERT INTO videot.film (titre, date_parution, idRéalisateur, idGenre) VALUES (?,?,?,?)";
 		String reqRéalisateur = "INSERT INTO videot.réalisateur (nom_re, prenom_re) VALUES(?,?)";
 		
 		try {
@@ -248,7 +250,8 @@ private List<Oeuvre> list = new ArrayList<>();
 			//set param pour tab film
 			myPstmt.setString(1, o.getTitre());
 			myPstmt.setInt(2, o.getDate_parution());
-			myPstmt.setInt(3, rechercheGenreId(o.getGenre()));
+			myPstmt.setInt(3,  rechercheRéalisateurId(o.getNomReal(), o.getPrenomReal()));
+			myPstmt.setInt(4, rechercheGenreId(o.getGenre()));
 			myPstmt.executeUpdate();
 			
 			
@@ -262,6 +265,8 @@ private List<Oeuvre> list = new ArrayList<>();
 			myPstmt3.setString(1, o.getNomReal());
 			myPstmt3.setString(2, o.getPrenomReal());
 			myPstmt3.executeUpdate();
+			setChanged();
+			notifyObservers();
 			
 		}
 		finally {
@@ -277,26 +282,33 @@ private List<Oeuvre> list = new ArrayList<>();
 	 * @param Oeuvre
 	 * @throws Exception
 	 */
-	public void UpdateOeuvres(Oeuvre Oeuvre ) throws Exception {
+	public void UpdateOeuvres(Oeuvre Oeuvre ) throws Exception {//ne marche pas 
 		PreparedStatement myPstmt = null;
 		
 		try {
 			//myPstmt = myConn.prepareStatement("UPDATE film SET  titre=?, description=?, idRéalisateur=?, idGenre=?, date_parution=? WHERE titre =ancienTitre ");
-			myPstmt = myConn.prepareStatement("UPDATE film SET titre=?, description=?, idRéalisateur=?, idGenre=?, date_parution=?"
-			+ " WHERE idFilm = ?");
+			//myPstmt = myConn.prepareStatement("UPDATE film SET titre=?, description=?, nom_re=?, idGenre=?, date_parution=?"
+			//+ " WHERE idFilm = ?");
 			
+			myPstmt = myConn.prepareStatement("UPDATE film INNER JOIN realisateur INNER JOIN genre"
+				+ "ON film.idFilm = realisateur.idFilm AND film.idGenre = genre.idGenre"
+				+ "SET titre=?, description=?, nom_re=?, prenom_re=? ,genre=?, date_parution=?"
+				+ "WHERE idFilm = ?"); 
 			//set param
 			
 			myPstmt.setString(1, Oeuvre.getTitre());
 			myPstmt.setString(2, Oeuvre.getDescription());
-			myPstmt.setInt(3, Oeuvre.getIdRéalisateur());
-			myPstmt.setInt(4, Oeuvre.getIdGenre());
-			myPstmt.setInt(5, Oeuvre.getDate_parution());
-			myPstmt.setInt(6, Oeuvre.getIdFilm());
+			myPstmt.setString(3, Oeuvre.getNomReal());
+			myPstmt.setString(4, Oeuvre.getPrenomReal());
+			myPstmt.setString(5, Oeuvre.getGenre());
+			myPstmt.setInt(6, Oeuvre.getDate_parution());
+			myPstmt.setInt(7, Oeuvre.getIdFilm());
 		
 			//exécutée la requête
 			myPstmt.executeUpdate();
 			System.out.println("le film a été modifié avec succes");
+			setChanged();
+			notifyObservers();
 		}
 		finally {
 			close(null, null, myPstmt);
@@ -320,7 +332,8 @@ private List<Oeuvre> list = new ArrayList<>();
 					
 			myPstmt.executeUpdate();
 			System.out.println("le film a été supprimé avec succès.");
-
+			setChanged();
+			notifyObservers();
 	
 
 		}
@@ -358,7 +371,7 @@ private List<Oeuvre> list = new ArrayList<>();
 		List<Oeuvre> film = new ArrayList<Oeuvre>();
 		film = searchOeuvre(titre);
 		
-		  Object[] row = new Object[6];
+		  Object[] row = new Object[7];
 		  for(int i = 0; i < film.size(); i++)
 		  {
 			  row[0] = film.get(i).getIdFilm();
@@ -367,9 +380,13 @@ private List<Oeuvre> list = new ArrayList<>();
 	           row[3] = film.get(i).getNomReal();
 	           row[4] = film.get(i).getPrenomReal();
 	           row[5] = film.get(i).getDate_parution();
-	           
+	           row[6] = film.get(i).getDescription();
+	           //row[7] = film.get(i).getNomAct();
+	           //row[7] = film.get(i).getCheminImage();
 	           model.addRow(row);
 		  }
+		  setChanged();
+		  notifyObservers();
 	
 	}
 	
@@ -384,6 +401,24 @@ private List<Oeuvre> list = new ArrayList<>();
 		model.setRowCount(0);
 		
 	}
+	/**
+	 * 
+	 * @return
+	 */
+	private String toStringActeurs(List<Personne> liste)
+	{
+		String catalogue = "";
+		
+		for(Iterator it = liste.iterator(); it.hasNext();)
+		{
+			catalogue += it.next().toString();
+			
+		}
+		
+		return catalogue;
+		
+	}
+	
 	
 	/**
 	 * 
@@ -429,7 +464,6 @@ private List<Oeuvre> list = new ArrayList<>();
 	}
 
 }
-
 
 
 
