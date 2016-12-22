@@ -52,6 +52,7 @@ public class VideoGUI extends JFrame implements ActionListener {
 	private String entreeUserTitre, entreeUserIdFilm;
 	
 	//Initialisation des boutons.
+	
 	private JButton chercheFilm = new JButton("Rechercher un film");
 	private JButton creeFilm = new JButton("Nouveau film");
 	private JButton supprimeFilm = new JButton("supprimer un Film");
@@ -60,6 +61,7 @@ public class VideoGUI extends JFrame implements ActionListener {
 	private JButton btnLancer = new JButton("Visionner");
 	
 	// Initialisation des etiquettes pour les champs de texte.
+	
 	JLabel lblId = new JLabel("id: ");
 	JLabel lblTitre = new JLabel("titre :");
 	JLabel lblGenre = new JLabel("genre :");
@@ -68,6 +70,7 @@ public class VideoGUI extends JFrame implements ActionListener {
 	JLabel lblParution = new JLabel("parution :");
 	
 	//Initialisation d'un champ de texte avec defilement horizontal/vertical.
+	
 	JScrollPane scrollPane = new JScrollPane();
 	private final JButton btnAffichecatalogue = new JButton("afficheCatalogue");
 	private JTextField txtEntrezUnTitre;
@@ -76,7 +79,7 @@ public class VideoGUI extends JFrame implements ActionListener {
 	 
 	TextArea texteDescriptif = new TextArea();	// Champ de texte contenant la description.
 	
-	private final TextArea textAreaActeurs = new TextArea();
+	private final TextArea textAreaActeurs = new TextArea();	//Chalo de texte contenant le casting d'un film.
 	
 
 
