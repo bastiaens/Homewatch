@@ -41,9 +41,9 @@ public class ConsoleVue extends VideoGUI {
 	        Scanner userInput = new Scanner(System.in);
 	        String MENU;
 
-	        // Display menu graphics
+	        // Menu console.
 	        System.out.println("*****************************************");
-	        System.out.println("| Modifier la base de donnée"             );
+	        System.out.println("| Gestion de la base de données");
 	        System.out.println("*****************************************");
 	        System.out.println("| Options:                              |");
 	        System.out.println("|        1. Recherche film              |");
@@ -52,19 +52,19 @@ public class ConsoleVue extends VideoGUI {
 	        System.out.println("|        4. Supprimer un film           |");
 	        System.out.println("|        5. Quitter                     |");
 	        System.out.println("*****************************************");
-	        System.out.print("Choississez une option: ");
+	        System.out.print("Choisissez une option : ");
 
 	        MENU = userInput.next();
 
-	//display menu based on user selection
+	// Affichage du menu selon la sélection de l'utilisateur.
 	        switch (MENU) {
 	            case "1":
 				try {
 					Scanner userI = new Scanner(System.in);
 					OeuvreDAO daor = new OeuvreDAO();
-					System.out.println("Vous avez choisi l'option 1: rechercher un film: ");
+					System.out.println("Vous avez choisi l'option 1, rechercher un film : ");
 					String Titre;
-					System.out.println("entrez un titre:");
+					System.out.println("Veuillez entrez un titre : ");
 					Titre = userI.next();
 					System.out.println(daor.searchOeuvre(Titre));
 					ConsoleVue.AfficherMenu();
@@ -77,26 +77,26 @@ public class ConsoleVue extends VideoGUI {
 	            	
 	            case "2":
 				try {
-					System.out.println("Vous avez choisi l'option 2: Ajout d'un film:");
+					System.out.println("Vous avez choisi l'option 2, ajout d'un film : ");
 					Scanner userI = new Scanner(System.in);
 					OeuvreDAO daoa = new OeuvreDAO();
 	
-			        System.out.println("Entrez le titre du Film:");
+			        System.out.println("Veuillez entrez le titre du Film : ");
 			        String Titre = userI.next();
 
-			        System.out.println("Entrez son résumer: ");
+			        System.out.println("Veuillez entrer son résumé : ");
 			        String Description = userI.nextLine();
 
-			        System.out.println("Entrez le nom du réalisateur");
+			        System.out.println("Veuillez entrer le nom du réalisateur : ");
 			        String nomRea = userI.next();
 			        
-			        System.out.println("Entrez le prenom du réalisateur");
+			        System.out.println("Veuillez entrer le prénom du réalisateur : ");
 			        String prenomRea = userI.next();
 					
-					System.out.println("entrez le genre:");
+					System.out.println("Veuillez entrer le genre du film : ");
 					String genre = userI.next();
 					
-					System.out.println("sa date de parution");
+					System.out.println("Veuillez entrer sa date de sortie : ");
 					int date_parution = userI.nextInt();
 					
 					Oeuvre tempOeuvre = new Oeuvre(Titre,Description, nomRea, prenomRea,genre, date_parution); 
@@ -110,26 +110,26 @@ public class ConsoleVue extends VideoGUI {
 	            	
 	            case "3":
 				try {
-					System.out.println("Vous avez choisi l'option 3: Mettre à  jour un film");//ne marche pas
+					System.out.println("Vous avez choisi l'option 3, Mettre à  jour un film : ");
 					Scanner userI = new Scanner(System.in);
 					OeuvreDAO daoa = new OeuvreDAO();
 					
-					System.out.println("Entrez l'id du film que vous voulez changer:");
+					System.out.println("Veuillez entrer l'id du film que vous voulez changer : ");
 					int idF = userI.nextInt();		// Le titre du film a changer.
 					
-			        System.out.println("Entrez le nouveau titre du Film:");
+			        System.out.println("Veuillez entrer le nouveau titre du Film : ");
 			        String nouveauTitre = userI.next();
 
-			        System.out.println("Entrez son résumer: ");
+			        System.out.println("Veuillez entrer son résumé : ");
 			        String Description = userI.next();
 
-			        System.out.println("Entrez l'id du réalisateur");
+			        System.out.println("Veuillez entrer l'id du réalisateur : ");
 			        int idRea = userI.nextInt();
 					
-					System.out.println("entrez l'id du genre:");
+					System.out.println("Veuillez entrer l'id du genre : ");
 					int idGenre = userI.nextInt();
 					
-					System.out.println("sa date de parution");
+					System.out.println("Veuillez indiquer sa date de sortie : ");
 					int date_parution = userI.nextInt();
 					
 					Oeuvre daob = new Oeuvre(idF, nouveauTitre, Description, idRea, idGenre, date_parution);
@@ -144,11 +144,11 @@ public class ConsoleVue extends VideoGUI {
 	            	
 	            case "4":
 				try {
-					System.out.println("Vous avez choissi l'option 5: Supprimer un film");
+					System.out.println("Vous avez choisi l'option 5, Suppression d'un film : ");
 					Scanner userI = new Scanner(System.in);
 					OeuvreDAO daod = new OeuvreDAO();
 					
-					System.out.println("entrez le titre du film");
+					System.out.println("Veuillez entrer le titre du film : ");
 					String titre = userI.next();
 					daod.deleteOeuvres(titre);
 					ConsoleVue.AfficherMenu();
@@ -160,7 +160,7 @@ public class ConsoleVue extends VideoGUI {
 	            	break;
 	            	
 	            default:
-	                System.out.println("vous avez quitter l'application");
+	                System.out.println("Vous avez quitté l'application avec succès.");
 	                break; 
 	        }
 	    }
