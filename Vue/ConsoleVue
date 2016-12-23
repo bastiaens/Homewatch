@@ -32,10 +32,10 @@ public class ConsoleVue extends VideoGUI {
 	     * @param model
 	     * @param vue
 	     */
-	    public ConsoleVue(Oeuvre model,VideoGUI vue)
+	   /* public ConsoleVue(Oeuvre model,VideoGUI vue)
 	    {
 	    	super(model,vue);
-	    }
+	    }*/
 
 	    public static void AfficherMenu() throws SQLException {
 	        Scanner userInput = new Scanner(System.in);
@@ -80,18 +80,22 @@ public class ConsoleVue extends VideoGUI {
 					System.out.println("Vous avez choisi l'option 2, ajout d'un film : ");
 					Scanner userI = new Scanner(System.in);
 					OeuvreDAO daoa = new OeuvreDAO();
-	
+					
+					String Titre;
 			        System.out.println("Veuillez entrez le titre du Film : ");
-			        String Titre = userI.next();
-
-			        System.out.println("Veuillez entrer son résumé : ");
-			        String Description = userI.nextLine();
-
-			        System.out.println("Veuillez entrer le nom du réalisateur : ");
-			        String nomRea = userI.next();
+			        Titre = userI.next();
 			        
+			        String Description;
+			        System.out.println("Veuillez entrer son résumé : ");
+			        Description = userI.nextLine();
+			        
+			        String nomRea;
+			        System.out.println("Veuillez entrer le nom du réalisateur : ");
+			        nomRea = userI.next();
+			        
+			        String prenomRea;
 			        System.out.println("Veuillez entrer le prénom du réalisateur : ");
-			        String prenomRea = userI.next();
+			        prenomRea = userI.next();
 					
 					System.out.println("Veuillez entrer le genre du film : ");
 					String genre = userI.next();
