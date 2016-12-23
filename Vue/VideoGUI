@@ -206,7 +206,7 @@ public class VideoGUI extends JFrame implements ActionListener {
 				JLabel picLabel = new JLabel(new ImageIcon(coverFilm));
 				
 				posterPanel.add(picLabel);
-				posterPanel.revalidate();
+				posterPanel.validate();
 				posterPanel.repaint(); // repaint - actualise l'affichage
 				
 
@@ -457,23 +457,5 @@ public class VideoGUI extends JFrame implements ActionListener {
 		}
 	}
 	
-	
-	/**
-	 * 
-	 */
-	public void updateTable()
-	{
-		
-		
-	}
-	
-	/**
-	 * 
-	 */
-	public void update()
-	{
-		
-		
-	}
 }
 
